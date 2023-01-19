@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.search
+package com.openclassrooms.realestatemanager.ui.list
 
 import android.os.Bundle
 import android.view.View
@@ -7,16 +7,18 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentListBinding
 import com.openclassrooms.realestatemanager.utils.viewBinding
 
-class SearchFragment : Fragment(R.layout.fragment_search) {
+class ListFragment : Fragment(R.layout.real_estate_list_fragment){
 
     companion object {
-        fun newInstance() = SearchFragment()
+        fun newInstance() = ListFragment()
     }
 
     private val binding by viewBinding { FragmentListBinding.bind(it) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
     }
 
 
