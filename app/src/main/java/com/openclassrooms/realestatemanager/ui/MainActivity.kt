@@ -4,8 +4,7 @@ import android.os.Bundle
 
 import androidx.appcompat.app.AppCompatActivity
 import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
-import com.openclassrooms.realestatemanager.ui.list.ListFragment
-import com.openclassrooms.realestatemanager.ui.search.SearchFragment
+import com.openclassrooms.realestatemanager.ui.list.RealEstateListFragment
 import com.openclassrooms.realestatemanager.utils.viewBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,16 +16,19 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-//        if (savedInstanceState == null) {
-//            supportFragmentManager.commitNow {
-//                replace(binding.fragmentContainerView.id, ListFragment.newInstance())
-//            }
-//        }
-
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(binding.fragmentContainerView.id, SearchFragment.newInstance()).commit()
+                .replace(binding.mainFragmentContainerView.id, RealEstateListFragment.newInstance()).commit()
         }
+
+        val containerDetailsId = binding.mainFragmentContainerViewDetail?.id
+        if (containerDetailsId != null && supportFragmentManager.findFragmentById(containerDetailsId) == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(containerDetailsId, DetailFragment())
+                .commitNow()
+        }
+
+
 
 
     }

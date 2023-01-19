@@ -6,4 +6,4 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/recyclerView"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    tools:listitem="@layout/fragment_list_item" />
+    tools:listitem="@layout/real_estate_list_item" />

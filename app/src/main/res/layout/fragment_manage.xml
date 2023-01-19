@@ -1,76 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<!--<TextView-->
+<!--    android:id="@+id/textView_price"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginStart="8dp"-->
+<!--    android:layout_marginTop="16dp"-->
+<!--    android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+<!--    android:textSize="30sp"-->
+<!--    android:textStyle="bold"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toBottomOf="@+id/imageView"-->
+<!--    tools:text="431000" />-->
 
 
-    <Button
-        android:id="@+id/button_validate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_validate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+<!--<TextView-->
+<!--android:id="@+id/textView_surpace"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginStart="8dp"-->
+<!--android:layout_marginTop="8dp"-->
+<!--android:textColor="@android:color/black"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/textView_type"-->
+<!--tools:text="120m2" />-->
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Guard" />
+<!--<TextView-->
+<!--android:id="@+id/textView_piece"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginStart="8dp"-->
+<!--android:textColor="@android:color/black"-->
+<!--app:layout_constraintBaseline_toBaselineOf="@+id/textView_surpace"-->
+<!--app:layout_constraintStart_toEndOf="@+id/textView_surpace"-->
+<!--tools:text="5 pieces" />-->
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Store" />
+<!--<TextView-->
+<!--android:id="@+id/textView_room"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginStart="8dp"-->
+<!--android:textColor="@android:color/black"-->
+<!--app:layout_constraintBaseline_toBaselineOf="@+id/textView_piece"-->
+<!--app:layout_constraintStart_toEndOf="@+id/textView_piece"-->
+<!--tools:text="5 rooms" />-->
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Subway" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Bus" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Sport" />
-    </com.google.android.material.chip.ChipGroup>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="hint" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
