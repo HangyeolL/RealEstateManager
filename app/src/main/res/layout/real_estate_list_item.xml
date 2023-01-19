@@ -14,37 +14,37 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/realEstateList_item_ImageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/realEstateList_GuideLine"
+            app:layout_constraintEnd_toStartOf="@+id/realEstateList_item_GuideLine"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/realEstateList_GuideLine"
+            android:id="@+id/realEstateList_item_GuideLine"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="125dp" />
 
         <TextView
-            android:id="@+id/textView_type"
+            android:id="@+id/realEstateList_item_TextView_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@android:color/black"
-            app:layout_constraintStart_toStartOf="@+id/realEstateList_GuideLine"
+            app:layout_constraintStart_toStartOf="@+id/realEstateList_item_GuideLine"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Appartement" />
 
         <TextView
-            android:id="@+id/textView_address"
+            android:id="@+id/realEstateList_item_TextView_cityName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -52,9 +52,24 @@
             android:layout_marginEnd="16dp"
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/textView_type"
-            tools:text="20 Route de Seoul, Paris" />
+            app:layout_constraintStart_toEndOf="@+id/realEstateList_item_ImageView"
+            app:layout_constraintTop_toBottomOf="@+id/realEstateList_item_TextView_type"
+            tools:text="Paris 17" />
+
+        <TextView
+            android:id="@+id/realEstateList_tiem_TextView_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="#FF659D"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/realEstateList_item_ImageView"
+            app:layout_constraintTop_toBottomOf="@+id/realEstateList_item_TextView_cityName"
+            tools:text="259000 euro" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
