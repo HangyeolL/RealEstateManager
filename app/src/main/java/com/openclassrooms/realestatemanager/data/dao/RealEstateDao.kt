@@ -13,7 +13,7 @@ interface RealEstateDao {
     @Query("SELECT * FROM realEstates")
     fun getAllRealEstates(): LiveData<List<RealEstate>>
 
-    @Delete("DELETE FROM realEstates WHERE id=:realEstateId")
+    @Query("DELETE FROM realEstates WHERE id=:realEstateId")
     suspend fun deleteRealEstate(realEstateId: Int): Int
 
 }

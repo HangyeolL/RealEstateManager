@@ -17,8 +17,6 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
     }
 
 
