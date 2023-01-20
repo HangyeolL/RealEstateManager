@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui
+package com.openclassrooms.realestatemanager.ui.detail
 
 import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.R

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.list
+package com.openclassrooms.realestatemanager.ui.realEstateList
 
 import android.os.Bundle
 import android.view.View

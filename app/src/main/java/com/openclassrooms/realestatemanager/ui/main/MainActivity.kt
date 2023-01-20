@@ -4,8 +4,8 @@ import android.os.Bundle
 
 import androidx.appcompat.app.AppCompatActivity
 import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
-import com.openclassrooms.realestatemanager.ui.DetailFragment
-import com.openclassrooms.realestatemanager.ui.list.RealEstateListFragment
+import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
+import com.openclassrooms.realestatemanager.ui.realEstateList.RealEstateListFragment
 import com.openclassrooms.realestatemanager.utils.viewBinding
 
 class MainActivity : AppCompatActivity() {

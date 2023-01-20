@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
+    <string name="location">Location</string>
+    <string name="number_of_bedrooms">Number of bedrooms</string>
+    <string name="number_of_bathrooms">Number of bathrooms</string>
+    <string name="number_of_rooms">Number of rooms</string>
+    <string name="surface">Surface</string>
 </resources>
