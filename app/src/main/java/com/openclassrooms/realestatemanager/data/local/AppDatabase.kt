@@ -1,12 +1,14 @@
-package com.openclassrooms.realestatemanager.data
+package com.openclassrooms.realestatemanager.data.local
 
 import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.openclassrooms.realestatemanager.data.dao.AgentDao
-import com.openclassrooms.realestatemanager.data.dao.RealEstateDao
+import com.openclassrooms.realestatemanager.data.local.dao.AgentDao
+import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
+import com.openclassrooms.realestatemanager.data.model.AgentEntity
+import com.openclassrooms.realestatemanager.data.model.RealEstateEntity
 
 @Database(
     entities = [AgentEntity::class, RealEstateEntity::class],
