@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "realEstates"
 )
-data class RealEstate(
+data class RealEstateEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val creationTime: Long,

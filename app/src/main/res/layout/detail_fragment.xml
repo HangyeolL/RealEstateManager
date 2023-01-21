@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/detail_TextView"
+        android:id="@+id/detail_TextView_media"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -25,10 +25,10 @@
         app:layout_constraintBottom_toTopOf="@+id/detail_Guideline_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_TextView">
+        app:layout_constraintTop_toBottomOf="@+id/detail_TextView_media">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/detail_RecyclerView"
+            android:id="@+id/detail_RecyclerView_images"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
     </HorizontalScrollView>
@@ -94,15 +94,24 @@
         app:layout_constraintTop_toTopOf="@+id/detail_Guideline_down" />
 
     <TextView
+        android:id="@+id/detail_TextView_squareMeter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/detail_TextView_surface"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="@+id/detail_TextView_surface"
+        app:layout_constraintTop_toBottomOf="@+id/detail_TextView_surface"
+        tools:text="750" />
+
+    <TextView
         android:id="@+id/detail_TextView_sqm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/detail_TextView_surface"
-        app:layout_constraintStart_toStartOf="@+id/detail_TextView_surface"
-        app:layout_constraintTop_toBottomOf="@+id/detail_TextView_surface"
-        tools:text="750 sqm" />
+        android:layout_marginStart="4dp"
+        android:text="@string/sqm"
+        app:layout_constraintBaseline_toBaselineOf="@+id/detail_TextView_squareMeter"
+        app:layout_constraintStart_toEndOf="@+id/detail_TextView_squareMeter" />
 
     <ImageView
         android:id="@+id/detail_ImageView_iconHouse"
@@ -224,11 +233,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/detail_TextView_location"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/detail_Guideline3"
+        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="@+id/detail_TextView_location"
         app:layout_constraintTop_toBottomOf="@+id/detail_TextView_location"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         tools:text="740 Paris avenu brooklin Newyork 77899 second floor bro united states" />
 
     <androidx.constraintlayout.widget.Guideline

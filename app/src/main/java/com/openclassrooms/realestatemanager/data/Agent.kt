@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "agents"
 )
-data class Agent(
+data class AgentEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val name: String,

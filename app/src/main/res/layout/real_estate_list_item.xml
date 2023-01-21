@@ -44,7 +44,7 @@
             tools:text="Appartement" />
 
         <TextView
-            android:id="@+id/realEstateList_item_TextView_cityName"
+            android:id="@+id/realEstateList_item_TextView_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -68,7 +68,7 @@
             android:textColor="#FF659D"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/realEstateList_item_ImageView"
-            app:layout_constraintTop_toBottomOf="@+id/realEstateList_item_TextView_cityName"
+            app:layout_constraintTop_toBottomOf="@+id/realEstateList_item_TextView_city"
             tools:text="259000 euro" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
