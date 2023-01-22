@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.RealEstateListFragmentBinding
 import com.openclassrooms.realestatemanager.utils.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment){
 
     companion object {

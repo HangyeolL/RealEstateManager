@@ -4,6 +4,8 @@ import android.app.Application
 import com.openclassrooms.realestatemanager.data.local.AppDatabase
 import com.openclassrooms.realestatemanager.data.local.dao.AgentDao
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
+import com.openclassrooms.realestatemanager.data.local.repository.AgentRepositoryImpl
+import com.openclassrooms.realestatemanager.domain.repository.AgentRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,4 +27,8 @@ object RoomModule {
     @Provides
     @Singleton
     fun provideRealEstateDao(appDatabase: AppDatabase): RealEstateDao = appDatabase.getRealEstateDao()
+
+    @Provides
+    @Singleton
+    fun provideAgentRepository(agentDao: AgentDao): AgentRepository = AgentRepositoryImpl(agentDao)
 }
