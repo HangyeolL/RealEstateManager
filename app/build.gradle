@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlinx-serialization'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
@@ -35,6 +36,8 @@ dependencies {
     // Kotlin
     implementation "androidx.core:core-ktx:1.8.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // Kotlin - to serialize JSON
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
 
     // Room
     implementation "androidx.room:room-runtime:2.4.0"
@@ -56,6 +59,8 @@ dependencies {
     // Google Map
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
 
+    // Gson
+    implementation 'com.google.code.gson:gson:2.9.0'
 
     //--------TEST---------//
     testImplementation 'junit:junit:4.12'

@@ -8,10 +8,8 @@ import androidx.room.PrimaryKey
 )
 data class RealEstateEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val creationTime: Long,
-    val imageList: List<Int>,
-    val name: String,
+    val id: Long = 0,
+    val imageUrlList: List<String>,
     val type: String,
     val descriptionBody: String,
     val squareMeter: Int,
@@ -20,5 +18,9 @@ data class RealEstateEntity(
     val numberOfRooms: Int,
     val numberOfBathrooms: Int,
     val numberOfBedrooms: Int,
-    val address: String
+    val address: String,
+    val garage: Boolean,
+    val guard: Boolean,
+    val garden: Boolean,
+    val elevator: Boolean
 )
