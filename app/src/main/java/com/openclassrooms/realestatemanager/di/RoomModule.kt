@@ -1,6 +1,9 @@
 package com.openclassrooms.realestatemanager.di
 
 import android.app.Application
+import androidx.work.WorkManager
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.openclassrooms.realestatemanager.data.local.AppDatabase
 import com.openclassrooms.realestatemanager.data.local.dao.AgentDao
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
@@ -18,17 +21,35 @@ object RoomModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(application: Application) : AppDatabase = AppDatabase.create(application)
+    fun provideWorkManager(application: Application): WorkManager =
+        WorkManager.getInstance(application)
 
     @Provides
     @Singleton
-    fun provideAgentDao(appDatabase: AppDatabase): AgentDao = appDatabase.getAgentDao()
+    fun provideGson(): Gson =
+        GsonBuilder().create()
 
     @Provides
     @Singleton
-    fun provideRealEstateDao(appDatabase: AppDatabase): RealEstateDao = appDatabase.getRealEstateDao()
+    fun provideAppDatabase(
+        application: Application,
+        workManager: WorkManager,
+        gson: Gson
+    ): AppDatabase =
+        AppDatabase.create(application, workManager, gson)
 
     @Provides
     @Singleton
-    fun provideAgentRepository(agentDao: AgentDao): AgentRepository = AgentRepositoryImpl(agentDao)
+    fun provideAgentDao(appDatabase: AppDatabase): AgentDao =
+        appDatabase.getAgentDao()
+
+    @Provides
+    @Singleton
+    fun provideRealEstateDao(appDatabase: AppDatabase): RealEstateDao =
+        appDatabase.getRealEstateDao()
+
+    @Provides
+    @Singleton
+    fun provideAgentRepository(agentDao: AgentDao): AgentRepository =
+        AgentRepositoryImpl(agentDao)
 }

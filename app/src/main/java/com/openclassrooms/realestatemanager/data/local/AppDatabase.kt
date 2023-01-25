@@ -219,6 +219,20 @@ abstract class AppDatabase : RoomDatabase() {
 
             return builder.build()
         }
+
+//        private fun getInitialData(): Pair<List<AgentEntity>, List<RealEstateEntity>> {
+////            val agentEntitiesAsJson = gson.toJson(
+////                listOf(
+////                    AgentEntity(1, "Agent Jake", "Jake@email.com", "abc"),
+////                    AgentEntity(2, "Agent Smith", "Smith@email.com", "abc"),
+////                    AgentEntity(3, "Agent Mike", "Mike@email.com", "abc"),
+////                    AgentEntity(3, "Agent Ken", "Ken@email.com", "abc")
+////                )
+////            )
+////            return agentEntitiesAsJson
+////        }
     }
+
+
 
 }

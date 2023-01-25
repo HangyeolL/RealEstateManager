@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.data.local
 
 import android.app.Application
+import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.Worker
@@ -19,7 +20,7 @@ class DatabaseInitializationWorker @AssistedInject constructor(
     @Assisted workerParameters: WorkerParameters,
     private val agentRepository: AgentRepository,
     private val gson: Gson
-): CoroutineWorker(application, workerParameters) {
+) : CoroutineWorker(application, workerParameters) {
 
     companion object {
         const val AGENT_ENTITIES_INPUT_DATA = "AGENT_ENTITIES_INPUT_DATA"
@@ -27,19 +28,28 @@ class DatabaseInitializationWorker @AssistedInject constructor(
 
     }
 
-    override suspend fun doWork(): Result {
+    override suspend fun doWork(): Result =
         withContext(Dispatchers.IO) {
             val agentEntitiesAsJson = inputData.getString(AGENT_ENTITIES_INPUT_DATA)
 
             if (agentEntitiesAsJson != null) {
-                val agentEntities = gson.fromJson<List<AgentEntity>>(agentEntitiesAsJson)
+                val agentEntities =
+                    gson.fromJson<List<AgentEntity>>(agentEntitiesAsJson, AgentEntity::class.java)
 
-                agentEntities.forEach {
-                    agentEntity -> agentRepository.upsertAgent(agentEntity)
+                if (agentEntities != null) {
+                    agentEntities.forEach { agentEntity ->
+                        agentRepository.upsertAgent(agentEntity)
+                    }
+                    Result.success()
+                } else {
+                    Log.e(javaClass.simpleName, "Gson can't parse objects : $agentEntitiesAsJson")
+                    Result.failure()
                 }
+
+            } else {
+                return@withContext Result.failure()
             }
         }
-    }
 
 }
 
