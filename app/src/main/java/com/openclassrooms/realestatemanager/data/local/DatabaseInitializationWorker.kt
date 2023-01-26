@@ -1,14 +1,13 @@
 package com.openclassrooms.realestatemanager.data.local
 
-import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
-import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.google.gson.Gson
 import com.openclassrooms.realestatemanager.data.model.AgentEntity
-import com.openclassrooms.realestatemanager.domain.repository.AgentRepository
+import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -16,11 +15,11 @@ import kotlinx.coroutines.withContext
 
 @HiltWorker
 class DatabaseInitializationWorker @AssistedInject constructor(
-    @Assisted application: Application,
+    @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val agentRepository: AgentRepository,
     private val gson: Gson
-) : CoroutineWorker(application, workerParameters) {
+) : CoroutineWorker(context, workerParameters) {
 
     companion object {
         const val AGENT_ENTITIES_INPUT_DATA = "AGENT_ENTITIES_INPUT_DATA"

@@ -1,17 +1,17 @@
 package com.openclassrooms.realestatemanager.data.local.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.openclassrooms.realestatemanager.data.RealEstate
+import com.openclassrooms.realestatemanager.data.model.RealEstateEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RealEstateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsertRealEstate(realEstate: RealEstate)
+    suspend fun upsertRealEstate(realEstate: RealEstateEntity)
 
     @Query("SELECT * FROM realEstates")
-    fun getAllRealEstates(): LiveData<List<RealEstate>>
+    fun getAllRealEstates(): Flow<List<RealEstateEntity>>
 
     @Query("DELETE FROM realEstates WHERE id=:realEstateId")
     suspend fun deleteRealEstate(realEstateId: Int): Int

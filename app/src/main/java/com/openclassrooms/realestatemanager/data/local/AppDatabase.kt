@@ -5,7 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.work.*
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.google.gson.Gson
 import com.openclassrooms.realestatemanager.data.local.dao.AgentDao
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
@@ -31,7 +33,7 @@ abstract class AppDatabase : RoomDatabase() {
         ): AppDatabase {
             val builder = Room.databaseBuilder(application, AppDatabase::class.java, DATABASE_NAME)
 
-            builder.addCallback(object : RoomDatabase.Callback() {
+            builder.addCallback(object : Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     val agentEntitiesAsJson = gson.toJson(
                         listOf(
@@ -45,7 +47,6 @@ abstract class AppDatabase : RoomDatabase() {
                     val realEstateEntitiesAsJson = gson.toJson(
                         listOf(
                             RealEstateEntity(
-                                imageUrlList = ArrayList(),
                                 type = "Studio",
                                 descriptionBody = "very nice studio in city center",
                                 squareMeter = 35,
@@ -61,7 +62,6 @@ abstract class AppDatabase : RoomDatabase() {
                                 elevator = true
                             ),
                             RealEstateEntity(
-                                imageUrlList = ArrayList(),
                                 type = "Apartment",
                                 descriptionBody = "very nice Apartment in city center",
                                 squareMeter = 55,
@@ -77,7 +77,6 @@ abstract class AppDatabase : RoomDatabase() {
                                 elevator = true
                             ),
                             RealEstateEntity(
-                                imageUrlList = ArrayList(),
                                 type = "Apartment",
                                 descriptionBody = "very nice Apartment not too far from bus stop and subway",
                                 squareMeter = 90,
@@ -93,7 +92,6 @@ abstract class AppDatabase : RoomDatabase() {
                                 elevator = true
                             ),
                             RealEstateEntity(
-                                imageUrlList = ArrayList(),
                                 type = "Apartment",
                                 descriptionBody = "very nice house with tranquility",
                                 squareMeter = 110,
@@ -109,7 +107,6 @@ abstract class AppDatabase : RoomDatabase() {
                                 elevator = true
                             ),
                             RealEstateEntity(
-                                imageUrlList = ArrayList(),
                                 type = "Studio",
                                 descriptionBody = "very nice studio next to grocery store",
                                 squareMeter = 19,
@@ -125,7 +122,6 @@ abstract class AppDatabase : RoomDatabase() {
                                 elevator = false
                             ),
                             RealEstateEntity(
-                                imageUrlList = ArrayList(),
                                 type = "Studio",
                                 descriptionBody = "suitable for students",
                                 squareMeter = 22,
@@ -141,7 +137,6 @@ abstract class AppDatabase : RoomDatabase() {
                                 elevator = false
                             ),
                             RealEstateEntity(
-                                imageUrlList = ArrayList(),
                                 type = "Studio",
                                 descriptionBody = "suitable for students",
                                 squareMeter = 7,
@@ -157,7 +152,6 @@ abstract class AppDatabase : RoomDatabase() {
                                 elevator = false
                             ),
                             RealEstateEntity(
-                                imageUrlList = ArrayList(),
                                 type = "House",
                                 descriptionBody = "Cozy house not too far from city center",
                                 squareMeter = 60,
@@ -173,7 +167,6 @@ abstract class AppDatabase : RoomDatabase() {
                                 elevator = false
                             ),
                             RealEstateEntity(
-                                imageUrlList = ArrayList(),
                                 type = "House",
                                 descriptionBody = "In the middle of city center. you have everything that you need",
                                 squareMeter = 150,
@@ -189,7 +182,6 @@ abstract class AppDatabase : RoomDatabase() {
                                 elevator = false
                             ),
                             RealEstateEntity(
-                                imageUrlList = ArrayList(),
                                 type = "House",
                                 descriptionBody = "little wooden house ! close to nature, not too far from the forest",
                                 squareMeter = 55,
@@ -232,7 +224,6 @@ abstract class AppDatabase : RoomDatabase() {
 ////            return agentEntitiesAsJson
 ////        }
     }
-
 
 
 }

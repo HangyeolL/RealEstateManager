@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.data.local.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.openclassrooms.realestatemanager.data.model.AgentEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AgentDao {
@@ -11,7 +12,7 @@ interface AgentDao {
     suspend fun upsertAgent(agent: AgentEntity)
 
     @Query("SELECT * FROM agents")
-    fun getAllAgents(): LiveData<List<AgentEntity>>
+    fun getAllAgents(): Flow<List<AgentEntity>>
 
     @Delete
     suspend fun deleteAgent(agent: AgentEntity)
