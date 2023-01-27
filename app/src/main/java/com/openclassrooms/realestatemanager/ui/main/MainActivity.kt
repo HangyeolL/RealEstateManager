@@ -7,7 +7,9 @@ import com.openclassrooms.realestatemanager.databinding.MainActivityBinding
 import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
 import com.openclassrooms.realestatemanager.ui.realEstateList.RealEstateListFragment
 import com.openclassrooms.realestatemanager.utils.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by viewBinding { MainActivityBinding.inflate(it) }

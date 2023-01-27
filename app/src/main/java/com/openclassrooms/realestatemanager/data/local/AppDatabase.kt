@@ -1,13 +1,12 @@
 package com.openclassrooms.realestatemanager.data.local
 
 import android.app.Application
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import com.openclassrooms.realestatemanager.data.local.dao.AgentDao
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
@@ -18,6 +17,7 @@ import com.openclassrooms.realestatemanager.data.model.RealEstateEntity
     entities = [AgentEntity::class, RealEstateEntity::class],
     version = 1,
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getAgentDao(): AgentDao
@@ -59,7 +59,13 @@ abstract class AppDatabase : RoomDatabase() {
                                 garage = false,
                                 guard = true,
                                 garden = false,
-                                elevator = true
+                                elevator = true,
+                                groceryStoreNearby = true,
+                                isSoldOut = false,
+                                dataOfSold = null,
+                                marketSince = "01/01/2022",
+                                agentIdInCharge = 1,
+                                latLng = LatLng(22.22, 22.22)
                             ),
                             RealEstateEntity(
                                 type = "Apartment",
@@ -74,7 +80,13 @@ abstract class AppDatabase : RoomDatabase() {
                                 garage = true,
                                 guard = true,
                                 garden = false,
-                                elevator = true
+                                elevator = true,
+                                groceryStoreNearby = true,
+                                isSoldOut = false,
+                                dataOfSold = null,
+                                marketSince = "01/01/2022",
+                                agentIdInCharge = 1,
+                                latLng = LatLng(22.22, 22.22)
                             ),
                             RealEstateEntity(
                                 type = "Apartment",
@@ -89,7 +101,13 @@ abstract class AppDatabase : RoomDatabase() {
                                 garage = true,
                                 guard = true,
                                 garden = true,
-                                elevator = true
+                                elevator = true,
+                                groceryStoreNearby = true,
+                                isSoldOut = false,
+                                dataOfSold = null,
+                                marketSince = "01/01/2022",
+                                agentIdInCharge = 1,
+                                latLng = LatLng(22.22, 22.22)
                             ),
                             RealEstateEntity(
                                 type = "Apartment",
@@ -104,7 +122,13 @@ abstract class AppDatabase : RoomDatabase() {
                                 garage = true,
                                 guard = true,
                                 garden = true,
-                                elevator = true
+                                elevator = true,
+                                groceryStoreNearby = true,
+                                isSoldOut = false,
+                                dataOfSold = null,
+                                marketSince = "01/01/2022",
+                                agentIdInCharge = 1,
+                                latLng = LatLng(22.22, 22.22)
                             ),
                             RealEstateEntity(
                                 type = "Studio",
@@ -119,7 +143,13 @@ abstract class AppDatabase : RoomDatabase() {
                                 garage = false,
                                 guard = false,
                                 garden = false,
-                                elevator = false
+                                elevator = false,
+                                groceryStoreNearby = true,
+                                isSoldOut = false,
+                                dataOfSold = null,
+                                marketSince = "01/01/2022",
+                                agentIdInCharge = 1,
+                                latLng = LatLng(22.22, 22.22)
                             ),
                             RealEstateEntity(
                                 type = "Studio",
@@ -134,7 +164,13 @@ abstract class AppDatabase : RoomDatabase() {
                                 garage = false,
                                 guard = false,
                                 garden = false,
-                                elevator = false
+                                elevator = false,
+                                groceryStoreNearby = true,
+                                isSoldOut = false,
+                                dataOfSold = null,
+                                marketSince = "01/01/2022",
+                                agentIdInCharge = 1,
+                                latLng = LatLng(22.22, 22.22)
                             ),
                             RealEstateEntity(
                                 type = "Studio",
@@ -149,7 +185,13 @@ abstract class AppDatabase : RoomDatabase() {
                                 garage = false,
                                 guard = false,
                                 garden = false,
-                                elevator = false
+                                elevator = false,
+                                groceryStoreNearby = true,
+                                isSoldOut = false,
+                                dataOfSold = null,
+                                marketSince = "01/01/2022",
+                                agentIdInCharge = 1,
+                                latLng = LatLng(22.22, 22.22)
                             ),
                             RealEstateEntity(
                                 type = "House",
@@ -164,7 +206,13 @@ abstract class AppDatabase : RoomDatabase() {
                                 garage = true,
                                 guard = false,
                                 garden = true,
-                                elevator = false
+                                elevator = false,
+                                groceryStoreNearby = true,
+                                isSoldOut = false,
+                                dataOfSold = null,
+                                marketSince = "01/01/2022",
+                                agentIdInCharge = 1,
+                                latLng = LatLng(22.22, 22.22)
                             ),
                             RealEstateEntity(
                                 type = "House",
@@ -179,7 +227,13 @@ abstract class AppDatabase : RoomDatabase() {
                                 garage = true,
                                 guard = false,
                                 garden = true,
-                                elevator = false
+                                elevator = false,
+                                groceryStoreNearby = true,
+                                isSoldOut = false,
+                                dataOfSold = null,
+                                marketSince = "01/01/2022",
+                                agentIdInCharge = 1,
+                                latLng = LatLng(22.22, 22.22)
                             ),
                             RealEstateEntity(
                                 type = "House",
@@ -194,7 +248,13 @@ abstract class AppDatabase : RoomDatabase() {
                                 garage = true,
                                 guard = false,
                                 garden = true,
-                                elevator = false
+                                elevator = false,
+                                groceryStoreNearby = true,
+                                isSoldOut = false,
+                                dataOfSold = null,
+                                marketSince = "01/01/2022",
+                                agentIdInCharge = 1,
+                                latLng = LatLng(22.22, 22.22)
                             )
                         )
                     )
@@ -212,17 +272,6 @@ abstract class AppDatabase : RoomDatabase() {
             return builder.build()
         }
 
-//        private fun getInitialData(): Pair<List<AgentEntity>, List<RealEstateEntity>> {
-////            val agentEntitiesAsJson = gson.toJson(
-////                listOf(
-////                    AgentEntity(1, "Agent Jake", "Jake@email.com", "abc"),
-////                    AgentEntity(2, "Agent Smith", "Smith@email.com", "abc"),
-////                    AgentEntity(3, "Agent Mike", "Mike@email.com", "abc"),
-////                    AgentEntity(3, "Agent Ken", "Ken@email.com", "abc")
-////                )
-////            )
-////            return agentEntitiesAsJson
-////        }
     }
 
 
