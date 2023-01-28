@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.data.local
 
 import android.app.Application
+import android.util.Log
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
@@ -16,6 +17,7 @@ import com.openclassrooms.realestatemanager.data.model.RealEstateEntity
 @Database(
     entities = [AgentEntity::class, RealEstateEntity::class],
     version = 1,
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -33,14 +35,15 @@ abstract class AppDatabase : RoomDatabase() {
         ): AppDatabase {
             val builder = Room.databaseBuilder(application, AppDatabase::class.java, DATABASE_NAME)
 
-            builder.addCallback(object : Callback() {
+            builder.addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
+                    Log.d("ROOM", "onCreate callback called")
                     val agentEntitiesAsJson = gson.toJson(
                         listOf(
                             AgentEntity(1, "Agent Jake", "Jake@email.com", "abc"),
                             AgentEntity(2, "Agent Smith", "Smith@email.com", "abc"),
                             AgentEntity(3, "Agent Mike", "Mike@email.com", "abc"),
-                            AgentEntity(3, "Agent Ken", "Ken@email.com", "abc")
+                            AgentEntity(3, "Agent Ken", "Ken@email.com", "abc"),
                         )
                     )
 
@@ -255,18 +258,17 @@ abstract class AppDatabase : RoomDatabase() {
                                 marketSince = "01/01/2022",
                                 agentIdInCharge = 1,
                                 latLng = LatLng(22.22, 22.22)
-                            )
+                            ),
                         )
                     )
 
                     workManager.enqueue(
                         OneTimeWorkRequestBuilder<DatabaseInitializationWorker>()
-                            .setInputData(workDataOf(DatabaseInitializationWorker.AGENT_ENTITIES_INPUT_DATA to agentEntitiesAsJson))
+//                            .setInputData(workDataOf(DatabaseInitializationWorker.AGENT_ENTITIES_INPUT_DATA to agentEntitiesAsJson))
                             .setInputData(workDataOf(DatabaseInitializationWorker.REAL_ESTATE_ENTITIES_INPUT_DATA to realEstateEntitiesAsJson))
                             .build()
                     )
                 }
-
             })
 
             return builder.build()

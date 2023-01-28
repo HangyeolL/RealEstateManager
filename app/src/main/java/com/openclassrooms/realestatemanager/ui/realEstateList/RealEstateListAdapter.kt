@@ -5,7 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.RealEstateListItemBinding
+import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
+import com.openclassrooms.realestatemanager.ui.main.MainActivity
 
 class RealEstateListAdapter : ListAdapter<RealEstateListViewStateItem, RealEstateListAdapter.ViewHolder>(RealEstateListDiffCallback) {
 
@@ -23,6 +26,9 @@ class RealEstateListAdapter : ListAdapter<RealEstateListViewStateItem, RealEstat
             itemBinding.realEstateListItemTextViewType.text = viewState.type
             itemBinding.realEstateListItemTextViewCity.text = viewState.city
             itemBinding.realEstateListTiemTextViewPrice.text = viewState.price.toString()
+
+            //TODO how to do transaction to switch Fragment ?
+
         }
     }
 
