@@ -27,7 +27,7 @@ class RealEstateListAdapter : ListAdapter<RealEstateListViewStateItem, RealEstat
             itemBinding.realEstateListItemTextViewCity.text = viewState.city
             itemBinding.realEstateListTiemTextViewPrice.text = viewState.price.toString()
 
-            //TODO how to do transaction to switch Fragment ?
+            // TODO how to do transaction to switch Fragment ?
 
         }
     }

@@ -16,21 +16,13 @@
 
         <ImageView
             android:id="@+id/realEstateList_item_ImageView"
-            android:layout_width="0dp"
+            android:layout_width="125dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/realEstateList_item_GuideLine"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/realEstateList_item_GuideLine"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="125dp" />
 
         <TextView
             android:id="@+id/realEstateList_item_TextView_type"
@@ -40,7 +32,7 @@
             android:layout_marginTop="16dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@android:color/black"
-            app:layout_constraintStart_toStartOf="@+id/realEstateList_item_GuideLine"
+            app:layout_constraintStart_toEndOf="@+id/realEstateList_item_ImageView"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Appartement" />
 

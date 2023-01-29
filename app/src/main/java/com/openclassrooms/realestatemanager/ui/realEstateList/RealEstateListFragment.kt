@@ -13,6 +13,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment) {
 
+    // TODO How to make recyclerView Items fit properly when it is landscape mode
+
     companion object {
         fun newInstance() = RealEstateListFragment()
     }

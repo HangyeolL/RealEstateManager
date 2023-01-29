@@ -21,7 +21,8 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(binding.mainFragmentContainerView.id, RealEstateListFragment.newInstance()).commit()
+                .replace(binding.mainFragmentContainerViewRealEstateList.id, RealEstateListFragment.newInstance())
+                .commit()
         }
 
         val containerDetailsId = binding.mainFragmentContainerViewDetail?.id

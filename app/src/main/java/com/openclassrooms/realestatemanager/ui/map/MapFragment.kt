@@ -13,7 +13,7 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback{
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        getMapAsync(this)
+        getMapAsync(this)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
