@@ -9,4 +9,8 @@
     <string name="number_of_rooms">Number of rooms</string>
     <string name="surface">Surface</string>
     <string name="sqm">sqm</string>
+    <string name="map_view">MAP VIEW</string>
+    <string name="modify">modify</string>
+    <string name="search">search</string>
+    <string name="create">create</string>
 </resources>

@@ -12,12 +12,15 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    // TODO need to take out overflow menu from toolBar
+
     private val binding by viewBinding { MainActivityBinding.inflate(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
+        setSupportActionBar(binding.mainMaterialToolbar)
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
