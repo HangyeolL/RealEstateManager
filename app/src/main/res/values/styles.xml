@@ -5,6 +5,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+<!--        TODO trying to change toolBar Icon colors -->
         <item name="android:textColorSecondary">@color/colorPrimary</item>
 
     </style>

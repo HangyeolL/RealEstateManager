@@ -5,13 +5,14 @@
     android:id="@+id/main_DrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.main.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/main_MaterialToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,6 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/main_toolbar_menu"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="@string/app_name"
             app:titleTextColor="@color/colorPrimary" />
@@ -43,6 +45,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/main_navigation_view_header"
+        app:itemIconTint="@color/colorPrimary"
         app:menu="@menu/main_navigation_view_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

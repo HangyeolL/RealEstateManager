@@ -1,8 +1,11 @@
 package com.openclassrooms.realestatemanager.ui.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 
 import androidx.appcompat.app.AppCompatActivity
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.MainActivityBinding
 import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
 import com.openclassrooms.realestatemanager.ui.realEstateList.RealEstateListFragment
@@ -35,8 +38,10 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
         }
 
+    }
 
-
-
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_toolbar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
