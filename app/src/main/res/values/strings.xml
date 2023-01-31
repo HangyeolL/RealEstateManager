@@ -13,4 +13,6 @@
     <string name="modify">modify</string>
     <string name="search">search</string>
     <string name="create">create</string>
+    <string name="navigation_drawer_open">navigation drawer is open</string>
+    <string name="navigation_drawer_close">navigation drawer is closed</string>
 </resources>

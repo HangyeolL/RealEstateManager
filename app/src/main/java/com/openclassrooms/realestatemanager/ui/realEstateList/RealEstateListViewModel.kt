@@ -18,12 +18,6 @@ class RealEstateListViewModel @Inject constructor(
     private val realEstateRepository: RealEstateRepository
 ) : ViewModel() {
 
-    val liveData: LiveData<List<String>> = liveData(Dispatchers.IO) {
-        agentRepository.getAllAgents().collect { agentEntities ->
-            emit(agentEntities.map { it.name })
-        }
-    }
-
     val realEstateListLiveData: LiveData<List<RealEstateListViewStateItem>> =
         liveData(Dispatchers.IO) {
             realEstateRepository.getAllRealEstates().collect() { realEstateEntities ->

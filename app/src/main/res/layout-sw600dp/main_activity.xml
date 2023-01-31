@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/main_Toolbar"
+            android:id="@+id/main_MaterialToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimaryDark"
@@ -32,20 +32,30 @@
             android:id="@+id/main_FragmentContainerView_realEstateList"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginEnd="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/main_GuideLine"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_MaterialToolbar" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/main_GuideLine"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="200dp" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/main_FragmentContainerView_detail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_Toolbar" />
+            app:layout_constraintStart_toStartOf="@+id/main_GuideLine"
+            app:layout_constraintTop_toBottomOf="@+id/main_MaterialToolbar" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/NavigationView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/main_navigation_view_header"
-        app:itemIconTint="@color/colorPrimary"
-        app:menu="@menu/main_navigation_view_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

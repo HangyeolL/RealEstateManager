@@ -22,6 +22,8 @@ import com.openclassrooms.realestatemanager.data.model.RealEstateEntity
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
+    // TODO how to chain work to insert AgentEntities with WorkManager
+
     abstract fun getAgentDao(): AgentDao
     abstract fun getRealEstateDao(): RealEstateDao
 
