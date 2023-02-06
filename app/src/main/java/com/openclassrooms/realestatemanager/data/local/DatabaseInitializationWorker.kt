@@ -34,38 +34,27 @@ class DatabaseInitializationWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result =
         withContext(Dispatchers.IO) {
-//            val agentEntitiesAsJson = inputData.getString(AGENT_ENTITIES_INPUT_DATA)
-//
-//            if (agentEntitiesAsJson != null) {
-//                val agentEntities =
-//                    gson.fromJson<List<AgentEntity>>(agentEntitiesAsJson, AgentEntity::class.java)
-//
-//                if (agentEntities != null) {
-//                    agentEntities.forEach { agentEntity ->
-//                        agentRepository.upsertAgent(agentEntity)
-//                    }
-//                    Result.success()
-//                } else {
-//                    Log.e(javaClass.simpleName, "Gson can't parse objects : $agentEntitiesAsJson")
-//                    Result.failure()
-//                }
-//            } else {
-//                return@withContext Result.failure()
-//            }
-
+            val agentEntitiesAsJson = inputData.getString(AGENT_ENTITIES_INPUT_DATA)
             val realEstateEntitiesAsJson = inputData.getString(REAL_ESTATE_ENTITIES_INPUT_DATA)
 
-            if (realEstateEntitiesAsJson != null) {
-                val realEstateEntities =
-                    gson.fromJson<List<RealEstateEntity>>(json = realEstateEntitiesAsJson)
+            if (realEstateEntitiesAsJson != null && agentEntitiesAsJson != null) {
 
-                if (realEstateEntities != null) {
+                val realEstateEntities = gson.fromJson<List<RealEstateEntity>>(json = realEstateEntitiesAsJson)
+                val agentEntities = gson.fromJson<List<AgentEntity>>(json = agentEntitiesAsJson)
+
+                if (realEstateEntities != null && agentEntities != null) {
+
                     realEstateEntities.forEach { realEstateEntity ->
                         realEstateRepository.upsertRealEstate(realEstateEntity)
                     }
+
+                    agentEntities.forEach { agentEntity ->
+                        agentRepository.upsertAgent(agentEntity)
+                    }
+
                     Result.success()
                 } else {
-                    Log.e(javaClass.simpleName, "Gson can't parse objects : $realEstateEntitiesAsJson")
+                    Log.e(javaClass.simpleName, "Gson can't parse objects : $realEstateEntitiesAsJson , $agentEntitiesAsJson")
                     Result.failure()
                 }
 

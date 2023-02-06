@@ -1,6 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.realEstateList
 
-data class RealEstateListViewStateItem(
+data class RealEstateListItemViewState(
     val id: Int,
     val image: Int,
     val type: String,

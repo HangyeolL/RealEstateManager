@@ -40,6 +40,7 @@ abstract class AppDatabase : RoomDatabase() {
             builder.addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     Log.d("ROOM", "onCreate callback called")
+
                     val agentEntitiesAsJson = gson.toJson(
                         listOf(
                             AgentEntity(1, "Agent Jake", "Jake@email.com", "abc"),
@@ -266,8 +267,12 @@ abstract class AppDatabase : RoomDatabase() {
 
                     workManager.enqueue(
                         OneTimeWorkRequestBuilder<DatabaseInitializationWorker>()
-//                            .setInputData(workDataOf(DatabaseInitializationWorker.AGENT_ENTITIES_INPUT_DATA to agentEntitiesAsJson))
-                            .setInputData(workDataOf(DatabaseInitializationWorker.REAL_ESTATE_ENTITIES_INPUT_DATA to realEstateEntitiesAsJson))
+                            .setInputData(
+                                workDataOf(
+                                    DatabaseInitializationWorker.REAL_ESTATE_ENTITIES_INPUT_DATA to realEstateEntitiesAsJson,
+                                    DatabaseInitializationWorker.AGENT_ENTITIES_INPUT_DATA to agentEntitiesAsJson
+                                )
+                            )
                             .build()
                     )
                 }
