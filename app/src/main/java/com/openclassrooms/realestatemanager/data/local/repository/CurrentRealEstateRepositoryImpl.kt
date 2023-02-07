@@ -5,18 +5,17 @@ import com.openclassrooms.realestatemanager.data.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 class CurrentRealEstateRepositoryImpl @Inject constructor(
-    private val realEstateDao: RealEstateDao
-) : CurrentRealEstateRepository {
+): CurrentRealEstateRepository {
 
     private val _currentRealEstateIdState = MutableStateFlow<Int?>(null)
-    val currentRealEstateIdState = _currentRealEstateIdState.asStateFlow()
+    private val currentRealEstateIdState = _currentRealEstateIdState.asStateFlow()
 
-
-    override fun getRealEstateById(id: Int): Flow<RealEstateEntity> = realEstateDao.getRealEstateById(id)
+    override fun getCurrentRealEstateId(): StateFlow<Int?> = currentRealEstateIdState
 
     override fun setCurrentRealEstateId(currentId: Int) {
         _currentRealEstateIdState.value = currentId

@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.activity.viewModels
@@ -7,6 +8,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.MainActivityBinding
+import com.openclassrooms.realestatemanager.ui.detail.DetailActivity
 import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
 import com.openclassrooms.realestatemanager.ui.realEstateList.RealEstateListFragment
 import com.openclassrooms.realestatemanager.utils.viewBinding
@@ -41,6 +43,12 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
         }
 
+        viewModel.viewActionSingleLiveEvent.observe(this) {
+            when(it) {
+                MainViewAction.NavigateToDetailActivity -> startActivity(Intent(this, DetailActivity::class.java))
+            }
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -51,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-//        viewModel.onResume(resources.getBoolean(R.bool.isTablet))
+        viewModel.onResume(resources.getBoolean(R.bool.isTablet))
     }
 
     private fun setUpToolBarAndDrawerLayout() {

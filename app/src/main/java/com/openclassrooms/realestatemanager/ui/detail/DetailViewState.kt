@@ -15,4 +15,6 @@ data class DetailViewState(
     val agentName: String,
 //    val agentPhoto: String
 
+    val isViewVisible: Boolean
+
 )

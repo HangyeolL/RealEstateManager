@@ -27,6 +27,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.detail.DetailActivity"
+            android:exported="false"/>
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"

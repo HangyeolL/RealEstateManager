@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.domain.agent
 import androidx.lifecycle.LiveData
 import com.openclassrooms.realestatemanager.data.model.AgentEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 interface AgentRepository {
 

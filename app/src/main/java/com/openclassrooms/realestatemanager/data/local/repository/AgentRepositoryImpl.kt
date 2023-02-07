@@ -5,6 +5,7 @@ import com.openclassrooms.realestatemanager.data.local.dao.AgentDao
 import com.openclassrooms.realestatemanager.data.model.AgentEntity
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class AgentRepositoryImpl @Inject constructor(private val agentDao: AgentDao) : AgentRepository {
