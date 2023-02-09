@@ -1,8 +1,8 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.openclassrooms.realestatemanager.R
@@ -15,32 +15,27 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
 
     companion object {
         fun newInstance() = DetailFragment()
-
     }
 
     private val binding by viewBinding { DetailFragmentBinding.bind(it) }
 
     private val viewModel by viewModels<DetailViewModel>()
 
-    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//
-//                viewModel.detailViewState.collect() { detailViewState ->
-//                    detailViewState!!
-//                    if (detailViewState.isViewVisible) {
-//                        binding.detailConstraintLayoutParent.isVisible
-//                    } else {
-//                        !binding.detailConstraintLayoutParent.isVisible
-//                    }
-//                    binding.detailTextViewDescriptionBody.text = detailViewState.descriptionBody
-//                }
-//
-//            }
-//        }
+        viewModel.detailViewState.observe(viewLifecycleOwner) {
+
+            binding.detailConstraintLayoutParent.isVisible = it.isViewVisible
+            binding.detailTextViewDescriptionBody.text = it.descriptionBody
+            binding.detailTextViewSquareMeter.text = it.squareMeter.toString()
+            binding.detailTextViewRooms.text = it.numberOfRooms.toString()
+            binding.detailTextViewBathrooms.text = it.numberOfBathrooms.toString()
+            binding.detailTextViewBedrooms.text = it.numberOfBedrooms.toString()
+            binding.detailTextViewAddress.text = it.address
+            binding.detailTextViewAgentName.text = it.agentName.toString()
+
+        }
 
     }
 }

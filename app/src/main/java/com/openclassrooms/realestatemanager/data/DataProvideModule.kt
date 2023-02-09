@@ -2,6 +2,8 @@ package com.openclassrooms.realestatemanager.data
 
 import android.app.Application
 import androidx.work.WorkManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.openclassrooms.realestatemanager.data.local.AppDatabase
@@ -40,4 +42,14 @@ object DataProvideModule {
     @Provides
     @Singleton
     fun provideRealEstateDao(appDatabase: AppDatabase): RealEstateDao = appDatabase.getRealEstateDao()
+
+    @Provides
+    @Singleton
+    fun provideFusedLocationProviderClient(application: Application): FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(application)
+
+
+
+
+
+
 }

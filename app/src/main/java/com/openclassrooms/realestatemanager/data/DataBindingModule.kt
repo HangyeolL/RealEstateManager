@@ -2,8 +2,10 @@ package com.openclassrooms.realestatemanager.data
 
 import com.openclassrooms.realestatemanager.data.local.repository.AgentRepositoryImpl
 import com.openclassrooms.realestatemanager.data.local.repository.CurrentRealEstateRepositoryImpl
+import com.openclassrooms.realestatemanager.data.local.repository.LocationRepositoryImpl
 import com.openclassrooms.realestatemanager.data.local.repository.RealEstateRepositoryImpl
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
+import com.openclassrooms.realestatemanager.domain.location.LocationRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import dagger.Binds
@@ -27,4 +29,8 @@ abstract class DataBindingModule {
     @Binds
     @Singleton
     abstract fun bindCurrentRealEstateRepository(impl: CurrentRealEstateRepositoryImpl) : CurrentRealEstateRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindLocationRepository(impl: LocationRepositoryImpl) : LocationRepository
 }
