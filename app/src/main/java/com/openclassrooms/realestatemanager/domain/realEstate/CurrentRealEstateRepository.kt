@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface CurrentRealEstateRepository {
 
-    fun getCurrentRealEstateId() : StateFlow<Int?>
+    fun getCurrentRealEstateIdStateFlow() : StateFlow<Int?>
 
     fun setCurrentRealEstateId(currentId: Int)
 

@@ -22,7 +22,7 @@ class LocationRepositoryImpl @Inject constructor(
     private var callback: LocationCallback? = null
 
     private val locationMutableStateFlow = MutableStateFlow<Location?>(null)
-    val locationStateFlow: StateFlow<Location?> = locationMutableStateFlow.asStateFlow()
+    private val locationStateFlow: StateFlow<Location?> = locationMutableStateFlow.asStateFlow()
 
     @RequiresPermission(anyOf = ["android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"])
     override fun startLocationRequest() {
@@ -52,4 +52,6 @@ class LocationRepositoryImpl @Inject constructor(
             fusedLocationProviderClient.removeLocationUpdates(callback!!)
         }
     }
+
+    override fun getLocationStateFlow(): StateFlow<Location?> = locationStateFlow
 }

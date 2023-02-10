@@ -1,7 +1,11 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,7 +28,32 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.detailViewState.observe(viewLifecycleOwner) {
+        val requestPermissionLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    viewModel.startLocationRequest()
+                } else {
+                    viewModel.stopLocationRequest()
+                }
+            }
+
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) -> {
+                viewModel.startLocationRequest()
+            }
+            else -> {
+                requestPermissionLauncher.launch(
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            }
+        }
+
+        viewModel.mediatorFlow.observe(viewLifecycleOwner) {
 
             binding.detailConstraintLayoutParent.isVisible = it.isViewVisible
             binding.detailTextViewDescriptionBody.text = it.descriptionBody
@@ -33,9 +62,9 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             binding.detailTextViewBathrooms.text = it.numberOfBathrooms.toString()
             binding.detailTextViewBedrooms.text = it.numberOfBedrooms.toString()
             binding.detailTextViewAddress.text = it.address
-            binding.detailTextViewAgentName.text = it.agentName.toString()
+            binding.detailTextViewAgentName.text = it.agentName
 
         }
-
     }
+
 }

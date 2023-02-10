@@ -4,17 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.data.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.databinding.RealEstateListFragmentBinding
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment) {

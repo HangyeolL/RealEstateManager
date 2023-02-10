@@ -11,7 +11,7 @@ data class DetailViewState(
     val numberOfBathrooms: Int,
     val numberOfBedrooms: Int,
     val address: String,
-    val latLng: LatLng,
+    val latLng: LatLng?,
     val agentName: String,
 //    val agentPhoto: String
 

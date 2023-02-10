@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val currentRealEstateRepository: CurrentRealEstateRepository
+    currentRealEstateRepository: CurrentRealEstateRepository
 ) : ViewModel() {
 
     private var isTablet: Boolean = false
@@ -17,7 +17,7 @@ class MainViewModel @Inject constructor(
     val viewActionSingleLiveEvent: SingleLiveEvent<MainViewAction> = SingleLiveEvent()
 
     init {
-        viewActionSingleLiveEvent.addSource(currentRealEstateRepository.getCurrentRealEstateId().asLiveData()) {
+        viewActionSingleLiveEvent.addSource(currentRealEstateRepository.getCurrentRealEstateIdStateFlow().asLiveData()) {
             if (it != null) {
                 if (!isTablet) {
                     viewActionSingleLiveEvent.setValue(MainViewAction.NavigateToDetailActivity)
