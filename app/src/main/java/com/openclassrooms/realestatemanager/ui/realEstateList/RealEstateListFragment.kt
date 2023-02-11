@@ -30,9 +30,6 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment) {
         }
         binding.realEstateListRecyclerView.adapter = adapter
 
-//        viewModel.realEstateListLiveData.observe(viewLifecycleOwner) { realEstateListViewStateItemList ->
-//            adapter.submitList(realEstateListViewStateItemList)
-//        }
 
         viewModel.viewStateLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it.itemViewStateList)

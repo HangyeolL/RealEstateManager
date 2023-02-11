@@ -16,12 +16,14 @@ import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateR
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val application: Application,
@@ -70,15 +72,17 @@ class DetailViewModel @Inject constructor(
             locationFlow
         ) { realEstate, agentList, locationFlow ->
 
-            val userLatLang: LatLng? = if (locationFlow != null) {
-                LatLng(locationFlow.latitude, locationFlow.longitude)
-            } else {
-                null
-            }
+            val userLatLang: LatLng? =
+                if (locationFlow != null) {
+                    LatLng(locationFlow.latitude, locationFlow.longitude)
+                } else {
+                    null
+                }
 
-            val agentInCharge: AgentEntity? = agentList.find {
-                it.id == realEstate.agentIdInCharge
-            }
+            val agentInCharge: AgentEntity? =
+                agentList.find {
+                    it.id == realEstate.agentIdInCharge
+                }
 
             emit(
                 DetailViewState(

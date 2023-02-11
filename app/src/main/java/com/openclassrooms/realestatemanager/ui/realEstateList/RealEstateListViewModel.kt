@@ -7,6 +7,7 @@ import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateR
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,18 +33,20 @@ class RealEstateListViewModel @Inject constructor(
 
     val viewStateLiveData: LiveData<RealEstateListViewState> =
         liveData(Dispatchers.IO) {
-            realEstateRepository.getAllRealEstates().collect { realEstateList ->
+            realEstateRepository.getAllRealEstates().collectLatest { realEstateList ->
 
                 val itemViewStateList = ArrayList<RealEstateListItemViewState>()
 
                 (realEstateList).forEach { realEstateEntity ->
-                    itemViewStateList.add(RealEstateListItemViewState(
-                        realEstateEntity.id,
-                        1,
-                        realEstateEntity.type,
-                        realEstateEntity.city,
-                        realEstateEntity.price
-                    ))
+                    itemViewStateList.add(
+                        RealEstateListItemViewState(
+                            realEstateEntity.id,
+                            1,
+                            realEstateEntity.type,
+                            realEstateEntity.city,
+                            realEstateEntity.price
+                        )
+                    )
                 }
 
                 emit(RealEstateListViewState(itemViewStateList))

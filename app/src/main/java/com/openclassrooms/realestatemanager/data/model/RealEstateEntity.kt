@@ -6,9 +6,9 @@ import com.google.android.gms.maps.model.LatLng
 
 @Entity(tableName = "realEstates")
 data class RealEstateEntity(
+
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-
 //    val imageUrlList: List<String>,
     val type: String,
     val descriptionBody: String,
