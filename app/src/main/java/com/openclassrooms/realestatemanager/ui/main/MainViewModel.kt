@@ -33,4 +33,8 @@ class MainViewModel @Inject constructor(
         this.isTablet = isTablet
     }
 
+    fun onToolBarMenuCreateClicked() {
+        viewActionSingleLiveEvent.setValue(MainViewAction.NavigateToAddRealEstateActivity)
+    }
+
 }
