@@ -63,7 +63,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // This Works
+        binding.mainToolbar!!.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.main_toolbar_menu_create -> {
+                    viewModel.onToolBarMenuCreateClicked()
+                    true
+                }
+
+                R.id.main_toolbar_menu_modify -> {
+                    true
+                }
+
+                else -> {
+                    // If we got here, the user's action was not recognized.
+                    // Invoke the superclass to handle it.
+                    super.onOptionsItemSelected(menuItem)
+                }
+            }
+        }
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -76,23 +96,27 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        when (item.itemId) {
-            R.id.main_toolbar_menu_create -> {
-                viewModel.onToolBarMenuCreateClicked()
-                true
-            }
 
-            R.id.main_toolbar_menu_modify -> {
-                true
-            }
 
-            else -> {
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                super.onOptionsItemSelected(item)
-            }
-        }
+//    This doesn't work why ?
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+//        when (item.itemId) {
+//            R.id.main_toolbar_menu_create -> {
+//                viewModel.onToolBarMenuCreateClicked()
+//                true
+//            }
+//
+//            R.id.main_toolbar_menu_modify -> {
+//                true
+//            }
+//
+//            else -> {
+//                // If we got here, the user's action was not recognized.
+//                // Invoke the superclass to handle it.
+//                super.onOptionsItemSelected(item)
+//            }
+//        }
 
 
     private fun setUpToolBarAndDrawerLayout() {

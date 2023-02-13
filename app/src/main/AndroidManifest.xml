@@ -16,8 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".AddRealEstateActivity"
-            android:exported="false" />
+            android:name=".ui.addRealEstate.AddRealEstateActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.main.MainActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

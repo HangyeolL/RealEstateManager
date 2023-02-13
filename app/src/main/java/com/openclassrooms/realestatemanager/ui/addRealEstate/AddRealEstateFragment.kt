@@ -1,16 +1,12 @@
 package com.openclassrooms.realestatemanager.ui.addRealEstate
 
 import android.os.Bundle
-import android.text.TextWatcher
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.AddRealEstateFragmentBinding
-import com.openclassrooms.realestatemanager.databinding.DetailFragmentBinding
-import com.openclassrooms.realestatemanager.ui.detail.DetailViewModel
-import com.openclassrooms.realestatemanager.ui.realEstateList.RealEstateListFragment
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddRealEstateFragment : Fragment(R.layout.add_real_estate_fragment) {
 
     companion object {
-        fun newInstance() = RealEstateListFragment()
+        fun newInstance() = AddRealEstateFragment()
     }
 
     private val binding by viewBinding { AddRealEstateFragmentBinding.bind(it) }

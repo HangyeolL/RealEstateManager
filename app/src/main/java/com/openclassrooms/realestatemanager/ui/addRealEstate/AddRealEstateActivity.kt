@@ -20,6 +20,9 @@ class AddRealEstateActivity : AppCompatActivity() {
 
         setContentView(R.layout.add_real_estate_activity)
 
+        setSupportActionBar(binding.addRealEstateToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(
