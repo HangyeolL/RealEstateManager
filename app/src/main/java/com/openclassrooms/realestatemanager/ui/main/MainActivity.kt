@@ -9,10 +9,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.MainActivityBinding
-import com.openclassrooms.realestatemanager.ui.addRealEstate.AddRealEstateActivity
+import com.openclassrooms.realestatemanager.ui.add_real_estate.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.detail.DetailActivity
 import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
-import com.openclassrooms.realestatemanager.ui.realEstateList.RealEstateListFragment
+import com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragment
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,40 +48,38 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.viewActionSingleLiveEvent.observe(this) {
             when (it) {
-                MainViewAction.NavigateToDetailActivity -> startActivity(
+                is MainViewAction.NavigateToDetailActivity -> startActivity(
                     Intent(
                         this,
                         DetailActivity::class.java
                     )
                 )
-                MainViewAction.NavigateToAddRealEstateActivity -> startActivity(
-                    Intent(
-                        this,
-                        AddRealEstateActivity::class.java
-                    )
+                is MainViewAction.NavigateToAddRealEstateActivity -> startActivity(
+                    AddRealEstateActivity.navigate(this, it.realEstateId)
                 )
             }
         }
 
+        // TODO Hangyeol this should no longer be needed
         // This Works
-        binding.mainToolbar!!.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.main_toolbar_menu_create -> {
-                    viewModel.onToolBarMenuCreateClicked()
-                    true
-                }
-
-                R.id.main_toolbar_menu_modify -> {
-                    true
-                }
-
-                else -> {
-                    // If we got here, the user's action was not recognized.
-                    // Invoke the superclass to handle it.
-                    super.onOptionsItemSelected(menuItem)
-                }
-            }
-        }
+//        binding.mainToolbar.setOnMenuItemClickListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.main_toolbar_menu_create -> {
+//                    viewModel.onToolBarMenuCreateClicked()
+//                    true
+//                }
+//
+//                R.id.main_toolbar_menu_modify -> {
+//                    true
+//                }
+//
+//                else -> {
+//                    // If we got here, the user's action was not recognized.
+//                    // Invoke the superclass to handle it.
+//                    super.onOptionsItemSelected(menuItem)
+//                }
+//            }
+//        }
     }
 
 
@@ -96,31 +94,23 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-
-
-//    This doesn't work why ?
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-//        when (item.itemId) {
-//            R.id.main_toolbar_menu_create -> {
-//                viewModel.onToolBarMenuCreateClicked()
-//                true
-//            }
-//
-//            R.id.main_toolbar_menu_modify -> {
-//                true
-//            }
-//
-//            else -> {
-//                // If we got here, the user's action was not recognized.
-//                // Invoke the superclass to handle it.
-//                super.onOptionsItemSelected(item)
-//            }
-//        }
+    // TODO Hangyeol This should work in all 3 configurations
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.main_toolbar_menu_create -> {
+            viewModel.onToolBarMenuCreateClicked()
+            true
+        }
+        R.id.main_toolbar_menu_modify -> {
+            true
+        }
+        // If we got here, the user's action was not recognized.
+        // Invoke the superclass to handle it.
+        else -> super.onOptionsItemSelected(item)
+    }
 
 
     private fun setUpToolBarAndDrawerLayout() {
-        setSupportActionBar(binding.mainMaterialToolbar)
+        setSupportActionBar(binding.mainToolbar)
         val actionBarDrawerToggle = ActionBarDrawerToggle(
             this,
             binding.mainDrawerLayout,

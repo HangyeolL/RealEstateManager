@@ -11,6 +11,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/main_toolbar_menu_modify"
+        android:icon="@drawable/ic_round_modify_24"
+        android:title="@string/modify"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/main_toolbar_menu_search"
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/search"

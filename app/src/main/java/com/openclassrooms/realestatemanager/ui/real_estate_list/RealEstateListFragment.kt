@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.realEstateList
+package com.openclassrooms.realestatemanager.ui.real_estate_list
 
 import android.os.Bundle
 import android.view.View
@@ -34,6 +34,8 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment) {
         viewModel.viewStateLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it.itemViewStateList)
         }
+
+
 
     }
 
