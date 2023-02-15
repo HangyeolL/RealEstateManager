@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
-import com.openclassrooms.realestatemanager.ui.add_real_estate.AddRealEstateFragment.Companion.KEY_REAL_ESTATE_ID
+import com.openclassrooms.realestatemanager.ui.add_real_estate.AddOrModifyRealEstateFragment.Companion.KEY_REAL_ESTATE_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

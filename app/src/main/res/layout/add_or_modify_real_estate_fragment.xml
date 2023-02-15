@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/addOrModifyRealEstate_Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:minHeight="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addOrModifyRealEstate_TextInputLayout_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_Spinner"
+            app:startIconDrawable="@drawable/ic_baseline_location_on_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addOrModifyRealEstate_TextInputEditText_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addOrModifyRealEstate_TextInputLayout_numberOfRooms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:hint="room"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBedRooms"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_address"
+            app:startIconDrawable="@drawable/ic_baseline_house_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBedRooms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:hint="bedroom"
+            app:expandedHintEnabled="false"
+            app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfRooms"
+            app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBathRooms"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfRooms"
+            app:startIconDrawable="@drawable/ic_baseline_bed_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBathRooms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="bathroom"
+            app:expandedHintEnabled="false"
+            app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBedRooms"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBedRooms"
+            app:startIconDrawable="@drawable/ic_baseline_bathtub_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addOrModifyRealEstate_TextInputLayout_sqm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:hint="square meter"
+            app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_TextInputLayout_marketSince"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfRooms"
+            app:startIconDrawable="@drawable/ic_baseline_zoom_out_map_24"
+            app:suffixText="m2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addOrModifyRealEstate_TextInputEditText_sqm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addOrModifyRealEstate_TextInputLayout_marketSince"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Market since"
+            app:expandedHintEnabled="false"
+            app:hintAnimationEnabled="true"
+            app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_TextInputLayout_sqm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_TextInputLayout_sqm"
+            app:placeholderText="Select the date"
+            app:startIconDrawable="@drawable/ic_outline_calendar_month_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addOrModifyRealEstate_TextInputEditText_marketSince"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addOrModifyRealEstate_TextInputLayout_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:endIconDrawable="@drawable/ic_round_euro_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_sqm"
+            app:suffixText="@string/euro_symbol_as_string">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addOrModifyRealEstate_TextInputEditText_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Price"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_price">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/addOrModifyRealEstate_chip_guard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="Guard"
+                    app:checkedIconVisible="true"
+                    app:chipIcon="@drawable/ic_outline_shield_24"
+                    app:chipIconVisible="true"
+                    app:chipMinTouchTargetSize="50dp"
+                    app:ensureMinTouchTargetSize="false"
+                    app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_chip_garage"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/addOrModifyRealEstate_chip_garage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="Garage"
+                    app:checkedIconVisible="true"
+                    app:chipIcon="@drawable/ic_baseline_garage_24"
+                    app:chipIconVisible="true"
+                    app:ensureMinTouchTargetSize="false"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_chip_guard"
+                    app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_chip_garden"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_chip_guard" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/addOrModifyRealEstate_chip_garden"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="Garden"
+                    app:checkedIconVisible="true"
+                    app:chipIcon="@drawable/ic_baseline_forest_24"
+                    app:chipIconVisible="true"
+                    app:chipMinTouchTargetSize="50dp"
+                    app:ensureMinTouchTargetSize="false"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_chip_garage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_chip_garage" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/addOrModifyRealEstate_chip_elevator"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="Elevator"
+                    app:checkedIconVisible="true"
+                    app:chipIcon="@drawable/ic_outline_elevator_24"
+                    app:chipIconVisible="true"
+                    app:chipMinTouchTargetSize="50dp"
+                    app:ensureMinTouchTargetSize="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/addOrModifyRealEstate_chip_guard"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_chip_guard" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/addOrModifyRealEstate_chip_groceryStoreNextBy"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="grocery store next by"
+                    android:textAlignment="center"
+                    app:checkedIconVisible="true"
+                    app:chipIcon="@drawable/ic_baseline_local_grocery_store_24"
+                    app:chipIconVisible="true"
+                    app:chipMinTouchTargetSize="50dp"
+                    app:ensureMinTouchTargetSize="false"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_chip_elevator"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_chip_elevator" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/addOrModifyRealEstate_chip_isSoldOut"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Sold Out"
+            app:checkedIconVisible="true"
+            app:chipIcon="@drawable/ic_outline_sell_24"
+            app:chipIconVisible="true"
+            app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_TextInputLayout_soldOutDate"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addOrModifyRealEstate_TextInputLayout_soldOutDate"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Date"
+            app:expandedHintEnabled="false"
+            app:layout_constraintBottom_toBottomOf="@+id/addOrModifyRealEstate_chip_isSoldOut"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_chip_isSoldOut"
+            app:layout_constraintTop_toTopOf="@+id/addOrModifyRealEstate_chip_isSoldOut"
+            app:placeholderText="Select the date"
+            app:startIconDrawable="@drawable/ic_outline_calendar_month_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addOrModifyRealEstate_TextInputEditText_soldOutDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addOrModifyRealEstate_TextInputLayout_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/description"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_chip_isSoldOut"
+            app:placeholderText="Tell us about your real estate ! :)">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addOrModifyRealEstate_TextInputEditText_descriptionBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/addOrModifyRealEstate_Button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addOrModifyRealEstate_TextInputLayout_asAgentSpinner"
+            style="@style/Widget.AppCompat.Spinner.DropDown"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Agent"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_description"
+            app:placeholderText="Select the agent in charge">
+
+            <AutoCompleteTextView
+                android:id="@+id/addOrModifyRealEstate_autoCompleteTextView_asAgentSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/addOrModifyRealEstate_RecyclerView_imageList"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/addOrModifyRealEstate_Button_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_asAgentSpinner" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

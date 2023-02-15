@@ -24,6 +24,8 @@ class MainViewModel @Inject constructor(
     val viewActionSingleLiveEvent: SingleLiveEvent<MainViewAction> = SingleLiveEvent()
 
     init {
+        // TODO Need to improve Navigation part here
+//        1. doing navigation via RV adapter by passing viewState Id when opening DetailActivity -> Should I unit test RV ?
         viewActionSingleLiveEvent.addSource(
             currentRealEstateRepository.getCurrentRealEstateIdStateFlow()
                 .filterNotNull()
@@ -44,7 +46,7 @@ class MainViewModel @Inject constructor(
             val realEstateId = currentRealEstateRepository.getCurrentRealEstateIdStateFlow().firstOrNull()
             withContext(Dispatchers.Main) {
                 viewActionSingleLiveEvent.setValue(
-                    MainViewAction.NavigateToAddRealEstateActivity(realEstateId = realEstateId)
+                    MainViewAction.NavigateToAddRealEstateActivity(realEstateId)
                 )
             }
         }
