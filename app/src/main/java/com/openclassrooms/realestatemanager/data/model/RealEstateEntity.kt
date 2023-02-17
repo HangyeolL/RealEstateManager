@@ -8,8 +8,7 @@ import com.google.android.gms.maps.model.LatLng
 data class RealEstateEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-//    val imageUrlList: List<String>,
+    val realEstateId: Int = 0,
     val type: String,
     val descriptionBody: String,
     val squareMeter: Int,

@@ -13,7 +13,7 @@ interface AgentDao {
     @Query("SELECT * FROM agents")
     fun getAllAgents(): Flow<List<AgentEntity>>
 
-    @Query("SELECT * FROM agents WHERE id = :agentId")
+    @Query("SELECT * FROM agents WHERE agentId = :agentId")
     fun getAgentById(agentId: Int) : Flow<AgentEntity>
 
     @Delete

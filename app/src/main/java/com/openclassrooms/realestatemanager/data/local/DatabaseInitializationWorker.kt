@@ -8,6 +8,7 @@ import androidx.work.WorkerParameters
 import com.google.gson.Gson
 import com.openclassrooms.realestatemanager.data.model.AgentEntity
 import com.openclassrooms.realestatemanager.data.model.RealEstateEntity
+import com.openclassrooms.realestatemanager.data.model.RealEstateWithPhotos
 import com.openclassrooms.realestatemanager.data.utils.fromJson
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
@@ -39,13 +40,13 @@ class DatabaseInitializationWorker @AssistedInject constructor(
 
             if (realEstateEntitiesAsJson != null && agentEntitiesAsJson != null) {
 
-                val realEstateEntities = gson.fromJson<List<RealEstateEntity>>(json = realEstateEntitiesAsJson)
+                val realEstateEntities = gson.fromJson<List<RealEstateWithPhotos>>(json = realEstateEntitiesAsJson)
                 val agentEntities = gson.fromJson<List<AgentEntity>>(json = agentEntitiesAsJson)
 
                 if (realEstateEntities != null && agentEntities != null) {
 
                     realEstateEntities.forEach { realEstateEntity ->
-                        realEstateRepository.upsertRealEstate(realEstateEntity)
+                        realEstateRepository.upsertRealEstateWithPhotos(realEstateEntity)
                     }
 
                     agentEntities.forEach { agentEntity ->

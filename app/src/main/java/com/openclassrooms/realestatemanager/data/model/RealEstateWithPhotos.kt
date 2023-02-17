@@ -6,7 +6,9 @@ import androidx.room.Relation
 data class RealEstateWithPhotos(
     @Embedded val realEstateEntity: RealEstateEntity,
     @Relation(
-        parentColumn =
+        parentColumn = "realEstateId",
+        entityColumn = "realEstateIdOfPhoto",
+        entity = RealEstatePhoto::class
     )
-    val photoList : List<Photo>
+    val realEstatePhotoLists : List<RealEstatePhoto>
 )

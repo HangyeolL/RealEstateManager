@@ -21,7 +21,7 @@ class RealEstateListViewModel @Inject constructor(
 //            realEstateRepository.getAllRealEstates().collect() { realEstateEntities ->
 //                emit(realEstateEntities.map {
 //                    RealEstateListItemViewState(
-//                        it.id,
+//                        it.realEstateId,
 //                        1,
 //                        it.type,
 //                        it.city,
@@ -33,18 +33,18 @@ class RealEstateListViewModel @Inject constructor(
 
     val viewStateLiveData: LiveData<RealEstateListViewState> =
         liveData(Dispatchers.IO) {
-            realEstateRepository.getAllRealEstates().collectLatest { realEstateList ->
+            realEstateRepository.getRealEstatesWithPhotos().collectLatest { realEstateWithPhotosList ->
 
                 val itemViewStateList = ArrayList<RealEstateListItemViewState>()
 
-                (realEstateList).forEach { realEstateEntity ->
+                (realEstateWithPhotosList).forEach { realEstateWithPhotos ->
                     itemViewStateList.add(
                         RealEstateListItemViewState(
-                            realEstateEntity.id,
+                            realEstateWithPhotos.realEstateEntity.realEstateId,
                             1,
-                            realEstateEntity.type,
-                            realEstateEntity.city,
-                            realEstateEntity.price
+                            realEstateWithPhotos.realEstateEntity.type,
+                            realEstateWithPhotos.realEstateEntity.city,
+                            realEstateWithPhotos.realEstateEntity.price
                         )
                     )
                 }

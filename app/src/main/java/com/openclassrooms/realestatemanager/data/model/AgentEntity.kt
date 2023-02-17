@@ -7,8 +7,7 @@ import androidx.room.PrimaryKey
 data class AgentEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-
+    val agentId: Int = 0,
     val name: String,
     val email: String,
     val photoUrl: String

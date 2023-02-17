@@ -1,9 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
-import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.app.Application
-import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -70,7 +67,7 @@ class DetailViewModel @Inject constructor(
             realEstateFlow,
             agentListFlow,
             locationFlow
-        ) { realEstate, agentList, locationFlow ->
+        ) { realEstateWithPhotos, agentList, locationFlow ->
 
             val userLatLang: LatLng? =
                 if (locationFlow != null) {
@@ -81,17 +78,17 @@ class DetailViewModel @Inject constructor(
 
             val agentInCharge: AgentEntity? =
                 agentList.find {
-                    it.id == realEstate.agentIdInCharge
+                    it.agentId == realEstateWithPhotos.realEstateEntity.agentIdInCharge
                 }
 
             emit(
                 DetailViewState(
-                    realEstate.descriptionBody,
-                    realEstate.squareMeter,
-                    realEstate.numberOfRooms,
-                    realEstate.numberOfBathrooms,
-                    realEstate.numberOfBedrooms,
-                    realEstate.address,
+                    realEstateWithPhotos.realEstateEntity.descriptionBody,
+                    realEstateWithPhotos.realEstateEntity.squareMeter,
+                    realEstateWithPhotos.realEstateEntity.numberOfRooms,
+                    realEstateWithPhotos.realEstateEntity.numberOfBathrooms,
+                    realEstateWithPhotos.realEstateEntity.numberOfBedrooms,
+                    realEstateWithPhotos.realEstateEntity.address,
                     userLatLang,
                     agentInCharge?.name ?: application.getString(R.string.none),
                     true

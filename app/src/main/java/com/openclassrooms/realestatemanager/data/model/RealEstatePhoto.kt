@@ -1,6 +1,6 @@
 package com.openclassrooms.realestatemanager.data.model
 
-data class Photo(
-    val realEstateId: Int,
+data class RealEstatePhoto(
+    val realEstateIdOfPhoto: Int,
     val url : String
 )

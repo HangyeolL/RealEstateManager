@@ -64,12 +64,12 @@ class MainActivity : AppCompatActivity() {
         // This Works
 //        binding.mainToolbar.setOnMenuItemClickListener { menuItem ->
 //            when (menuItem.itemId) {
-//                R.id.main_toolbar_menu_create -> {
+//                R.realEstateId.main_toolbar_menu_create -> {
 //                    viewModel.onToolBarMenuCreateClicked()
 //                    true
 //                }
 //
-//                R.id.main_toolbar_menu_modify -> {
+//                R.realEstateId.main_toolbar_menu_modify -> {
 //                    true
 //                }
 //
