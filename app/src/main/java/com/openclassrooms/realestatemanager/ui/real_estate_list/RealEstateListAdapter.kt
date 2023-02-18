@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.RealEstateListItemBinding
 
 class RealEstateListAdapter(
@@ -29,6 +30,7 @@ class RealEstateListAdapter(
             itemBinding.realEstateListItemTextViewType.text = viewState.type
             itemBinding.realEstateListItemTextViewCity.text = viewState.city
             itemBinding.realEstateListTiemTextViewPrice.text = viewState.price.toString()
+            Glide.with(itemView.context).load(viewState.imageUrl).into(itemBinding.realEstateListItemImageView)
 
             itemBinding.realEstateListItemCardView.setOnClickListener {
                 itemIdListener.invoke(viewState.id)

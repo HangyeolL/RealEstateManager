@@ -1,12 +1,14 @@
 package com.openclassrooms.realestatemanager.data
 
 import android.app.Application
+import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.openclassrooms.realestatemanager.data.local.AppDatabase
+import com.openclassrooms.realestatemanager.data.local.AppDatabase.Companion.DATABASE_NAME
 import com.openclassrooms.realestatemanager.data.local.dao.AgentDao
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
 import dagger.Module
@@ -21,19 +23,31 @@ object DataProvideModule {
 
     @Provides
     @Singleton
-    fun provideWorkManager(application: Application): WorkManager = WorkManager.getInstance(application)
+    fun provideWorkManager(application: Application): WorkManager =
+        WorkManager.getInstance(application)
 
     @Provides
     @Singleton
     fun provideGson(): Gson = GsonBuilder().create()
 
+//    @Provides
+//    @Singleton
+//    fun provideAppDatabase(
+//        application: Application,
+//        workManager: WorkManager,
+//        gson: Gson
+//    ): AppDatabase = AppDatabase.create(application, workManager, gson)
+
     @Provides
     @Singleton
-    fun provideAppDatabase(
-        application: Application,
-        workManager: WorkManager,
-        gson: Gson
-    ): AppDatabase = AppDatabase.create(application, workManager, gson)
+    fun provideAppDatabase(application: Application): AppDatabase =
+        Room.databaseBuilder(
+            application,
+            AppDatabase::class.java,
+            DATABASE_NAME
+        )
+            .createFromAsset("database/RealEstateManager_database.db")
+            .build()
 
     @Provides
     @Singleton
@@ -41,15 +55,13 @@ object DataProvideModule {
 
     @Provides
     @Singleton
-    fun provideRealEstateDao(appDatabase: AppDatabase): RealEstateDao = appDatabase.getRealEstateDao()
+    fun provideRealEstateDao(appDatabase: AppDatabase): RealEstateDao =
+        appDatabase.getRealEstateDao()
 
     @Provides
     @Singleton
-    fun provideFusedLocationProviderClient(application: Application): FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(application)
-
-
-
-
+    fun provideFusedLocationProviderClient(application: Application): FusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(application)
 
 
 }
