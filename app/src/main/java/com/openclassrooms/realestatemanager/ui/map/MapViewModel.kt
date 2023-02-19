@@ -1,31 +1,41 @@
 package com.openclassrooms.realestatemanager.ui.map
 
-import android.location.Location
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.google.android.gms.maps.model.LatLng
-import com.openclassrooms.realestatemanager.domain.location.LocationRepository
+import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class MapViewModel @Inject constructor(
-    locationRepository: LocationRepository
+    currentRealEstateRepository: CurrentRealEstateRepository,
+    realEstateRepository: RealEstateRepository
 ) : ViewModel() {
 
-    val userLatLngLiveData: LiveData<LatLng> = liveData(Dispatchers.IO) {
-        locationRepository.getLocationStateFlow()
+    val latLngLiveData: LiveData<MapViewState> = liveData(Dispatchers.IO) {
+        currentRealEstateRepository.getCurrentRealEstateIdStateFlow()
             .filterNotNull()
-            .mapLatest { it ->
-                emit(LatLng(it.latitude, it.longitude))
+            .flatMapLatest { currentRealEstateId ->
+                realEstateRepository.getRealEstateById(currentRealEstateId)
             }
-            .collectLatest {
+            .collectLatest { realEstateWithPhotos ->
+                emit(
+                    MapViewState(
+                        realEstateWithPhotos.realEstateEntity.latLng
+                    )
+                )
             }
     }
+
 
 }
 

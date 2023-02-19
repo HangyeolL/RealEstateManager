@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.add_real_estate.AddOrModifyRealEstateActivity">
+    tools:context=".ui.add_or_modify_real_estate.AddOrModifyRealEstateActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/addOrModifyRealEstate_Toolbar"
@@ -23,7 +23,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/addOrModifyRealEstate_FragmentContainerView"
-        android:name="com.openclassrooms.realestatemanager.ui.add_real_estate.AddOrModifyRealEstateFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

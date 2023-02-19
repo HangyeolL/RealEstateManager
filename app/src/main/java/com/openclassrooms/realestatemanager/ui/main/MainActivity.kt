@@ -9,7 +9,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.MainActivityBinding
-import com.openclassrooms.realestatemanager.ui.add_real_estate.AddOrModifyRealEstateActivity
+import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.detail.DetailActivity
 import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
 import com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragment

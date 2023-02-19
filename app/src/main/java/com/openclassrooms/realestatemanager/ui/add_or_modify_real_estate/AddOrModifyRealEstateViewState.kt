@@ -1,8 +1,10 @@
-package com.openclassrooms.realestatemanager.ui.add_real_estate
+package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
-data class AddRealEstateViewState(
+data class AddOrModifyRealEstateViewState(
 
-    val typeSpinnerItemViewState: AddRealEstateTypeSpinnerItemViewState,
+    val typeSpinnerItemViewStateList: List<AddOrModifyRealEstateTypeSpinnerItemViewState>,
+    val agentSpinnerItemViewStateList: List<AddOrModifyRealEstateAgentSpinnerItemViewState>,
+    val realEstatePhotoListItemViewStateList: List<AddOrModifyRealEstatePhotoListItemViewState>,
     val address: String,
     val numberOfRooms: Int,
     val numberOfBathrooms: Int,
@@ -18,7 +20,6 @@ data class AddRealEstateViewState(
     val isSoldOut: Boolean,
     val dataOfSold: String?,
     val description: String,
-    val agentSpinnerItemViewState: AddRealEstateAgentSpinnerItemViewState,
     val imageList: List<String>,
 
     )

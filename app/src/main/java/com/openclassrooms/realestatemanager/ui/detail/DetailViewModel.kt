@@ -4,11 +4,9 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.model.AgentEntity
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
-import com.openclassrooms.realestatemanager.domain.location.LocationRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +22,6 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val application: Application,
-    private val locationRepository: LocationRepository,
     realEstateRepository: RealEstateRepository,
     currentRealEstateRepository: CurrentRealEstateRepository,
     agentRepository: AgentRepository,
@@ -60,21 +57,24 @@ class DetailViewModel @Inject constructor(
 
     private val agentListFlow = agentRepository.getAllAgents()
 
-    private val locationFlow = locationRepository.getLocationStateFlow()
-
     val mediatorFlow: LiveData<DetailViewState> = liveData(Dispatchers.IO) {
         combine(
             realEstateFlow,
             agentListFlow,
-            locationFlow
-        ) { realEstateWithPhotos, agentList, locationFlow ->
+        ) { realEstateWithPhotos, agentList ->
 
-            val userLatLang: LatLng? =
-                if (locationFlow != null) {
-                    LatLng(locationFlow.latitude, locationFlow.longitude)
-                } else {
-                    null
-                }
+            val itemViewStateList = ArrayList<DetailListItemViewState>()
+
+            realEstateWithPhotos.realEstatePhotoLists.forEach { realEstatePhoto ->
+                itemViewStateList.add(
+                    DetailListItemViewState(
+                        realEstatePhoto.photoId,
+                        realEstatePhoto.url,
+                        realEstatePhoto.description ?: ""
+                    )
+                )
+
+            }
 
             val agentInCharge: AgentEntity? =
                 agentList.find {
@@ -83,30 +83,29 @@ class DetailViewModel @Inject constructor(
 
             emit(
                 DetailViewState(
+                    itemViewStateList,
                     realEstateWithPhotos.realEstateEntity.descriptionBody,
                     realEstateWithPhotos.realEstateEntity.squareMeter,
                     realEstateWithPhotos.realEstateEntity.numberOfRooms,
                     realEstateWithPhotos.realEstateEntity.numberOfBathrooms,
                     realEstateWithPhotos.realEstateEntity.numberOfBedrooms,
                     realEstateWithPhotos.realEstateEntity.address,
-                    userLatLang,
                     agentInCharge?.name ?: application.getString(R.string.none),
                     true
                 )
             )
-
 
         }.collectLatest() {
 
         }
     }
 
-    fun startLocationRequest() {
-        locationRepository.startLocationRequest()
-    }
-
-    fun stopLocationRequest() {
-        locationRepository.stopLocationRequest()
-    }
+//    fun startLocationRequest() {
+//        locationRepository.startLocationRequest()
+//    }
+//
+//    fun stopLocationRequest() {
+//        locationRepository.stopLocationRequest()
+//    }
 
 }

@@ -47,8 +47,9 @@ class RealEstateListViewModel @Inject constructor(
                                 if (realEstateWithPhotos.realEstatePhotoLists.isNotEmpty())
                                     realEstateWithPhotos.realEstatePhotoLists[0].url
                                 else
-                                    // TODO How to use drawable resource with Glide ! or is there a better way ?
-                                    Uri.parse("android.resource://com.example.project/" + R.drawable.image_not_available).toString(),
+                                // TODO How to use drawable resource with Glide ! or is there a better way ?
+                                    Uri.parse("android.resource://com.example.project/" + R.drawable.image_not_available)
+                                        .toString(),
                                 realEstateWithPhotos.realEstateEntity.type,
                                 realEstateWithPhotos.realEstateEntity.city,
                                 realEstateWithPhotos.realEstateEntity.price

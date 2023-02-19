@@ -28,8 +28,8 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment) {
         val adapter = RealEstateListAdapter() {
             viewModel.onRealEstateItemClicked(it)
         }
-        binding.realEstateListRecyclerView.adapter = adapter
 
+        binding.realEstateListRecyclerView.adapter = adapter
 
         viewModel.viewStateLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it.itemViewStateList)

@@ -390,7 +390,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/addOrModifyRealEstate_RecyclerView_imageList"
+            android:id="@+id/addOrModifyRealEstate_RecyclerView_realEstatePhotoList"
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:layout_marginStart="16dp"

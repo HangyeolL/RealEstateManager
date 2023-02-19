@@ -23,5 +23,7 @@ data class RealEstatePhoto(
     @ColumnInfo(index = true)
     val realEstateIdOfPhoto: Int,
 
-    val url : String
+    val url : String,
+
+    val description: String?
 )

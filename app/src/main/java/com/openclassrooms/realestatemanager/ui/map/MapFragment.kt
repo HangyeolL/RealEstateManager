@@ -12,6 +12,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,8 +37,11 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback {
         googleMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
         googleMap.isMyLocationEnabled = true
 
-        viewModel.userLatLngLiveData.observe(viewLifecycleOwner) {
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 14f))
+        viewModel.latLngLiveData.observe(viewLifecycleOwner) {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it.latLng, 14f))
+            googleMap.addMarker(
+                MarkerOptions().position(it.latLng)
+            )
         }
     }
 

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.add_real_estate
+package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
 import android.content.Context
 import android.content.Intent
@@ -24,7 +24,7 @@ class AddOrModifyRealEstateActivity : AppCompatActivity() {
 
     private val binding by viewBinding { AddOrModifyRealEstateActivityBinding.inflate(it) }
 
-    private val viewModel by viewModels<AddRealEstateViewModel>()
+    private val viewModel by viewModels<AddOrModifyRealEstateViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

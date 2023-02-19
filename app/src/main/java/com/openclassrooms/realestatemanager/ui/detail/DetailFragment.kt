@@ -1,11 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,33 +24,9 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val requestPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    viewModel.startLocationRequest()
-                } else {
-                    viewModel.stopLocationRequest()
-                }
-            }
-
-        when (PackageManager.PERMISSION_GRANTED) {
-            ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) -> {
-                viewModel.startLocationRequest()
-            }
-            else -> {
-                requestPermissionLauncher.launch(
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            }
-        }
+        val adapter = DetailListAdapter()
 
         viewModel.mediatorFlow.observe(viewLifecycleOwner) {
-
             binding.detailConstraintLayoutParent.isVisible = it.isViewVisible
             binding.detailTextViewDescriptionBody.text = it.descriptionBody
             binding.detailTextViewSquareMeter.text = it.squareMeter.toString()
@@ -63,8 +35,33 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             binding.detailTextViewBedrooms.text = it.numberOfBedrooms.toString()
             binding.detailTextViewAddress.text = it.address
             binding.detailTextViewAgentName.text = it.agentName
-
+            adapter.submitList(it.itemViewStateList)
         }
     }
+
+//        val requestPermissionLauncher =
+//            registerForActivityResult(
+//                ActivityResultContracts.RequestPermission()
+//            ) { isGranted: Boolean ->
+//                if (isGranted) {
+//                    viewModel.startLocationRequest()
+//                } else {
+//                    viewModel.stopLocationRequest()
+//                }
+//            }
+//
+//        when (PackageManager.PERMISSION_GRANTED) {
+//            ContextCompat.checkSelfPermission(
+//                requireActivity(),
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//            ) -> {
+//                viewModel.startLocationRequest()
+//            }
+//            else -> {
+//                requestPermissionLauncher.launch(
+//                    Manifest.permission.ACCESS_FINE_LOCATION
+//                )
+//            }
+//        }
 
 }
