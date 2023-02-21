@@ -1,21 +1,25 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
 import android.app.Application
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.model.AgentEntity
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
+import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateActivity
+import com.openclassrooms.realestatemanager.ui.main.MainViewAction
+import com.openclassrooms.realestatemanager.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -23,31 +27,11 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val application: Application,
     realEstateRepository: RealEstateRepository,
-    currentRealEstateRepository: CurrentRealEstateRepository,
+    private val currentRealEstateRepository: CurrentRealEstateRepository,
     agentRepository: AgentRepository,
 ) : ViewModel() {
 
-//    val detailViewState: LiveData<DetailViewState> = liveData(Dispatchers.IO) {
-//        currentRealEstateRepository.getCurrentRealEstateIdStateFlow()
-//            .filterNotNull()
-//            .flatMapLatest { currentRealEstateId ->
-//                realEstateRepository.getRealEstateById(currentRealEstateId)
-//            }.collect {
-//                emit(
-//                    DetailViewState(
-//                        it.descriptionBody,
-//                        it.squareMeter,
-//                        it.numberOfRooms,
-//                        it.numberOfBathrooms,
-//                        it.numberOfBedrooms,
-//                        it.address,
-//                        it.latLng,
-//                        "Agent Name",
-//                        true
-//                    )
-//                )
-//            }
-//    }
+    val viewActionSingleLiveEvent: SingleLiveEvent<Intent> = SingleLiveEvent()
 
     private val realEstateFlow = currentRealEstateRepository.getCurrentRealEstateIdStateFlow()
         .filterNotNull()
@@ -99,6 +83,44 @@ class DetailViewModel @Inject constructor(
 
         }
     }
+
+
+    fun onToolBarMenuModifyClicked() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val realEstateId = currentRealEstateRepository.getCurrentRealEstateIdStateFlow().firstOrNull()
+            withContext(Dispatchers.Main) {
+                viewActionSingleLiveEvent.setValue(
+                    AddOrModifyRealEstateActivity.navigate(
+                        application,
+                        realEstateId
+                    )
+                )
+            }
+        }
+
+    }
+
+//    val detailViewState: LiveData<DetailViewState> = liveData(Dispatchers.IO) {
+//        currentRealEstateRepository.getCurrentRealEstateIdStateFlow()
+//            .filterNotNull()
+//            .flatMapLatest { currentRealEstateId ->
+//                realEstateRepository.getRealEstateById(currentRealEstateId)
+//            }.collect {
+//                emit(
+//                    DetailViewState(
+//                        it.descriptionBody,
+//                        it.squareMeter,
+//                        it.numberOfRooms,
+//                        it.numberOfBathrooms,
+//                        it.numberOfBedrooms,
+//                        it.address,
+//                        it.latLng,
+//                        "Agent Name",
+//                        true
+//                    )
+//                )
+//            }
+//    }
 
 //    fun startLocationRequest() {
 //        locationRepository.startLocationRequest()

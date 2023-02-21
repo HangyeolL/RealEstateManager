@@ -24,7 +24,7 @@ data class RealEstateEntity(
     val elevator: Boolean,
     val groceryStoreNearby: Boolean,
     val isSoldOut: Boolean,
-    val dataOfSold: String?,
+    val dateOfSold: String?,
     val marketSince: String,
     val agentIdInCharge: Int,
     val latLng: LatLng

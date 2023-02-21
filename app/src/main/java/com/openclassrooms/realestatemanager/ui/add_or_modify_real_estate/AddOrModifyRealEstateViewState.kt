@@ -18,9 +18,7 @@ data class AddOrModifyRealEstateViewState(
     val elevator: Boolean,
     val groceryStoreNearby: Boolean,
     val isSoldOut: Boolean,
-    val dataOfSold: String?,
+    val dateOfSold: String?,
     val description: String,
-    val photoList: List<String>,
-
     )
 

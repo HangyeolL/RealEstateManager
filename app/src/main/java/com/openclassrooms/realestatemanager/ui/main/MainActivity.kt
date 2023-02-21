@@ -48,38 +48,20 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.viewActionSingleLiveEvent.observe(this) {
             when (it) {
-                is MainViewAction.NavigateToDetailActivity -> startActivity(
-                    Intent(
-                        this,
-                        DetailActivity::class.java
+                is MainViewAction.NavigateToDetailActivity ->
+                    startActivity(
+                        Intent(
+                            this,
+                            DetailActivity::class.java
+                        )
                     )
-                )
-                is MainViewAction.NavigateToAddRealEstateActivity -> startActivity(
-                    AddOrModifyRealEstateActivity.navigate(this, it.realEstateId)
-                )
+                is MainViewAction.NavigateToAddOrModifyRealEstateActivity ->
+                    startActivity(
+                        AddOrModifyRealEstateActivity.navigate(this, it.realEstateId)
+                    )
             }
         }
 
-        // TODO Hangyeol this should no longer be needed
-        // This Works
-//        binding.mainToolbar.setOnMenuItemClickListener { menuItem ->
-//            when (menuItem.itemId) {
-//                R.realEstateId.main_toolbar_menu_create -> {
-//                    viewModel.onToolBarMenuCreateClicked()
-//                    true
-//                }
-//
-//                R.realEstateId.main_toolbar_menu_modify -> {
-//                    true
-//                }
-//
-//                else -> {
-//                    // If we got here, the user's action was not recognized.
-//                    // Invoke the superclass to handle it.
-//                    super.onOptionsItemSelected(menuItem)
-//                }
-//            }
-//        }
     }
 
 
@@ -94,19 +76,19 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    // TODO Hangyeol This should work in all 3 configurations
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.main_toolbar_menu_create -> {
-            viewModel.onToolBarMenuCreateClicked()
-            true
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
+            R.id.main_toolbar_menu_create -> {
+                viewModel.onToolBarMenuCreateClicked()
+                true
+            }
+            R.id.main_toolbar_menu_modify -> {
+                true
+            }
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            else -> super.onOptionsItemSelected(item)
         }
-        R.id.main_toolbar_menu_modify -> {
-            true
-        }
-        // If we got here, the user's action was not recognized.
-        // Invoke the superclass to handle it.
-        else -> super.onOptionsItemSelected(item)
-    }
 
 
     private fun setUpToolBarAndDrawerLayout() {

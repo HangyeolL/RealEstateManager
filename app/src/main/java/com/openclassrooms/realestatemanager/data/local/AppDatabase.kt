@@ -1,22 +1,12 @@
 package com.openclassrooms.realestatemanager.data.local
 
-import android.app.Application
-import android.util.Log
 import androidx.room.*
-import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.workDataOf
 import com.google.android.gms.maps.model.LatLng
-import com.google.gson.Gson
 import com.openclassrooms.realestatemanager.data.local.dao.AgentDao
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.data.model.AgentEntity
 import com.openclassrooms.realestatemanager.data.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.data.model.RealEstatePhoto
-import com.openclassrooms.realestatemanager.data.model.RealEstateWithPhotos
-import java.util.ArrayList
 
 @Database(
     entities = [AgentEntity::class, RealEstateEntity::class, RealEstatePhoto::class],
@@ -117,7 +107,7 @@ abstract class AppDatabase : RoomDatabase() {
                     elevator = true,
                     groceryStoreNearby = true,
                     isSoldOut = false,
-                    dataOfSold = null,
+                    dateOfSold = null,
                     marketSince = "01/01/2022",
                     agentIdInCharge = 1,
                     latLng = LatLng(22.22, 22.22)
@@ -138,7 +128,7 @@ abstract class AppDatabase : RoomDatabase() {
                     elevator = true,
                     groceryStoreNearby = true,
                     isSoldOut = false,
-                    dataOfSold = null,
+                    dateOfSold = null,
                     marketSince = "01/01/2022",
                     agentIdInCharge = 1,
                     latLng = LatLng(22.22, 22.22)
@@ -159,7 +149,7 @@ abstract class AppDatabase : RoomDatabase() {
                     elevator = true,
                     groceryStoreNearby = true,
                     isSoldOut = false,
-                    dataOfSold = null,
+                    dateOfSold = null,
                     marketSince = "01/01/2022",
                     agentIdInCharge = 1,
                     latLng = LatLng(22.22, 22.22)
@@ -180,7 +170,7 @@ abstract class AppDatabase : RoomDatabase() {
                     elevator = false,
                     groceryStoreNearby = true,
                     isSoldOut = false,
-                    dataOfSold = null,
+                    dateOfSold = null,
                     marketSince = "01/01/2022",
                     agentIdInCharge = 1,
                     latLng = LatLng(22.22, 22.22)
@@ -201,7 +191,7 @@ abstract class AppDatabase : RoomDatabase() {
                     elevator = false,
                     groceryStoreNearby = true,
                     isSoldOut = false,
-                    dataOfSold = null,
+                    dateOfSold = null,
                     marketSince = "01/01/2022",
                     agentIdInCharge = 1,
                     latLng = LatLng(22.22, 22.22)
@@ -222,7 +212,7 @@ abstract class AppDatabase : RoomDatabase() {
                     elevator = false,
                     groceryStoreNearby = true,
                     isSoldOut = false,
-                    dataOfSold = null,
+                    dateOfSold = null,
                     marketSince = "01/01/2022",
                     agentIdInCharge = 1,
                     latLng = LatLng(22.22, 22.22)
@@ -243,7 +233,7 @@ abstract class AppDatabase : RoomDatabase() {
                     elevator = false,
                     groceryStoreNearby = true,
                     isSoldOut = false,
-                    dataOfSold = null,
+                    dateOfSold = null,
                     marketSince = "01/01/2022",
                     agentIdInCharge = 1,
                     latLng = LatLng(22.22, 22.22)
@@ -264,7 +254,7 @@ abstract class AppDatabase : RoomDatabase() {
                     elevator = false,
                     groceryStoreNearby = true,
                     isSoldOut = false,
-                    dataOfSold = null,
+                    dateOfSold = null,
                     marketSince = "01/01/2022",
                     agentIdInCharge = 1,
                     latLng = LatLng(22.22, 22.22)
@@ -285,7 +275,7 @@ abstract class AppDatabase : RoomDatabase() {
                     elevator = true,
                     groceryStoreNearby = true,
                     isSoldOut = false,
-                    dataOfSold = null,
+                    dateOfSold = null,
                     marketSince = "01/01/2022",
                     agentIdInCharge = 1,
                     latLng = LatLng(22.22, 22.22)
@@ -306,7 +296,7 @@ abstract class AppDatabase : RoomDatabase() {
                     elevator = false,
                     groceryStoreNearby = true,
                     isSoldOut = false,
-                    dataOfSold = null,
+                    dateOfSold = null,
                     marketSince = "01/01/2022",
                     agentIdInCharge = 1,
                     latLng = LatLng(22.22, 22.22)
@@ -332,7 +322,7 @@ abstract class AppDatabase : RoomDatabase() {
 //                        elevator = true,
 //                        groceryStoreNearby = true,
 //                        isSoldOut = false,
-//                        dataOfSold = null,
+//                        dateOfSold = null,
 //                        marketSince = "01/01/2022",
 //                        agentIdInCharge = 1,
 //                        latLng = LatLng(22.22, 22.22)
@@ -356,7 +346,7 @@ abstract class AppDatabase : RoomDatabase() {
 //                        elevator = true,
 //                        groceryStoreNearby = true,
 //                        isSoldOut = false,
-//                        dataOfSold = null,
+//                        dateOfSold = null,
 //                        marketSince = "01/01/2022",
 //                        agentIdInCharge = 1,
 //                        latLng = LatLng(22.22, 22.22)
@@ -380,7 +370,7 @@ abstract class AppDatabase : RoomDatabase() {
 //                        elevator = true,
 //                        groceryStoreNearby = true,
 //                        isSoldOut = false,
-//                        dataOfSold = null,
+//                        dateOfSold = null,
 //                        marketSince = "01/01/2022",
 //                        agentIdInCharge = 1,
 //                        latLng = LatLng(22.22, 22.22)
@@ -404,7 +394,7 @@ abstract class AppDatabase : RoomDatabase() {
 //                        elevator = false,
 //                        groceryStoreNearby = true,
 //                        isSoldOut = false,
-//                        dataOfSold = null,
+//                        dateOfSold = null,
 //                        marketSince = "01/01/2022",
 //                        agentIdInCharge = 1,
 //                        latLng = LatLng(22.22, 22.22)
@@ -429,7 +419,7 @@ abstract class AppDatabase : RoomDatabase() {
 //                        elevator = false,
 //                        groceryStoreNearby = true,
 //                        isSoldOut = false,
-//                        dataOfSold = null,
+//                        dateOfSold = null,
 //                        marketSince = "01/01/2022",
 //                        agentIdInCharge = 1,
 //                        latLng = LatLng(22.22, 22.22)
@@ -454,7 +444,7 @@ abstract class AppDatabase : RoomDatabase() {
 //                        elevator = false,
 //                        groceryStoreNearby = true,
 //                        isSoldOut = false,
-//                        dataOfSold = null,
+//                        dateOfSold = null,
 //                        marketSince = "01/01/2022",
 //                        agentIdInCharge = 1,
 //                        latLng = LatLng(22.22, 22.22)
@@ -478,7 +468,7 @@ abstract class AppDatabase : RoomDatabase() {
 //                        elevator = false,
 //                        groceryStoreNearby = true,
 //                        isSoldOut = false,
-//                        dataOfSold = null,
+//                        dateOfSold = null,
 //                        marketSince = "01/01/2022",
 //                        agentIdInCharge = 1,
 //                        latLng = LatLng(22.22, 22.22)
@@ -503,7 +493,7 @@ abstract class AppDatabase : RoomDatabase() {
 //                        elevator = false,
 //                        groceryStoreNearby = true,
 //                        isSoldOut = false,
-//                        dataOfSold = null,
+//                        dateOfSold = null,
 //                        marketSince = "01/01/2022",
 //                        agentIdInCharge = 1,
 //                        latLng = LatLng(22.22, 22.22)
@@ -528,7 +518,7 @@ abstract class AppDatabase : RoomDatabase() {
 //                        elevator = true,
 //                        groceryStoreNearby = true,
 //                        isSoldOut = false,
-//                        dataOfSold = null,
+//                        dateOfSold = null,
 //                        marketSince = "01/01/2022",
 //                        agentIdInCharge = 1,
 //                        latLng = LatLng(22.22, 22.22)
@@ -552,7 +542,7 @@ abstract class AppDatabase : RoomDatabase() {
 //                        elevator = false,
 //                        groceryStoreNearby = true,
 //                        isSoldOut = false,
-//                        dataOfSold = null,
+//                        dateOfSold = null,
 //                        marketSince = "01/01/2022",
 //                        agentIdInCharge = 1,
 //                        latLng = LatLng(22.22, 22.22)

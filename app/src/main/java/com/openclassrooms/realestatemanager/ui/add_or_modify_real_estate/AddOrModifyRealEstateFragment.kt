@@ -31,10 +31,17 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         
         val typeSpinnerAdapter = AddOrModifyRealEstateTypeSpinnerAdapter(requireContext(), R.layout.add_real_estate_spinner_item)
         val agentSpinnerAdapter = AddOrModifyRealEstateAgentSpinnerAdapter(requireContext(), R.layout.add_real_estate_spinner_item)
-        val realEstatePhotoListAdapter = DetailListAdapter()
+        val realEstatePhotoListAdapter = AddOrModifyRealEstatePhotoListAdapter()
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setAdapter(typeSpinnerAdapter)
         binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setAdapter(agentSpinnerAdapter)
         binding.addOrModifyRealEstateRecyclerViewRealEstatePhotoList.adapter = realEstatePhotoListAdapter
+
+        viewModel.mediatorFlow.observe(viewLifecycleOwner) {
+            typeSpinnerAdapter.addAll(it.typeSpinnerItemViewStateList)
+            agentSpinnerAdapter.addAll(it.agentSpinnerItemViewStateList)
+            realEstatePhotoListAdapter.submitList(it.realEstatePhotoListItemViewStateList)
+
+        }
     }
 }

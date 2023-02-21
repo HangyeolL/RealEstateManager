@@ -8,7 +8,6 @@ import com.openclassrooms.realestatemanager.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -46,7 +45,7 @@ class MainViewModel @Inject constructor(
             val realEstateId = currentRealEstateRepository.getCurrentRealEstateIdStateFlow().firstOrNull()
             withContext(Dispatchers.Main) {
                 viewActionSingleLiveEvent.setValue(
-                    MainViewAction.NavigateToAddRealEstateActivity(realEstateId)
+                    MainViewAction.NavigateToAddOrModifyRealEstateActivity(realEstateId)
                 )
             }
         }

@@ -324,7 +324,7 @@
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_chip_isSoldOut"
             app:layout_constraintTop_toTopOf="@+id/addOrModifyRealEstate_chip_isSoldOut"
-            app:placeholderText="Select the date"
+            app:placeholderText="Date"
             app:startIconDrawable="@drawable/ic_outline_calendar_month_24">
 
             <com.google.android.material.textfield.TextInputEditText
