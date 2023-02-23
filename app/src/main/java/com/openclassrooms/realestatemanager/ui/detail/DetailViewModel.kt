@@ -2,12 +2,14 @@ package com.openclassrooms.realestatemanager.ui.detail
 
 import android.app.Application
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.model.AgentEntity
+import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
@@ -45,35 +47,33 @@ class DetailViewModel @Inject constructor(
         combine(
             realEstateFlow,
             agentListFlow,
-        ) { realEstateWithPhotos, agentList ->
+        ) { realEstate, agentList ->
 
-            val itemViewStateList = ArrayList<DetailListItemViewState>()
-
-            realEstateWithPhotos.realEstatePhotoLists.forEach { realEstatePhoto ->
-                itemViewStateList.add(
-                    DetailListItemViewState(
-                        realEstatePhoto.photoId,
-                        realEstatePhoto.url,
-                        realEstatePhoto.description ?: ""
-                    )
+            val photoListItemViewStateList = realEstate.realEstatePhotoLists.map {
+                RealEstatePhotoItemViewState.Content(
+                    it.photoId,
+                    it.url,
+                    it.description
                 )
-
+            } + RealEstatePhotoItemViewState.AddRealEstatePhoto {
+                Log.d("HG", "AddOrModifyRealEstateViewModel.onAddPhotoClicked() called")
             }
+
 
             val agentInCharge: AgentEntity? =
                 agentList.find {
-                    it.agentId == realEstateWithPhotos.realEstateEntity.agentIdInCharge
+                    it.agentId == realEstate.realEstateEntity.agentIdInCharge
                 }
 
             emit(
                 DetailViewState(
-                    itemViewStateList,
-                    realEstateWithPhotos.realEstateEntity.descriptionBody,
-                    realEstateWithPhotos.realEstateEntity.squareMeter,
-                    realEstateWithPhotos.realEstateEntity.numberOfRooms,
-                    realEstateWithPhotos.realEstateEntity.numberOfBathrooms,
-                    realEstateWithPhotos.realEstateEntity.numberOfBedrooms,
-                    realEstateWithPhotos.realEstateEntity.address,
+                    photoListItemViewStateList,
+                    realEstate.realEstateEntity.descriptionBody,
+                    realEstate.realEstateEntity.squareMeter,
+                    realEstate.realEstateEntity.numberOfRooms,
+                    realEstate.realEstateEntity.numberOfBathrooms,
+                    realEstate.realEstateEntity.numberOfBedrooms,
+                    realEstate.realEstateEntity.address,
                     agentInCharge?.name ?: application.getString(R.string.none),
                     true
                 )

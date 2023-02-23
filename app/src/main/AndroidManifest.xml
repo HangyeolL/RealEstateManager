@@ -15,10 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.add_or_modify_real_estate.AddOrModifyRealEstateActivity"
-            android:exported="false"
-            android:parentActivityName=".ui.main.MainActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -33,14 +29,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.detail.DetailActivity"
+            android:parentActivityName=".ui.main.MainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.add_or_modify_real_estate.AddOrModifyRealEstateActivity"
             android:exported="false" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             tools:node="remove" />
+
     </application>
 
 </manifest>

@@ -4,9 +4,8 @@ import android.app.Application
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.*
-import com.bumptech.glide.Glide.init
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.design_system.photo_carousel.PhotoCarouselViewState
+import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragment.Companion.KEY_REAL_ESTATE_ID
@@ -75,12 +74,12 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                     )
 
                     val photoListItemViewStateList = realEstate.realEstatePhotoLists.map {
-                            PhotoCarouselViewState.Content(
+                            RealEstatePhotoItemViewState.Content(
                                 it.photoId,
                                 it.url,
                                 it.description
                             )
-                    } + PhotoCarouselViewState.AddPhoto {
+                    } + RealEstatePhotoItemViewState.AddRealEstatePhoto {
                         Log.d("Nino", "AddOrModifyRealEstateViewModel.onAddPhotoClicked() called")
                     }
 

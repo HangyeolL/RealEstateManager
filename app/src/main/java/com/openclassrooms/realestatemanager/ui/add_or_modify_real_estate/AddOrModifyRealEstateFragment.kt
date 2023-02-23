@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.ui.detail.DetailListAdapter
+import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoListAdapter
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,7 +31,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         
         val typeSpinnerAdapter = AddOrModifyRealEstateTypeSpinnerAdapter(requireContext(), R.layout.add_real_estate_spinner_item)
         val agentSpinnerAdapter = AddOrModifyRealEstateAgentSpinnerAdapter(requireContext(), R.layout.add_real_estate_spinner_item)
-        val realEstatePhotoListAdapter = AddOrModifyRealEstatePhotoListAdapter()
+        val realEstatePhotoListAdapter = RealEstatePhotoListAdapter()
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setAdapter(typeSpinnerAdapter)
         binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setAdapter(agentSpinnerAdapter)
