@@ -1,11 +1,10 @@
 package com.openclassrooms.realestatemanager.domain.realEstate
 
 import androidx.room.*
-import com.openclassrooms.realestatemanager.data.model.RealEstateEntity
-import com.openclassrooms.realestatemanager.data.model.RealEstatePhoto
-import com.openclassrooms.realestatemanager.data.model.RealEstateWithPhotos
+import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
+import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhoto
+import com.openclassrooms.realestatemanager.data.local.model.RealEstateWithPhotos
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 interface RealEstateRepository {
 

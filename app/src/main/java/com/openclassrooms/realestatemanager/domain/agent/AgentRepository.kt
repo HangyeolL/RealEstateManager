@@ -1,6 +1,6 @@
 package com.openclassrooms.realestatemanager.domain.agent
 
-import com.openclassrooms.realestatemanager.data.model.AgentEntity
+import com.openclassrooms.realestatemanager.data.local.model.AgentEntity
 import kotlinx.coroutines.flow.Flow
 
 interface AgentRepository {

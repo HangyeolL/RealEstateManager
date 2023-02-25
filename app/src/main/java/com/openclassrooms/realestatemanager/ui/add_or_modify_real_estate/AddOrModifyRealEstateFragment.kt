@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoListAdapter
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +23,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
     }
 
-    private val binding by viewBinding { com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateFragmentBinding.bind(it) }
+    private val binding by viewBinding { AddOrModifyRealEstateFragmentBinding.bind(it) }
 
     private val viewModel by viewModels<AddOrModifyRealEstateViewModel>()
 
@@ -38,10 +39,23 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         binding.addOrModifyRealEstateRecyclerViewRealEstatePhotoList.adapter = realEstatePhotoListAdapter
 
         viewModel.mediatorFlow.observe(viewLifecycleOwner) {
+
             typeSpinnerAdapter.addAll(it.typeSpinnerItemViewStateList)
             agentSpinnerAdapter.addAll(it.agentSpinnerItemViewStateList)
             realEstatePhotoListAdapter.submitList(it.realEstatePhotoListItemViewStateList)
 
+            binding.addOrModifyRealEstateTextInputEditTextNumberOfRooms.setText(it.numberOfRooms.toString())
+            binding.addOrModifyRealEstateTextInputEditTextNumberOfBedRooms.setText(it.numberOfBedrooms.toString())
+            binding.addOrModifyRealEstateTextInputEditTextNumberOfBathRooms.setText(it.numberOfBathrooms.toString())
+
+            binding.addOrModifyRealEstateTextInputEditTextAddress.setText(it.address)
+            binding.addOrModifyRealEstateTextInputEditTextDescriptionBody.setText(it.description)
+            binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText(it.marketSince)
+            binding.addOrModifyRealEstateTextInputEditTextSoldOutDate.setText(it.dateOfSold)
+            binding.addOrModifyRealEstateTextInputEditTextPrice.setText(it.price.toString())
+            binding.addOrModifyRealEstateTextInputEditTextSqm.setText(it.squareMeter.toString())
         }
+
+
     }
 }

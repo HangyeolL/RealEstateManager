@@ -4,12 +4,12 @@ import androidx.room.*
 import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.data.local.dao.AgentDao
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
-import com.openclassrooms.realestatemanager.data.model.AgentEntity
-import com.openclassrooms.realestatemanager.data.model.RealEstateEntity
-import com.openclassrooms.realestatemanager.data.model.RealEstatePhoto
+import com.openclassrooms.realestatemanager.data.local.model.AgentEntity
+import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
+import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity
 
 @Database(
-    entities = [AgentEntity::class, RealEstateEntity::class, RealEstatePhoto::class],
+    entities = [AgentEntity::class, RealEstateEntity::class, RealEstatePhotoEntity::class],
     version = 1,
     exportSchema = true
 )

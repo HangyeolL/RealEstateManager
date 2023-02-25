@@ -1,21 +1,17 @@
 package com.openclassrooms.realestatemanager.data.local
 
 import android.content.Context
-import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.google.gson.Gson
-import com.openclassrooms.realestatemanager.data.model.AgentEntity
-import com.openclassrooms.realestatemanager.data.model.RealEstateEntity
-import com.openclassrooms.realestatemanager.data.model.RealEstatePhoto
-import com.openclassrooms.realestatemanager.data.model.RealEstateWithPhotos
+import com.openclassrooms.realestatemanager.data.local.model.AgentEntity
+import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.data.utils.fromJson
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

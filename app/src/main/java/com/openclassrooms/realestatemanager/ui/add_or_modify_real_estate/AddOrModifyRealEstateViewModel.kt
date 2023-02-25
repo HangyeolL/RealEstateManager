@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.*
+import androidx.lifecycle.Transformations.map
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
@@ -25,7 +26,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    lateinit var mediatorFlow: LiveData<AddOrModifyRealEstateViewState>
+    val mediatorFlow: LiveData<AddOrModifyRealEstateViewState>
 
     init {
         val realEstateId: Int? = savedStateHandle[KEY_REAL_ESTATE_ID]
@@ -35,51 +36,65 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
             //TODO Doing this here doesn't feel right..? better way to do transformations ?
 
-            val realEstateFlow = realEstateRepository.getRealEstateById(realEstateId)
-            val agentInChargeFlow = realEstateFlow
+            val allRealEstatesFlow = realEstateRepository.getRealEstatesWithPhotos()
+            val allAgentsFlow = agentRepository.getAllAgents()
+            val selectedRealEstateFlow = realEstateRepository.getRealEstateById(realEstateId)
+            val agentInChargeFlow = selectedRealEstateFlow
                 .flatMapLatest { realEstateWithPhotos ->
                     agentRepository.getAgentById(realEstateWithPhotos.realEstateEntity.agentIdInCharge)
                 }
 
             mediatorFlow = liveData(Dispatchers.IO) {
                 combine(
-                    realEstateFlow,
-                    agentInChargeFlow
-                ) { realEstate, agentInCharge ->
+                    selectedRealEstateFlow,
+                    agentInChargeFlow,
+                    allRealEstatesFlow,
+                    allAgentsFlow,
+                ) { realEstate, agentInCharge, allRealEstates, allAgents ->
 
                     val typeSpinnerItemViewStateList = listOf(
                         AddOrModifyRealEstateTypeSpinnerItemViewState(
                             ResourcesCompat.getDrawable(
                                 application.resources,
-                                when (realEstate.realEstateEntity.type) {
-                                    "House" -> R.drawable.ic_baseline_house_24
-                                    "Studio" -> R.drawable.ic_baseline_bed_24
-                                    "Apartment" -> R.drawable.ic_baseline_apartment_24
-                                    else -> {
-                                        null
-                                    }
-                                } as Int,
+                                R.drawable.ic_baseline_house_24,
                                 null
                             ),
-                            realEstate.realEstateEntity.type
+                            "House"
+                        ),
+                        AddOrModifyRealEstateTypeSpinnerItemViewState(
+                            ResourcesCompat.getDrawable(
+                                application.resources,
+                                R.drawable.ic_baseline_apartment_24,
+                                null
+                            ),
+                            "Apartment"
+                        ),
+                        AddOrModifyRealEstateTypeSpinnerItemViewState(
+                            ResourcesCompat.getDrawable(
+                                application.resources,
+                                R.drawable.ic_baseline_bed_24,
+                                null
+                            ),
+                            "Studio"
                         )
                     )
 
-                    val agentSpinnerItemViewStateList = listOf(
+                    val agentSpinnerItemViewStateList = allAgents.map {
                         AddOrModifyRealEstateAgentSpinnerItemViewState(
-                            agentInCharge.agentId,
-                            agentInCharge.name,
-                            agentInCharge.photoUrl
+                            it.agentId,
+                            it.name,
+                            it.photoUrl
                         )
-                    )
+                    }
 
                     val photoListItemViewStateList = realEstate.realEstatePhotoLists.map {
-                            RealEstatePhotoItemViewState.Content(
-                                it.photoId,
-                                it.url,
-                                it.description
-                            )
+                        RealEstatePhotoItemViewState.Content(
+                            it.photoId,
+                            it.url,
+                            it.description
+                        )
                     } + RealEstatePhotoItemViewState.AddRealEstatePhoto {
+
                         Log.d("Nino", "AddOrModifyRealEstateViewModel.onAddPhotoClicked() called")
                     }
 
@@ -112,7 +127,9 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
             }
 
         } else { // TODO Case : ADD / normal case : blank view state
+            mediatorFlow = liveData(Dispatchers.IO) {
 
+            }
         }
     }
 }

@@ -12,7 +12,6 @@ import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEst
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState.PhotoCarouselType.ADD_PHOTO
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState.PhotoCarouselType.CONTENT
 
-//TODO Didnt understand perfectly how it works
 class RealEstatePhotoListAdapter :
     ListAdapter<RealEstatePhotoItemViewState, ViewHolder>(PhotoCarouselDiffCallback) {
 

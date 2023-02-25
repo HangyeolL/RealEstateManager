@@ -25,17 +25,12 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback {
     private val viewModel by viewModels<MapViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        when (PackageManager.PERMISSION_GRANTED) {
-            ContextCompat.checkSelfPermission(requireContext(), ACCESS_FINE_LOCATION) -> {
-                getMapAsync(this)
-            }
-        }
+        getMapAsync(this)
     }
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         googleMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
-        googleMap.isMyLocationEnabled = true
 
         viewModel.latLngLiveData.observe(viewLifecycleOwner) {
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it.latLng, 14f))

@@ -11,6 +11,8 @@ import com.openclassrooms.realestatemanager.data.local.AppDatabase
 import com.openclassrooms.realestatemanager.data.local.AppDatabase.Companion.DATABASE_NAME
 import com.openclassrooms.realestatemanager.data.local.dao.AgentDao
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
+import com.openclassrooms.realestatemanager.data.remote.GoogleApi
+import com.openclassrooms.realestatemanager.data.remote.GoogleApiHolder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,8 +25,7 @@ object DataProvideModule {
 
     @Provides
     @Singleton
-    fun provideWorkManager(application: Application): WorkManager =
-        WorkManager.getInstance(application)
+    fun provideWorkManager(application: Application): WorkManager = WorkManager.getInstance(application)
 
     @Provides
     @Singleton
@@ -55,13 +56,15 @@ object DataProvideModule {
 
     @Provides
     @Singleton
-    fun provideRealEstateDao(appDatabase: AppDatabase): RealEstateDao =
-        appDatabase.getRealEstateDao()
+    fun provideRealEstateDao(appDatabase: AppDatabase): RealEstateDao = appDatabase.getRealEstateDao()
 
     @Provides
     @Singleton
     fun provideFusedLocationProviderClient(application: Application): FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(application)
 
+    @Provides
+    @Singleton
+    fun provideGoogleApi(): GoogleApi = GoogleApiHolder.getInstance().create(GoogleApi::class.java)
 
 }

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.data.model
+package com.openclassrooms.realestatemanager.data.local.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
         )
     ]
 )
-data class RealEstatePhoto(
+data class RealEstatePhotoEntity(
 
     @PrimaryKey(autoGenerate = true)
     val photoId: Int = 0,

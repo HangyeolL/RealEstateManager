@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.data.model
+package com.openclassrooms.realestatemanager.data.local.model
 
 import androidx.room.Embedded
 import androidx.room.Relation
@@ -8,7 +8,7 @@ data class RealEstateWithPhotos(
     @Relation(
         parentColumn = "realEstateId",
         entityColumn = "realEstateIdOfPhoto",
-        entity = RealEstatePhoto::class
+        entity = RealEstatePhotoEntity::class
     )
-    val realEstatePhotoLists : List<RealEstatePhoto>
+    val realEstatePhotoLists : List<RealEstatePhotoEntity>
 )

@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.ui.detail
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,11 @@ class DetailActivity : AppCompatActivity() {
         viewModel.viewActionSingleLiveEvent.observe(this) { intent ->
             startActivity(intent)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.detail_toolbar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =

@@ -2,19 +2,17 @@ package com.openclassrooms.realestatemanager.ui.detail
 
 import android.app.Application
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.data.model.AgentEntity
+import com.openclassrooms.realestatemanager.data.local.model.AgentEntity
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateActivity
-import com.openclassrooms.realestatemanager.ui.main.MainViewAction
 import com.openclassrooms.realestatemanager.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -55,10 +53,7 @@ class DetailViewModel @Inject constructor(
                     it.url,
                     it.description
                 )
-            } + RealEstatePhotoItemViewState.AddRealEstatePhoto {
-                Log.d("HG", "AddOrModifyRealEstateViewModel.onAddPhotoClicked() called")
             }
-
 
             val agentInCharge: AgentEntity? =
                 agentList.find {
