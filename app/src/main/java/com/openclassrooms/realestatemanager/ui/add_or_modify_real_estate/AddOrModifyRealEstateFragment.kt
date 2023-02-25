@@ -1,7 +1,10 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.openclassrooms.realestatemanager.R
@@ -54,8 +57,21 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             binding.addOrModifyRealEstateTextInputEditTextSoldOutDate.setText(it.dateOfSold)
             binding.addOrModifyRealEstateTextInputEditTextPrice.setText(it.price.toString())
             binding.addOrModifyRealEstateTextInputEditTextSqm.setText(it.squareMeter.toString())
+
         }
 
+        binding.addOrModifyRealEstateTextInputEditTextAddress.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewModel.onEditTextAddressChanged()
+            }
+
+            override fun afterTextChanged(text: Editable?) {
+            }
+        })
 
     }
 }

@@ -8,6 +8,7 @@ import androidx.lifecycle.Transformations.map
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
+import com.openclassrooms.realestatemanager.domain.autocomplete.AutoCompleteRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragment.Companion.KEY_REAL_ESTATE_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,10 +21,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddOrModifyRealEstateViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val application: Application,
     private val agentRepository: AgentRepository,
     private val realEstateRepository: RealEstateRepository,
-    private val savedStateHandle: SavedStateHandle,
+    private val autoCompleteRepository: AutoCompleteRepository,
 ) : ViewModel() {
 
     val mediatorFlow: LiveData<AddOrModifyRealEstateViewState>
@@ -131,7 +133,13 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
             }
         }
+
     }
+
+    fun onEditTextAddressChanged(userInput: String) {
+        autoCompleteRepository.requestMyAutocompleteResponse()
+    }
+
 }
 //                typeSpinnerItemViewStateList.add(
 //                    AddOrModifyRealEstateTypeSpinnerItemViewState(
