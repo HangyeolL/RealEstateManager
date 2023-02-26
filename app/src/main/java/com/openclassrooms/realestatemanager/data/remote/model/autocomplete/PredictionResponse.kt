@@ -7,30 +7,30 @@ data class PredictionResponse(
 
     @SerializedName("description")
     @Expose
-    private val description: String,
+    val description: String,
 
     @SerializedName("matched_substrings")
     @Expose
-    private val matchedSubstrings: List<MatchedSubstringResponse>? = null,
+    val matchedSubstrings: List<MatchedSubstringResponse>? = null,
 
     @SerializedName("place_id")
     @Expose
-    private val placeId: String,
+    val placeId: String,
 
     @SerializedName("reference")
     @Expose
-    private val reference: String,
+    val reference: String,
 
     @SerializedName("structured_formatting")
     @Expose
-    private val structuredFormattingResponse: StructuredFormattingResponse,
+    val structuredFormattingResponse: StructuredFormattingResponse,
 
     @SerializedName("termResponses")
     @Expose
-    private val termResponses: List<TermResponse>? = null,
+    val termResponses: List<TermResponse>? = null,
 
     @SerializedName("types")
     @Expose
-    private val types: List<String>? = null,
+    val types: List<String>? = null,
 
     )

@@ -4,11 +4,10 @@ import android.app.Application
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.*
-import androidx.lifecycle.Transformations.map
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
-import com.openclassrooms.realestatemanager.domain.autocomplete.AutoCompleteRepository
+import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragment.Companion.KEY_REAL_ESTATE_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +24,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private val application: Application,
     private val agentRepository: AgentRepository,
     private val realEstateRepository: RealEstateRepository,
-    private val autoCompleteRepository: AutoCompleteRepository,
+    private val autoCompleteRepository: AutocompleteRepository,
 ) : ViewModel() {
 
     val mediatorFlow: LiveData<AddOrModifyRealEstateViewState>
@@ -45,6 +44,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                 .flatMapLatest { realEstateWithPhotos ->
                     agentRepository.getAgentById(realEstateWithPhotos.realEstateEntity.agentIdInCharge)
                 }
+            val autocompleteResponseFlow = autoCompleteRepository.getMyAutocompleteResponse()
 
             mediatorFlow = liveData(Dispatchers.IO) {
                 combine(
@@ -52,7 +52,9 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                     agentInChargeFlow,
                     allRealEstatesFlow,
                     allAgentsFlow,
-                ) { realEstate, agentInCharge, allRealEstates, allAgents ->
+                    autocompleteResponseFlow,
+
+                ) { realEstate, agentInCharge, allRealEstates, allAgents, autocompleteResponse ->
 
                     val typeSpinnerItemViewStateList = listOf(
                         AddOrModifyRealEstateTypeSpinnerItemViewState(
@@ -106,6 +108,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                             agentSpinnerItemViewStateList,
                             photoListItemViewStateList,
                             realEstate.realEstateEntity.address,
+                            autocompleteResponse?.predictions ?: emptyList(),
                             realEstate.realEstateEntity.numberOfRooms,
                             realEstate.realEstateEntity.numberOfBathrooms,
                             realEstate.realEstateEntity.numberOfBedrooms,
@@ -137,7 +140,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     }
 
     fun onEditTextAddressChanged(userInput: String) {
-        autoCompleteRepository.requestMyAutocompleteResponse()
+        autoCompleteRepository.requestMyAutocompleteResponse(userInput)
     }
 
 }

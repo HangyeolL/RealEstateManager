@@ -2,7 +2,7 @@ package com.openclassrooms.realestatemanager.data.local.dao
 
 import androidx.room.*
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
-import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhoto
+import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateWithPhotos
 import kotlinx.coroutines.flow.Flow
 
@@ -13,13 +13,13 @@ interface RealEstateDao {
     suspend fun upsertRealEstate(realEstateEntity: RealEstateEntity)
 
     @Insert
-    suspend fun insertRealEstatePhoto(realEstatePhoto: RealEstatePhoto)
+    suspend fun insertRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity)
 
     @Query("DELETE FROM realEstates WHERE realEstateId = :realEstateId")
     suspend fun deleteRealEstate(realEstateId: Int)
 
     @Delete
-    fun deleteRealEstatePhoto(realEstatePhoto: RealEstatePhoto)
+    fun deleteRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity)
 
     @Query("SELECT * FROM realEstates WHERE realEstateId = :realEstateId")
     fun getRealEstateById(realEstateId: Int) : Flow<RealEstateWithPhotos>

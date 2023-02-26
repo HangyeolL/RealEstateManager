@@ -46,8 +46,8 @@
             app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_asTypeSpinner"
             app:startIconDrawable="@drawable/ic_baseline_location_on_24">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addOrModifyRealEstate_TextInputEditText_address"
+            <AutoCompleteTextView
+                android:id="@+id/addOrModifyRealEstate_AutoCompleteTextView_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

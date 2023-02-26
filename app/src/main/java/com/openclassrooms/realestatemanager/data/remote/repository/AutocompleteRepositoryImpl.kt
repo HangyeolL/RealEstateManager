@@ -4,7 +4,7 @@ import android.util.Log
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.data.remote.GoogleApi
 import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.MyAutocompleteResponse
-import com.openclassrooms.realestatemanager.domain.autocomplete.AutoCompleteRepository
+import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,12 +14,12 @@ import retrofit2.Response
 import javax.inject.Inject
 
 
-class AutoCompleteRepositoryImpl @Inject constructor(
+class AutocompleteRepositoryImpl @Inject constructor(
     private val googleApi: GoogleApi,
-) : AutoCompleteRepository {
+) : AutocompleteRepository {
 
-    private val autoCompleteMutableStateFlow = MutableStateFlow<MyAutocompleteResponse?>(null)
-    private val autoCompleteStateFlow = autoCompleteMutableStateFlow.asStateFlow()
+    private val autocompleteMutableStateFlow = MutableStateFlow<MyAutocompleteResponse?>(null)
+    private val autocompleteStateFlow = autocompleteMutableStateFlow.asStateFlow()
 
 //    private val userInputMutableStateFlow = MutableStateFlow<String?>(null)
 
@@ -35,18 +35,18 @@ class AutoCompleteRepositoryImpl @Inject constructor(
                 call: Call<MyAutocompleteResponse?>,
                 response: Response<MyAutocompleteResponse?>
             ) {
-                autoCompleteMutableStateFlow.value = response.body()
+                autocompleteMutableStateFlow.value = response.body()
             }
 
             override fun onFailure(call: Call<MyAutocompleteResponse?>, t: Throwable) {
                 Log.w("HG", "Get Autocomplete data failed", t)
-                autoCompleteMutableStateFlow.value = null
+                autocompleteMutableStateFlow.value = null
             }
         })
 
     }
 
-    override fun getMyAutocompleteResponse() : StateFlow<MyAutocompleteResponse?> = autoCompleteStateFlow
+    override fun getMyAutocompleteResponse() : StateFlow<MyAutocompleteResponse?> = autocompleteStateFlow
 
 //    override fun setUserInput(userInput: String) {
 //        userInputMutableStateFlow.value = userInput

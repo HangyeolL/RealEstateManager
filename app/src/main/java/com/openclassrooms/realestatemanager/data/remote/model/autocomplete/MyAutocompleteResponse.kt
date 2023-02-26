@@ -7,10 +7,10 @@ data class MyAutocompleteResponse(
 
     @SerializedName("predictions")
     @Expose
-    private val predictions: List<PredictionResponse>,
+    val predictions: List<PredictionResponse>,
 
     @SerializedName("status")
     @Expose
-    private val status: String,
+    val status: String,
 
     )

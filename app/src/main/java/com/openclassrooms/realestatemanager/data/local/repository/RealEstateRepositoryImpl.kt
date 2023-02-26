@@ -2,7 +2,7 @@ package com.openclassrooms.realestatemanager.data.local.repository
 
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
-import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhoto
+import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateWithPhotos
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import kotlinx.coroutines.flow.Flow
@@ -13,11 +13,11 @@ class RealEstateRepositoryImpl @Inject constructor(
 ) : RealEstateRepository {
     override suspend fun upsertRealEstate(realEstateEntity: RealEstateEntity) = realEstateDao.upsertRealEstate(realEstateEntity)
 
-    override suspend fun insertRealEstatePhoto(realEstatePhoto: RealEstatePhoto) = realEstateDao.insertRealEstatePhoto(realEstatePhoto)
+    override suspend fun insertRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity) = realEstateDao.insertRealEstatePhoto(realEstatePhotoEntity)
 
     override suspend fun deleteRealEstate(realEstateId: Int) = realEstateDao.deleteRealEstate(realEstateId)
 
-    override fun deleteRealEstatePhoto(realEstatePhoto: RealEstatePhoto) = realEstateDao.deleteRealEstatePhoto(realEstatePhoto)
+    override fun deleteRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity) = realEstateDao.deleteRealEstatePhoto(realEstatePhotoEntity)
 
     override fun getRealEstateById(realEstateId: Int): Flow<RealEstateWithPhotos> = realEstateDao.getRealEstateById(realEstateId)
 

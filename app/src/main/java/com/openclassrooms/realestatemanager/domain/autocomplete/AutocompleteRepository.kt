@@ -4,7 +4,7 @@ import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.MyAut
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-interface AutoCompleteRepository {
+interface AutocompleteRepository {
 
     fun requestMyAutocompleteResponse(userInput: String,)
 
