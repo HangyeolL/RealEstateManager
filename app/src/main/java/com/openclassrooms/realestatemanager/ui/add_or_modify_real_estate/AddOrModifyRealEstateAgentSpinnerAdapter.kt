@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.annotation.NonNull
 import com.bumptech.glide.Glide
-import com.openclassrooms.realestatemanager.databinding.AddRealEstateSpinnerItemBinding
+import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateSpinnerItemBinding
 
 class AddOrModifyRealEstateAgentSpinnerAdapter(
     context: Context,
@@ -23,7 +23,7 @@ class AddOrModifyRealEstateAgentSpinnerAdapter(
     }
 
     private fun getCustomView(position: Int, @NonNull parent: ViewGroup): View {
-        val itemBinding = AddRealEstateSpinnerItemBinding.inflate(
+        val itemBinding = AddOrModifyRealEstateSpinnerItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

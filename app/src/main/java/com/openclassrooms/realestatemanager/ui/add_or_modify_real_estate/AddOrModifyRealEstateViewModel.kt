@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.*
+import com.bumptech.glide.Glide.init
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
@@ -27,25 +28,28 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private val autoCompleteRepository: AutocompleteRepository,
 ) : ViewModel() {
 
+    val realEstateId: Int? = savedStateHandle[KEY_REAL_ESTATE_ID]
+
     val mediatorFlow: LiveData<AddOrModifyRealEstateViewState>
 
-    init {
-        val realEstateId: Int? = savedStateHandle[KEY_REAL_ESTATE_ID]
+    private val allRealEstatesFlow = realEstateRepository.getRealEstatesWithPhotos()
+    private val allAgentsFlow = agentRepository.getAllAgents()
+    private val autocompleteResponseFlow = autoCompleteRepository.getMyAutocompleteResponse()
 
-        // TODO Case : MODIFY
+    private var realEstateType: String? = null
+    private var numberOfRooms: Int? = null
+
+    // TODO Case : MODIFY
+    init {
         if (realEstateId != null) {
 
-            //TODO Doing this here doesn't feel right..? better way to do transformations ?
-
-            val allRealEstatesFlow = realEstateRepository.getRealEstatesWithPhotos()
-            val allAgentsFlow = agentRepository.getAllAgents()
             val selectedRealEstateFlow = realEstateRepository.getRealEstateById(realEstateId)
             val agentInChargeFlow = selectedRealEstateFlow
                 .flatMapLatest { realEstateWithPhotos ->
                     agentRepository.getAgentById(realEstateWithPhotos.realEstateEntity.agentIdInCharge)
                 }
-            val autocompleteResponseFlow = autoCompleteRepository.getMyAutocompleteResponse()
 
+            //TODO Doing this here doesn't feel right..? better way to do transformations ?
             mediatorFlow = liveData(Dispatchers.IO) {
                 combine(
                     selectedRealEstateFlow,
@@ -54,7 +58,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                     allAgentsFlow,
                     autocompleteResponseFlow,
 
-                ) { realEstate, agentInCharge, allRealEstates, allAgents, autocompleteResponse ->
+                    ) { selectedRealEstate, agentInCharge, allRealEstates, allAgents, autocompleteResponse ->
 
                     val typeSpinnerItemViewStateList = listOf(
                         AddOrModifyRealEstateTypeSpinnerItemViewState(
@@ -91,7 +95,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         )
                     }
 
-                    val photoListItemViewStateList = realEstate.realEstatePhotoLists.map {
+                    val photoListItemViewStateList = selectedRealEstate.realEstatePhotoLists.map {
                         RealEstatePhotoItemViewState.Content(
                             it.photoId,
                             it.url,
@@ -107,22 +111,22 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                             typeSpinnerItemViewStateList,
                             agentSpinnerItemViewStateList,
                             photoListItemViewStateList,
-                            realEstate.realEstateEntity.address,
+                            selectedRealEstate.realEstateEntity.address,
                             autocompleteResponse?.predictions ?: emptyList(),
-                            realEstate.realEstateEntity.numberOfRooms,
-                            realEstate.realEstateEntity.numberOfBathrooms,
-                            realEstate.realEstateEntity.numberOfBedrooms,
-                            realEstate.realEstateEntity.squareMeter,
-                            realEstate.realEstateEntity.marketSince,
-                            realEstate.realEstateEntity.price,
-                            realEstate.realEstateEntity.garage,
-                            realEstate.realEstateEntity.guard,
-                            realEstate.realEstateEntity.garden,
-                            realEstate.realEstateEntity.elevator,
-                            realEstate.realEstateEntity.groceryStoreNearby,
-                            realEstate.realEstateEntity.isSoldOut,
-                            realEstate.realEstateEntity.dateOfSold,
-                            realEstate.realEstateEntity.descriptionBody,
+                            selectedRealEstate.realEstateEntity.numberOfRooms,
+                            selectedRealEstate.realEstateEntity.numberOfBathrooms,
+                            selectedRealEstate.realEstateEntity.numberOfBedrooms,
+                            selectedRealEstate.realEstateEntity.squareMeter,
+                            selectedRealEstate.realEstateEntity.marketSince,
+                            selectedRealEstate.realEstateEntity.price,
+                            selectedRealEstate.realEstateEntity.garage,
+                            selectedRealEstate.realEstateEntity.guard,
+                            selectedRealEstate.realEstateEntity.garden,
+                            selectedRealEstate.realEstateEntity.elevator,
+                            selectedRealEstate.realEstateEntity.groceryStoreNearby,
+                            selectedRealEstate.realEstateEntity.isSoldOut,
+                            selectedRealEstate.realEstateEntity.dateOfSold,
+                            selectedRealEstate.realEstateEntity.descriptionBody,
                         )
                     )
 
@@ -136,12 +140,20 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
             }
         }
+    }
 
+    fun onTypeSpinnerItemSelected(selectedItem: AddOrModifyRealEstateTypeSpinnerItemViewState) {
+        realEstateType = selectedItem.type
     }
 
     fun onEditTextAddressChanged(userInput: String) {
         autoCompleteRepository.requestMyAutocompleteResponse(userInput)
     }
+
+    fun onEditTextNumberOfRoomsChanged(userInput: Int) {
+        numberOfRooms = userInput
+    }
+
 
 }
 //                typeSpinnerItemViewStateList.add(

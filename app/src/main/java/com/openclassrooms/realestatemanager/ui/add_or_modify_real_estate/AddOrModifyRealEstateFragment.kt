@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -38,11 +38,11 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
         val typeSpinnerAdapter = AddOrModifyRealEstateTypeSpinnerAdapter(
             requireContext(),
-            R.layout.add_real_estate_spinner_item
+            R.layout.add_or_modify_real_estate_spinner_item
         )
         val agentSpinnerAdapter = AddOrModifyRealEstateAgentSpinnerAdapter(
             requireContext(),
-            R.layout.add_real_estate_spinner_item
+            R.layout.add_or_modify_real_estate_spinner_item
         )
         val realEstatePhotoListAdapter = RealEstatePhotoListAdapter()
 
@@ -52,8 +52,12 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
         viewModel.mediatorFlow.observe(viewLifecycleOwner) {
 
+            typeSpinnerAdapter.clear()
             typeSpinnerAdapter.addAll(it.typeSpinnerItemViewStateList)
+
+            agentSpinnerAdapter.clear()
             agentSpinnerAdapter.addAll(it.agentSpinnerItemViewStateList)
+
             realEstatePhotoListAdapter.submitList(it.realEstatePhotoListItemViewStateList)
 
             binding.addOrModifyRealEstateTextInputEditTextNumberOfRooms.setText(it.numberOfRooms.toString())
@@ -77,10 +81,18 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
         }
 
+        binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.onItemSelectedListener =
+            object: AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(adapter: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    viewModel.onTypeSpinnerItemSelected(adapter?.selectedItem as AddOrModifyRealEstateTypeSpinnerItemViewState)
+                }
 
+                override fun onNothingSelected(p0: AdapterView<*>?) {
 
-        binding.addOrModifyRealEstateAutoCompleteTextViewAddress.addTextChangedListener(object :
-            TextWatcher {
+                }
+            }
+
+        binding.addOrModifyRealEstateAutoCompleteTextViewAddress.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -89,9 +101,12 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
             override fun afterTextChanged(text: Editable?) {
                 viewModel.onEditTextAddressChanged(text.toString())
-
             }
         })
+
+        binding.addOrModifyRealEstateTextInputEditTextNumberOfRooms.addTextChangedListener {
+            viewModel.onEditTextNumberOfRoomsChanged(it.toString().toInt())
+        }
 
     }
 
