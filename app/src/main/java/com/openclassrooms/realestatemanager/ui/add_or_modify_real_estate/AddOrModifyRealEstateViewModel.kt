@@ -4,7 +4,6 @@ import android.app.Application
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.*
-import com.bumptech.glide.Glide.init
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
@@ -36,8 +35,19 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private val allAgentsFlow = agentRepository.getAllAgents()
     private val autocompleteResponseFlow = autoCompleteRepository.getMyAutocompleteResponse()
 
-    private var realEstateType: String? = null
+    private var type: String? = null
     private var numberOfRooms: Int? = null
+    private var numberOfBedRooms: Int? = null
+    private var numberOfBathRooms: Int? = null
+    private var sqm: Int? = null
+    private var price: Int? = null
+    private var marketSince: String? = null
+    private var garage: Boolean? = null
+    private var guard: Boolean? = null
+    private var garden: Boolean? = null
+    private var elevator: Boolean? = null
+    private var groceryStoreNearby: Boolean? = null
+    private var isSoldOut: Boolean? = null
 
     // TODO Case : MODIFY
     init {
@@ -143,7 +153,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     }
 
     fun onTypeSpinnerItemSelected(selectedItem: AddOrModifyRealEstateTypeSpinnerItemViewState) {
-        realEstateType = selectedItem.type
+        type = selectedItem.type
     }
 
     fun onEditTextAddressChanged(userInput: String) {
@@ -154,41 +164,61 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         numberOfRooms = userInput
     }
 
-    fun onEditTextNumberOfBedRoomsChanged(toInt: Int) {
-        TODO("Not yet implemented")
+    fun onEditTextNumberOfBedRoomsChanged(userInput: Int) {
+        numberOfBedRooms = userInput
     }
 
-    fun onEditTextNumberOfBathRoomsChanged(toInt: Int) {
-        TODO("Not yet implemented")
+    fun onEditTextNumberOfBathRoomsChanged(userInput: Int) {
+        numberOfBathRooms = userInput
     }
 
-    fun onEditTextSqmChanged(toInt: Int) {
+    fun onEditTextSqmChanged(userInput: Int) {
+        sqm = userInput
+    }
+
+    fun onEditTextPriceChanged(userInput: Int) {
+        price = userInput
+    }
+
+    fun onUserDateSet(year: Int, month: Int, day: Int) {
+        marketSince = "$day/$month/$year"
+    }
+
+    fun onChipGuardClicked(checked: Boolean) {
+        guard = checked
+    }
+
+    fun onChipGarageClicked(checked: Boolean) {
+        garage = checked
+    }
+
+    fun onChipGardenClicked(checked: Boolean) {
+        garden = checked
+    }
+
+    fun onChipElevatorClicked(checked: Boolean) {
+        elevator = checked
+    }
+
+    fun onChipGroceryStoreNextByClicked(checked: Boolean) {
+        groceryStoreNearby = checked
+    }
+
+    fun onChipIsSoldOutClicked(checked: Boolean) {
+        isSoldOut = checked
+    }
+
+    fun onEditTextDescriptionChanged(description: String) {
 
     }
 
-    fun onEditTextPriceChanged(toInt: Int) {
+    fun onAgentSpinnerItemSelected(selectedItem: AddOrModifyRealEstateAgentSpinnerItemViewState) {
+
+    }
+
+    fun onSaveButtonClicked() {
 
     }
 
 
 }
-//                typeSpinnerItemViewStateList.add(
-//                    AddOrModifyRealEstateTypeSpinnerItemViewState(
-//                        ResourcesCompat.getDrawable(
-//                            application.resources,
-//                            R.drawable.ic_baseline_apartment_24,
-//                            null
-//                        ),
-//                        "Apartment"
-//                    )
-//                )
-//                typeSpinnerItemViewStateList.add(
-//                    AddOrModifyRealEstateTypeSpinnerItemViewState(
-//                        ResourcesCompat.getDrawable(
-//                            application.resources,
-//                            R.drawable.ic_baseline_bed_24,
-//                            null
-//                        ),
-//                        "Studio"
-//                    )
-//                )

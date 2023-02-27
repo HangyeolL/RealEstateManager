@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.PredictionResponse
@@ -121,11 +122,54 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         binding.addOrModifyRealEstateTextInputEditTextMarketSince.setOnClickListener() {
-
+            DatePickerDialogFragment().show(childFragmentManager, "DatePicker")
         }
 
         binding.addOrModifyRealEstateTextInputEditTextPrice.addTextChangedListener {
             viewModel.onEditTextPriceChanged(it.toString().toInt())
+        }
+
+        binding.addOrModifyRealEstateChipGuard.setOnClickListener() {
+            viewModel.onChipGuardClicked(binding.addOrModifyRealEstateChipGuard.isChecked)
+        }
+
+        binding.addOrModifyRealEstateChipGarage.setOnClickListener() {
+            viewModel.onChipGarageClicked(binding.addOrModifyRealEstateChipGarage.isChecked)
+        }
+
+        binding.addOrModifyRealEstateChipGarden.setOnClickListener() {
+            viewModel.onChipGardenClicked(binding.addOrModifyRealEstateChipGarden.isChecked)
+        }
+
+        binding.addOrModifyRealEstateChipElevator.setOnClickListener() {
+            viewModel.onChipElevatorClicked(binding.addOrModifyRealEstateChipElevator.isChecked)
+        }
+
+        binding.addOrModifyRealEstateChipGroceryStoreNextBy.setOnClickListener() {
+            viewModel.onChipGroceryStoreNextByClicked(binding.addOrModifyRealEstateChipGroceryStoreNextBy.isChecked)
+        }
+
+        binding.addOrModifyRealEstateChipIsSoldOut.setOnClickListener() {
+            viewModel.onChipIsSoldOutClicked(binding.addOrModifyRealEstateChipIsSoldOut.isChecked)
+        }
+
+        binding.addOrModifyRealEstateTextInputEditTextDescriptionBody.addTextChangedListener {
+            viewModel.onEditTextDescriptionChanged(it.toString())
+        }
+
+        binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.onItemSelectedListener =
+            object: AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(adapter: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    viewModel.onAgentSpinnerItemSelected(adapter?.selectedItem as AddOrModifyRealEstateAgentSpinnerItemViewState)
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                }
+            }
+
+        binding.addOrModifyRealEstateButtonSave.setOnClickListener {
+            viewModel.onSaveButtonClicked()
         }
 
     }

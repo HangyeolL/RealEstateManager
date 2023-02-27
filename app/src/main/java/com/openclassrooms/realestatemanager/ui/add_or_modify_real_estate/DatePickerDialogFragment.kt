@@ -9,7 +9,6 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import java.time.LocalDateTime
-import java.util.*
 
 class DatePickerDialogFragment: DialogFragment(), DatePickerDialog.OnDateSetListener {
 
@@ -29,7 +28,7 @@ class DatePickerDialogFragment: DialogFragment(), DatePickerDialog.OnDateSetList
 
     // TODO How to communicate with viewModel ?
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
-        viewModel.onUserDateSet()
+        viewModel.onUserDateSet(year, month, day)
     }
 
 }
