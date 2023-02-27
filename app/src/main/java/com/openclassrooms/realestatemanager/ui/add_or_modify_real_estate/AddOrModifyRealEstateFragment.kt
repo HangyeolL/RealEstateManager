@@ -108,6 +108,26 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             viewModel.onEditTextNumberOfRoomsChanged(it.toString().toInt())
         }
 
+        binding.addOrModifyRealEstateTextInputEditTextNumberOfBedRooms.addTextChangedListener {
+            viewModel.onEditTextNumberOfBedRoomsChanged(it.toString().toInt())
+        }
+
+        binding.addOrModifyRealEstateTextInputEditTextNumberOfBathRooms.addTextChangedListener {
+            viewModel.onEditTextNumberOfBathRoomsChanged(it.toString().toInt())
+        }
+
+        binding.addOrModifyRealEstateTextInputEditTextSqm.addTextChangedListener {
+            viewModel.onEditTextSqmChanged(it.toString().toInt())
+        }
+
+        binding.addOrModifyRealEstateTextInputEditTextMarketSince.setOnClickListener() {
+
+        }
+
+        binding.addOrModifyRealEstateTextInputEditTextPrice.addTextChangedListener {
+            viewModel.onEditTextPriceChanged(it.toString().toInt())
+        }
+
     }
 
 }

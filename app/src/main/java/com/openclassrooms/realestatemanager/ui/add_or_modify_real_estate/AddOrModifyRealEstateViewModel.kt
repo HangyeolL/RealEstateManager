@@ -154,6 +154,22 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         numberOfRooms = userInput
     }
 
+    fun onEditTextNumberOfBedRoomsChanged(toInt: Int) {
+        TODO("Not yet implemented")
+    }
+
+    fun onEditTextNumberOfBathRoomsChanged(toInt: Int) {
+        TODO("Not yet implemented")
+    }
+
+    fun onEditTextSqmChanged(toInt: Int) {
+
+    }
+
+    fun onEditTextPriceChanged(toInt: Int) {
+
+    }
+
 
 }
 //                typeSpinnerItemViewStateList.add(
