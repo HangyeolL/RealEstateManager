@@ -12,7 +12,8 @@ import java.time.LocalDateTime
 
 class DatePickerDialogFragment: DialogFragment(), DatePickerDialog.OnDateSetListener {
 
-    private val viewModel by viewModels<AddOrModifyRealEstateViewModel>()
+    // Sharing viewModel between AddOrModifyRealEstateFragment and DatePickerDialogFragment
+    private val viewModel by viewModels<AddOrModifyRealEstateViewModel>(ownerProducer = {requireParentFragment()})
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -26,7 +27,6 @@ class DatePickerDialogFragment: DialogFragment(), DatePickerDialog.OnDateSetList
         )
     }
 
-    // TODO How to communicate with viewModel ?
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
         viewModel.onUserDateSet(year, month, day)
     }

@@ -4,7 +4,9 @@ import android.app.Application
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.*
+import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
@@ -15,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -48,6 +51,9 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private var elevator: Boolean? = null
     private var groceryStoreNearby: Boolean? = null
     private var isSoldOut: Boolean? = null
+    private var description: String? = null
+    private var agentIdInCharge: Int? = null
+
 
     // TODO Case : MODIFY
     init {
@@ -116,6 +122,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         Log.d("Nino", "AddOrModifyRealEstateViewModel.onAddPhotoClicked() called")
                     }
 
+                    // TODO need to make the texts to be able to be changed when user input comes
                     emit(
                         AddOrModifyRealEstateViewState(
                             typeSpinnerItemViewStateList,
@@ -208,16 +215,58 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         isSoldOut = checked
     }
 
-    fun onEditTextDescriptionChanged(description: String) {
-
+    fun onEditTextDescriptionChanged(userInput: String) {
+        description = userInput
     }
 
     fun onAgentSpinnerItemSelected(selectedItem: AddOrModifyRealEstateAgentSpinnerItemViewState) {
-
+        agentIdInCharge = selectedItem.agentIdInCharge
     }
 
     fun onSaveButtonClicked() {
-
+        if (type != null &&
+            numberOfRooms != null &&
+            numberOfBedRooms != null &&
+            numberOfBathRooms != null &&
+            sqm != null &&
+            price != null &&
+            marketSince != null &&
+            garage != null &&
+            guard != null &&
+            garden != null &&
+            elevator != null &&
+            groceryStoreNearby != null &&
+            isSoldOut != null &&
+            description != null &&
+            agentIdInCharge != null
+        ) {
+            viewModelScope.launch(Dispatchers.IO) {
+                // TODO How to put the values ? is there better way to do ?
+//                realEstateRepository.upsertRealEstate(
+//                    RealEstateEntity(
+//                        type = type,
+//                        descriptionBody = description,
+//                        squareMeter = sqm,
+//                        city = "",
+//                        price = price,
+//                        numberOfRooms = numberOfRooms,
+//                        numberOfBathrooms = numberOfBathRooms,
+//                        numberOfBedrooms = numberOfBedRooms,
+//                        address = "",
+//                        garage = garage,
+//                        guard = guard,
+//                        garden = garden,
+//                        elevator = elevator,
+//                        groceryStoreNearby = groceryStoreNearby,
+//                        isSoldOut = isSoldOut,
+//                        dateOfSold = null,
+//                        marketSince = marketSince,
+//                        agentIdInCharge = agentIdInCharge,
+//                        latLng = LatLng()
+//                    )
+//                )
+            }
+        }
     }
 
 
