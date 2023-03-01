@@ -15,7 +15,6 @@ class DatePickerDialogFragment: DialogFragment(), DatePickerDialog.OnDateSetList
     // Sharing viewModel between AddOrModifyRealEstateFragment and DatePickerDialogFragment
     private val viewModel by viewModels<AddOrModifyRealEstateViewModel>(ownerProducer = {requireParentFragment()})
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         return DatePickerDialog(

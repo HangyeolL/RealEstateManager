@@ -4,18 +4,16 @@ import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.Predi
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
 
 data class AddOrModifyRealEstateViewState(
-
     val typeSpinnerItemViewStateList: List<AddOrModifyRealEstateTypeSpinnerItemViewState>,
     val agentSpinnerItemViewStateList: List<AddOrModifyRealEstateAgentSpinnerItemViewState>,
     val realEstatePhotoListItemViewStateList: List<RealEstatePhotoItemViewState>,
     val address: String,
-    val addressAutocompletePredictions: List<PredictionResponse>,
-    val numberOfRooms: Int,
-    val numberOfBathrooms: Int,
-    val numberOfBedrooms: Int,
-    val squareMeter: Int,
+    val numberOfRooms: String,
+    val numberOfBathrooms: String,
+    val numberOfBedrooms: String,
+    val squareMeter: String,
     val marketSince: String,
-    val price: Int,
+    val price: String,
     val garage: Boolean,
     val guard: Boolean,
     val garden: Boolean,
@@ -24,5 +22,5 @@ data class AddOrModifyRealEstateViewState(
     val isSoldOut: Boolean,
     val dateOfSold: String?,
     val description: String,
-    )
+)
 
