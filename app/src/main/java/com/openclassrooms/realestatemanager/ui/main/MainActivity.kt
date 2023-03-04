@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.main
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -18,6 +19,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        fun navigate(context: Context) = Intent(context, MainActivity::class.java)
+    }
 
     private val binding by viewBinding { MainActivityBinding.inflate(it) }
 

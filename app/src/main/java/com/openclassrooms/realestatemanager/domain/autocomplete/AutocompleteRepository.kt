@@ -6,9 +6,12 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface AutocompleteRepository {
 
-    fun requestMyAutocompleteResponse(userInput: String,)
+    fun requestMyAutocompleteResponseOfAddress(userInput: String,)
 
-    fun getMyAutocompleteResponse(): StateFlow<MyAutocompleteResponse?>
+    fun getMyAutocompleteResponseOfAddress(): StateFlow<MyAutocompleteResponse?>
 
-//    fun setUserInput(userInput: String)
+    fun requestMyAutocompleteResponseOfCity(userInput: String)
+
+    fun getMyAutocompleteResponseOfCity(): StateFlow<MyAutocompleteResponse?>
+
 }

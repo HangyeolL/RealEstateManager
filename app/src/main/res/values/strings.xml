@@ -17,4 +17,9 @@
     <string name="navigation_drawer_close">navigation drawer is closed</string>
     <string name="euro_symbol_as_string">\u20ac</string>
     <string name="none">None</string>
+    <string name="please_fill_out_all_the_forms">Please fill out all the forms</string>
+    <string name="house">House</string>
+    <string name="apartment">Apartment</string>
+    <string name="studio">Studio</string>
+    <string name="paris">Paris</string>
 </resources>

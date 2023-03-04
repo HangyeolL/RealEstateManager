@@ -22,5 +22,7 @@ data class AddOrModifyRealEstateViewState(
     val isSoldOut: Boolean,
     val dateOfSold: String?,
     val description: String,
-)
+) {
+
+}
 

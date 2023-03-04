@@ -18,15 +18,17 @@ class AutocompleteRepositoryImpl @Inject constructor(
     private val googleApi: GoogleApi,
 ) : AutocompleteRepository {
 
-    private val autocompleteMutableStateFlow = MutableStateFlow<MyAutocompleteResponse?>(null)
-    private val autocompleteStateFlow = autocompleteMutableStateFlow.asStateFlow()
+    private val autocompleteOfAddressMutableStateFlow = MutableStateFlow<MyAutocompleteResponse?>(null)
+    private val autocompleteOfAddressStateFlow = autocompleteOfAddressMutableStateFlow.asStateFlow()
 
-//    private val userInputMutableStateFlow = MutableStateFlow<String?>(null)
+    private val autocompleteOfCityMutableStateFlow = MutableStateFlow<MyAutocompleteResponse?>(null)
+    private val autocompleteOfCityStateFlow = autocompleteOfAddressMutableStateFlow.asStateFlow()
 
-    override fun requestMyAutocompleteResponse(userInput: String) {
-        val call = googleApi.getAutocompleteData(
+    override fun requestMyAutocompleteResponseOfAddress(userInput: String) {
+        val call = googleApi.getAutocompleteResponse(
             userInput,
             "country:fr",
+            "address",
             BuildConfig.GOOGLE_API_KEY
         )
 
@@ -35,20 +37,41 @@ class AutocompleteRepositoryImpl @Inject constructor(
                 call: Call<MyAutocompleteResponse?>,
                 response: Response<MyAutocompleteResponse?>
             ) {
-                autocompleteMutableStateFlow.value = response.body()
+                autocompleteOfAddressMutableStateFlow.value = response.body()
             }
 
             override fun onFailure(call: Call<MyAutocompleteResponse?>, t: Throwable) {
                 Log.w("HG", "Get Autocomplete data failed", t)
-                autocompleteMutableStateFlow.value = null
+                autocompleteOfAddressMutableStateFlow.value = null
             }
         })
 
     }
 
-    override fun getMyAutocompleteResponse() : StateFlow<MyAutocompleteResponse?> = autocompleteStateFlow
+    override fun getMyAutocompleteResponseOfAddress(): StateFlow<MyAutocompleteResponse?> = autocompleteOfAddressStateFlow
 
-//    override fun setUserInput(userInput: String) {
-//        userInputMutableStateFlow.value = userInput
-//    }
+    override fun requestMyAutocompleteResponseOfCity(userInput: String) {
+        val call = googleApi.getAutocompleteResponse(
+            userInput,
+            "country:fr",
+            "cities",
+            BuildConfig.GOOGLE_API_KEY
+        )
+
+        call.enqueue(object : Callback<MyAutocompleteResponse?> {
+            override fun onResponse(
+                call: Call<MyAutocompleteResponse?>,
+                response: Response<MyAutocompleteResponse?>
+            ) {
+                autocompleteOfCityMutableStateFlow.value = response.body()
+            }
+
+            override fun onFailure(call: Call<MyAutocompleteResponse?>, t: Throwable) {
+                Log.w("HG", "Get Autocomplete data failed", t)
+                autocompleteOfCityMutableStateFlow.value = null
+            }
+        })
+    }
+
+    override fun getMyAutocompleteResponseOfCity(): StateFlow<MyAutocompleteResponse?> = autocompleteOfCityStateFlow
 }

@@ -56,6 +56,51 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addOrModifyRealEstate_TextInputLayout_price"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:endIconDrawable="@drawable/ic_round_euro_24"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_TextInputLayout_city"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_address"
+            app:suffixText="@string/euro_symbol_as_string">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addOrModifyRealEstate_TextInputEditText_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Price"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addOrModifyRealEstate_TextInputLayout_city"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:placeholderText="@string/paris"
+            app:expandedHintEnabled="false"
+            app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_TextInputLayout_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_TextInputLayout_price">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addOrModifyRealEstate_TextInputEditText_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="city" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/addOrModifyRealEstate_TextInputLayout_numberOfRooms"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
@@ -67,7 +112,7 @@
             app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBedRooms"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_address"
+            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_price"
             app:startIconDrawable="@drawable/ic_baseline_house_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -173,30 +218,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_price"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:endIconDrawable="@drawable/ic_round_euro_24"
-            app:expandedHintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_sqm"
-            app:suffixText="@string/euro_symbol_as_string">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addOrModifyRealEstate_TextInputEditText_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Price"
-                android:inputType="number" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
             android:layout_width="0dp"
@@ -206,7 +227,7 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_price">
+            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_sqm">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -341,11 +362,11 @@
             app:startIconDrawable="@drawable/ic_outline_calendar_month_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addOrModifyRealEstate_TextInputEditText_soldOutDate"
+                android:id="@+id/addOrModifyRealEstate_TextInputEditText_dateOfSold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
-                android:inputType="none"/>
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -419,6 +440,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_asAgentSpinner" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

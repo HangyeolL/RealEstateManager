@@ -1,16 +1,15 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.PredictionResponse
 import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoListAdapter
 import com.openclassrooms.realestatemanager.utils.viewBinding
@@ -46,8 +45,11 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         val realEstatePhotoListAdapter = RealEstatePhotoListAdapter()
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setAdapter(typeSpinnerAdapter)
-        binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setAdapter(agentSpinnerAdapter)
-        binding.addOrModifyRealEstateRecyclerViewRealEstatePhotoList.adapter = realEstatePhotoListAdapter
+        binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setAdapter(
+            agentSpinnerAdapter
+        )
+        binding.addOrModifyRealEstateRecyclerViewRealEstatePhotoList.adapter =
+            realEstatePhotoListAdapter
 
         viewModel.initialViewStateLiveData.observe(viewLifecycleOwner) {
 
@@ -66,7 +68,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setText(it.address)
             binding.addOrModifyRealEstateTextInputEditTextDescriptionBody.setText(it.description)
             binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText(it.marketSince)
-            binding.addOrModifyRealEstateTextInputEditTextSoldOutDate.setText(it.dateOfSold)
+            binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(it.dateOfSold)
             binding.addOrModifyRealEstateTextInputEditTextPrice.setText(it.price)
             binding.addOrModifyRealEstateTextInputEditTextSqm.setText(it.squareMeter)
         }
@@ -81,8 +83,16 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             )
         }
 
+        viewModel.stringSingleLiveEvent.observe(viewLifecycleOwner) { string ->
+            Toast.makeText(requireContext(), string, Toast.LENGTH_SHORT).show()
+        }
+
+        viewModel.intentSingleLiveEvent.observe(viewLifecycleOwner) { intent ->
+            startActivity(intent)
+        }
+
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.onItemSelectedListener =
-            object: AdapterView.OnItemSelectedListener {
+            object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(adapter: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     viewModel.onTypeSpinnerItemSelected(adapter?.selectedItem as AddOrModifyRealEstateTypeSpinnerItemViewState)
                 }
@@ -95,6 +105,10 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAddress.addTextChangedListener {
             viewModel.onEditTextAddressChanged(it?.toString())
+        }
+
+        binding.addOrModifyRealEstateTextInputEditTextCity.addTextChangedListener {
+            viewModel.onEditTextCityChanged(it?.toString())
         }
 
         binding.addOrModifyRealEstateTextInputEditTextNumberOfRooms.addTextChangedListener {
@@ -114,35 +128,47 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         binding.addOrModifyRealEstateTextInputEditTextMarketSince.setOnClickListener {
-            DatePickerDialogFragment().show(childFragmentManager, "DatePicker")
+            val bundle = Bundle()
+            bundle.putInt("DATE", 1)
+
+            DatePickerDialogFragment().arguments = bundle
+            DatePickerDialogFragment().show(childFragmentManager, "datePicker")
         }
 
         binding.addOrModifyRealEstateTextInputEditTextPrice.addTextChangedListener {
             viewModel.onEditTextPriceChanged(it?.toString())
         }
 
-        binding.addOrModifyRealEstateChipGuard.setOnClickListener() {
+        binding.addOrModifyRealEstateChipGuard.setOnClickListener {
             viewModel.onChipGuardClicked(binding.addOrModifyRealEstateChipGuard.isChecked)
         }
 
-        binding.addOrModifyRealEstateChipGarage.setOnClickListener() {
+        binding.addOrModifyRealEstateChipGarage.setOnClickListener {
             viewModel.onChipGarageClicked(binding.addOrModifyRealEstateChipGarage.isChecked)
         }
 
-        binding.addOrModifyRealEstateChipGarden.setOnClickListener() {
+        binding.addOrModifyRealEstateChipGarden.setOnClickListener {
             viewModel.onChipGardenClicked(binding.addOrModifyRealEstateChipGarden.isChecked)
         }
 
-        binding.addOrModifyRealEstateChipElevator.setOnClickListener() {
+        binding.addOrModifyRealEstateChipElevator.setOnClickListener {
             viewModel.onChipElevatorClicked(binding.addOrModifyRealEstateChipElevator.isChecked)
         }
 
-        binding.addOrModifyRealEstateChipGroceryStoreNextBy.setOnClickListener() {
+        binding.addOrModifyRealEstateChipGroceryStoreNextBy.setOnClickListener {
             viewModel.onChipGroceryStoreNextByClicked(binding.addOrModifyRealEstateChipGroceryStoreNextBy.isChecked)
         }
 
-        binding.addOrModifyRealEstateChipIsSoldOut.setOnClickListener() {
+        binding.addOrModifyRealEstateChipIsSoldOut.setOnClickListener {
             viewModel.onChipIsSoldOutClicked(binding.addOrModifyRealEstateChipIsSoldOut.isChecked)
+        }
+
+        binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putInt("DATE", 2)
+
+            DatePickerDialogFragment().arguments = bundle
+            DatePickerDialogFragment().show(childFragmentManager, "datePicker")
         }
 
         binding.addOrModifyRealEstateTextInputEditTextDescriptionBody.addTextChangedListener {
@@ -150,7 +176,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.onItemSelectedListener =
-            object: AdapterView.OnItemSelectedListener {
+            object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(adapter: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     viewModel.onAgentSpinnerItemSelected(adapter?.selectedItem as AddOrModifyRealEstateAgentSpinnerItemViewState)
                 }

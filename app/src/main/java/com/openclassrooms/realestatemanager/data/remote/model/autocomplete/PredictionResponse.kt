@@ -33,4 +33,9 @@ data class PredictionResponse(
     @Expose
     val types: List<String>? = null,
 
-    )
+) {
+    //TODO if i do properly toString maybe autosuggestion will work ?
+    override fun toString(): String {
+        return super.toString()
+    }
+}

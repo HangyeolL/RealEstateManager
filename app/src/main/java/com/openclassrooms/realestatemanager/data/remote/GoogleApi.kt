@@ -8,9 +8,10 @@ import retrofit2.http.Query
 interface GoogleApi {
 
     @GET("autocomplete/json")
-    fun getAutocompleteData(
+    fun getAutocompleteResponse(
         @Query("input") input: String,
         @Query("components") components: String,
+        @Query("types") types: String,
         @Query("key") key: String,
     ): Call<MyAutocompleteResponse>
 
