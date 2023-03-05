@@ -9,7 +9,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import java.time.LocalDateTime
 
-class DatePickerDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
+class DatePickerDialogFragment(
+    private val listener: DatePickerDialog.OnDateSetListener
+) : DialogFragment() {
 
     // Sharing viewModel between AddOrModifyRealEstateFragment and DatePickerDialogFragment
     private val viewModel by viewModels<AddOrModifyRealEstateViewModel>(ownerProducer = { requireParentFragment() })
@@ -25,7 +27,7 @@ class DatePickerDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetLis
         when (this.requireArguments().getInt("DATE")) {
             MARKET_SINCE -> DatePickerDialog(
                 requireContext(),
-                this,
+                listener,
                 LocalDateTime.now().year,
                 LocalDateTime.now().monthValue,
                 LocalDateTime.now().dayOfMonth
@@ -33,7 +35,7 @@ class DatePickerDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetLis
 
             DATE_OF_SOLD -> DatePickerDialog(
                 requireContext(),
-                this,
+                listener,
                 LocalDateTime.now().year,
                 LocalDateTime.now().monthValue,
                 LocalDateTime.now().dayOfMonth
@@ -44,13 +46,5 @@ class DatePickerDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetLis
                 throw Exception("unknown DatePicker")
             }
         }
-
-
-    override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
-        when(this.requireArguments().getInt("DATE")) {
-            MARKET_SINCE -> viewModel.onUserMarketSinceDateSet(year, month, day)
-            DATE_OF_SOLD -> viewModel.onUserDateOfSoldSet(year, month, day)
-        }
-    }
 
 }

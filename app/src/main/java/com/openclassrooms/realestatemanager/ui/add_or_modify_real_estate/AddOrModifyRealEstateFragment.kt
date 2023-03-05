@@ -1,10 +1,12 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
+import android.app.DatePickerDialog
 import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -131,9 +133,21 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             val bundle = Bundle()
             bundle.putInt("DATE", 1)
 
-            DatePickerDialogFragment().arguments = bundle
-            DatePickerDialogFragment().show(childFragmentManager, "datePicker")
+            val datePicker = DatePickerDialogFragment(object: DatePickerDialog.OnDateSetListener {
+                override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
+                    viewModel.onUserMarketSinceDateSet(year, month, day)
+                    binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText("$day/$month/$year")
+                }
+            })
+            datePicker.arguments = bundle
+            datePicker.show(childFragmentManager, "datePicker")
         }
+
+//        val marketSinceDatePicker = object: DatePickerDialog.OnDateSetListener {
+//            override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
+//
+//            }
+//        }
 
         binding.addOrModifyRealEstateTextInputEditTextPrice.addTextChangedListener {
             viewModel.onEditTextPriceChanged(it?.toString())
@@ -163,12 +177,20 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             viewModel.onChipIsSoldOutClicked(binding.addOrModifyRealEstateChipIsSoldOut.isChecked)
         }
 
+        val dateOfSoldDatePicker = object: DatePickerDialog.OnDateSetListener {
+            override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
+                viewModel.onUserDateOfSoldSet(year, month, day)
+                binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText("$day/$month/$year")
+            }
+        }
+
         binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setOnClickListener {
             val bundle = Bundle()
             bundle.putInt("DATE", 2)
 
-            DatePickerDialogFragment().arguments = bundle
-            DatePickerDialogFragment().show(childFragmentManager, "datePicker")
+            val datePicker = DatePickerDialogFragment(dateOfSoldDatePicker)
+            datePicker.arguments = bundle
+            datePicker.show(childFragmentManager, "datePicker")
         }
 
         binding.addOrModifyRealEstateTextInputEditTextDescriptionBody.addTextChangedListener {
