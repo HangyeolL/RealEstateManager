@@ -1,13 +1,14 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
+import android.Manifest
 import android.app.DatePickerDialog
-import android.app.ProgressDialog.show
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.DatePicker
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -35,6 +36,25 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Camera permission request TODO how to do this in ViewModel
+        val requestPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+                if (isGranted) {
+
+                } else {
+
+                }
+            }
+
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) -> {
+
+            }
+            else -> {
+                requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+            }
+        }
 
         val typeSpinnerAdapter = AddOrModifyRealEstateTypeSpinnerAdapter(
             requireContext(),
@@ -93,16 +113,9 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             startActivity(intent)
         }
 
-        binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(adapter: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    viewModel.onTypeSpinnerItemSelected(adapter?.selectedItem as AddOrModifyRealEstateTypeSpinnerItemViewState)
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                }
-            }
+        binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setOnItemClickListener { adapter, _, position, _ ->
+            viewModel.onTypeSpinnerItemClicked(adapter.getItemAtPosition(position) as AddOrModifyRealEstateTypeSpinnerItemViewState)
+        }
 
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAddress.addTextChangedListener {
@@ -133,12 +146,10 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             val bundle = Bundle()
             bundle.putInt("DATE", 1)
 
-            val datePicker = DatePickerDialogFragment(object: DatePickerDialog.OnDateSetListener {
-                override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
-                    viewModel.onUserMarketSinceDateSet(year, month, day)
-                    binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText("$day/$month/$year")
-                }
-            })
+            val datePicker = DatePickerDialogFragment { p0, year, month, day ->
+                viewModel.onUserMarketSinceDateSet(year, month, day)
+                binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText("$day/$month/$year")
+            }
             datePicker.arguments = bundle
             datePicker.show(childFragmentManager, "datePicker")
         }
@@ -177,12 +188,11 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             viewModel.onChipIsSoldOutClicked(binding.addOrModifyRealEstateChipIsSoldOut.isChecked)
         }
 
-        val dateOfSoldDatePicker = object: DatePickerDialog.OnDateSetListener {
-            override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
+        val dateOfSoldDatePicker =
+            DatePickerDialog.OnDateSetListener { p0, year, month, day ->
                 viewModel.onUserDateOfSoldSet(year, month, day)
                 binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText("$day/$month/$year")
             }
-        }
 
         binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setOnClickListener {
             val bundle = Bundle()
@@ -197,16 +207,9 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             viewModel.onEditTextDescriptionChanged(it?.toString())
         }
 
-        binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(adapter: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    viewModel.onAgentSpinnerItemSelected(adapter?.selectedItem as AddOrModifyRealEstateAgentSpinnerItemViewState)
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                }
-            }
+        binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setOnItemClickListener { adapter, _, position, _ ->
+            viewModel.onAgentSpinnerItemClicked(adapter.getItemAtPosition(position) as AddOrModifyRealEstateAgentSpinnerItemViewState)
+        }
 
         binding.addOrModifyRealEstateButtonSave.setOnClickListener {
             viewModel.onSaveButtonClicked()

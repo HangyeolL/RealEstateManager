@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 import android.app.Application
 import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.R
@@ -19,7 +20,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -82,9 +82,11 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                                 photoDescription = photoEntity.description
                             )
                         } + RealEstatePhotoItemViewState.AddRealEstatePhoto {
+                            val intent = Intent("android.media.action.IMAGE_CAPTURE")
+                            intentSingleLiveEvent.setValue(intent)
 
                             Log.d(
-                                "Nino",
+                                "Hangyeol",
                                 "AddOrModifyRealEstateViewModel.onAddPhotoClicked() called"
                             )
                         }
@@ -148,7 +150,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private var description: String? = null
     private var agentIdInCharge: Int? = null
 
-    fun onTypeSpinnerItemSelected(selectedItem: AddOrModifyRealEstateTypeSpinnerItemViewState) {
+    fun onTypeSpinnerItemClicked(selectedItem: AddOrModifyRealEstateTypeSpinnerItemViewState) {
         type = selectedItem.type
     }
 
@@ -223,7 +225,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         description = userInput
     }
 
-    fun onAgentSpinnerItemSelected(selectedItem: AddOrModifyRealEstateAgentSpinnerItemViewState) {
+    fun onAgentSpinnerItemClicked(selectedItem: AddOrModifyRealEstateAgentSpinnerItemViewState) {
         agentIdInCharge = selectedItem.agentIdInCharge
     }
 

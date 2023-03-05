@@ -21,6 +21,7 @@ interface RealEstateDao {
     @Delete
     fun deleteRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity)
 
+    @Transaction
     @Query("SELECT * FROM realEstates WHERE realEstateId = :realEstateId")
     fun getRealEstateById(realEstateId: Int) : Flow<RealEstateWithPhotos>
 

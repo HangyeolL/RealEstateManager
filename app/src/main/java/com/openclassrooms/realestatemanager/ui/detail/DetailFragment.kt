@@ -55,18 +55,6 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
 //                }
 //            }
 //
-//        when (PackageManager.PERMISSION_GRANTED) {
-//            ContextCompat.checkSelfPermission(
-//                requireActivity(),
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            ) -> {
-//                viewModel.startLocationRequest()
-//            }
-//            else -> {
-//                requestPermissionLauncher.launch(
-//                    Manifest.permission.ACCESS_FINE_LOCATION
-//                )
-//            }
-//        }
+
 
 }
