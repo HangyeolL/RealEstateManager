@@ -1,17 +1,17 @@
 package com.openclassrooms.realestatemanager.domain.autocomplete
 
-import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.MyAutocompleteResponse
-import kotlinx.coroutines.flow.Flow
+import com.openclassrooms.realestatemanager.domain.autocomplete.model.AutocompleteEntity
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
 interface AutocompleteRepository {
 
     fun requestMyAutocompleteResponseOfAddress(userInput: String,)
 
-    fun getMyAutocompleteResponseOfAddress(): StateFlow<MyAutocompleteResponse?>
+    fun getAutocompleteEntitiesForAddress(): SharedFlow<List<AutocompleteEntity>>
 
     fun requestMyAutocompleteResponseOfCity(userInput: String)
 
-    fun getMyAutocompleteResponseOfCity(): StateFlow<MyAutocompleteResponse?>
+    fun getAutocompleteEntitiesForCity(): SharedFlow<List<AutocompleteEntity>>
 
 }

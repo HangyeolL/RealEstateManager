@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.ListAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -66,10 +67,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             R.layout.add_or_modify_real_estate_spinner_item
         )
         val realEstatePhotoListAdapter = RealEstatePhotoListAdapter()
-        val autocompleteAdapter = ArrayAdapter<PredictionResponse>(
-            requireContext(),
-            android.R.layout.simple_list_item_1
-        )
+        val autocompleteAdapter = AddOrModifyRealEstateAddressAutocompleteAdapter()
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setAdapter(typeSpinnerAdapter)
         binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setAdapter(agentSpinnerAdapter)
@@ -101,14 +99,12 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             binding.addOrModifyRealEstateTextInputEditTextSqm.setText(viewState.squareMeter)
         }
 
-        viewModel.addressPredictionsLiveData.observe(viewLifecycleOwner) { addressAutocompletePredictions ->
-            autocompleteAdapter.clear()
-            autocompleteAdapter.addAll(addressAutocompletePredictions)
+        viewModel.addressPredictionsLiveData.observe(viewLifecycleOwner) { viewStates ->
+            autocompleteAdapter.setData(viewStates)
         }
 
-        viewModel.cityPredictionsLiveData.observe(viewLifecycleOwner) { cityAutocompletePredictions ->
-            autocompleteAdapter.clear()
-            autocompleteAdapter.addAll(cityAutocompletePredictions)
+        viewModel.cityPredictionsLiveData.observe(viewLifecycleOwner) { viewStates ->
+            autocompleteAdapter.setData(viewStates)
         }
 
         viewModel.stringSingleLiveEvent.observe(viewLifecycleOwner) { string ->

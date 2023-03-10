@@ -5,9 +5,8 @@ import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.data.remote.GoogleApi
 import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.MyAutocompleteResponse
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.openclassrooms.realestatemanager.domain.autocomplete.model.AutocompleteEntity
+import kotlinx.coroutines.flow.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,11 +17,11 @@ class AutocompleteRepositoryImpl @Inject constructor(
     private val googleApi: GoogleApi,
 ) : AutocompleteRepository {
 
-    private val autocompleteOfAddressMutableStateFlow = MutableStateFlow<MyAutocompleteResponse?>(null)
-    private val autocompleteOfAddressStateFlow = autocompleteOfAddressMutableStateFlow.asStateFlow()
+    private val autocompleteOfAddressMutableSharedFlow = MutableSharedFlow<List<AutocompleteEntity>>(replay = 1)
+    private val autocompleteOfAddressSharedFlow = autocompleteOfAddressMutableSharedFlow.asSharedFlow()
 
-    private val autocompleteOfCityMutableStateFlow = MutableStateFlow<MyAutocompleteResponse?>(null)
-    private val autocompleteOfCityStateFlow = autocompleteOfAddressMutableStateFlow.asStateFlow()
+    private val autocompleteOfCityMutableSharedFlow = MutableSharedFlow<List<AutocompleteEntity>>(replay = 1)
+    private val autocompleteOfCitySharedFlow = autocompleteOfAddressMutableSharedFlow.asSharedFlow()
 
     override fun requestMyAutocompleteResponseOfAddress(userInput: String) {
         val call = googleApi.requestAutocompleteResponse(
@@ -37,18 +36,27 @@ class AutocompleteRepositoryImpl @Inject constructor(
                 call: Call<MyAutocompleteResponse?>,
                 response: Response<MyAutocompleteResponse?>
             ) {
-                autocompleteOfAddressMutableStateFlow.value = response.body()
+                autocompleteOfAddressMutableSharedFlow.tryEmit(
+                    response.body()?.let {
+                        it.predictions.map { predictionResponse ->
+                            AutocompleteEntity(
+                                placeId = predictionResponse.placeId,
+                                text = predictionResponse.description,
+                            )
+                        }
+                    } ?: emptyList()
+                )
             }
 
             override fun onFailure(call: Call<MyAutocompleteResponse?>, t: Throwable) {
                 Log.w("HG", "Get Autocomplete data failed", t)
-                autocompleteOfAddressMutableStateFlow.value = null
+                autocompleteOfAddressMutableSharedFlow.tryEmit(emptyList())
             }
         })
 
     }
 
-    override fun getMyAutocompleteResponseOfAddress(): StateFlow<MyAutocompleteResponse?> = autocompleteOfAddressStateFlow
+    override fun getAutocompleteEntitiesForAddress(): SharedFlow<List<AutocompleteEntity>> = autocompleteOfAddressSharedFlow
 
     override fun requestMyAutocompleteResponseOfCity(userInput: String) {
         val call = googleApi.requestAutocompleteResponse(
@@ -63,15 +71,24 @@ class AutocompleteRepositoryImpl @Inject constructor(
                 call: Call<MyAutocompleteResponse?>,
                 response: Response<MyAutocompleteResponse?>
             ) {
-                autocompleteOfCityMutableStateFlow.value = response.body()
+                autocompleteOfCityMutableSharedFlow.tryEmit(
+                    response.body()?.let {
+                        it.predictions.map { predictionResponse ->
+                            AutocompleteEntity(
+                                placeId = predictionResponse.placeId,
+                                text = predictionResponse.description,
+                            )
+                        }
+                    } ?: emptyList()
+                )
             }
 
             override fun onFailure(call: Call<MyAutocompleteResponse?>, t: Throwable) {
                 Log.w("HG", "Get Autocomplete data failed", t)
-                autocompleteOfCityMutableStateFlow.value = null
+                autocompleteOfCityMutableSharedFlow.tryEmit(emptyList())
             }
         })
     }
 
-    override fun getMyAutocompleteResponseOfCity(): StateFlow<MyAutocompleteResponse?> = autocompleteOfCityStateFlow
+    override fun getAutocompleteEntitiesForCity(): SharedFlow<List<AutocompleteEntity>> = autocompleteOfCitySharedFlow
 }

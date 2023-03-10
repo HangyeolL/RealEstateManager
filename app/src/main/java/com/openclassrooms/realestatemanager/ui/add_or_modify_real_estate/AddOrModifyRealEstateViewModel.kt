@@ -16,10 +16,12 @@ import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrMo
 import com.openclassrooms.realestatemanager.ui.main.MainActivity
 import com.openclassrooms.realestatemanager.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -187,18 +189,32 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
             }
         }
 
-    val addressPredictionsLiveData: LiveData<List<PredictionResponse>> = liveData(Dispatchers.IO) {
-        autoCompleteRepository.getMyAutocompleteResponseOfAddress()
-            .collect { addressAutocompleteResponse ->
-                emit(addressAutocompleteResponse?.predictions ?: emptyList())
-            }
+    val addressPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAddressAutocompleteViewStateItem>> = liveData(Dispatchers.IO) {
+        autoCompleteRepository.getAutocompleteEntitiesForAddress().collect { autocompleteEntities ->
+            emit(
+                autocompleteEntities.map { autocompleteEntity ->
+                    AddOrModifyRealEstateAddressAutocompleteViewStateItem(
+                        text = autocompleteEntity.text
+                    ) {
+                        Log.d("Nino", "AddOrModifyRealEstateViewModel.address.onClick() called with $autocompleteEntity")
+                    }
+                }
+            )
+        }
     }
 
-    val cityPredictionsLiveData: LiveData<List<PredictionResponse>> = liveData(Dispatchers.IO) {
-        autoCompleteRepository.getMyAutocompleteResponseOfCity()
-            .collect { cityAutocompleteResponse ->
-                emit(cityAutocompleteResponse?.predictions ?: emptyList())
-            }
+    val cityPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAddressAutocompleteViewStateItem>> = liveData(Dispatchers.IO) {
+        autoCompleteRepository.getAutocompleteEntitiesForCity().collect { autocompleteEntities ->
+            emit(
+                autocompleteEntities.map { autocompleteEntity ->
+                    AddOrModifyRealEstateAddressAutocompleteViewStateItem(
+                        text = autocompleteEntity.text
+                    ) {
+                        Log.d("Nino", "AddOrModifyRealEstateViewModel.city.onClick() called with $autocompleteEntity")
+                    }
+                }
+            )
+        }
     }
 
     private var type: String? = null
