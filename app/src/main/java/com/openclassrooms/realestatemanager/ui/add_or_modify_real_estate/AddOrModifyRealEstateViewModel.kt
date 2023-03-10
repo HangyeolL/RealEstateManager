@@ -3,7 +3,6 @@ package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 import android.app.Application
 import android.content.Intent
 import android.util.Log
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.R
@@ -17,11 +16,10 @@ import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrMo
 import com.openclassrooms.realestatemanager.ui.main.MainActivity
 import com.openclassrooms.realestatemanager.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 
@@ -97,6 +95,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                             agentSpinnerItemViewStateList = agentSpinnerItemViewStateList,
                             realEstatePhotoListItemViewStateList = photoListItemViewStateList,
                             address = realEstate.realEstateEntity.address,
+                            city = realEstate.realEstateEntity.city,
                             numberOfRooms = realEstate.realEstateEntity.numberOfRooms.toString(),
                             numberOfBathrooms = realEstate.realEstateEntity.numberOfBathrooms.toString(),
                             numberOfBedrooms = realEstate.realEstateEntity.numberOfBedrooms.toString(),
@@ -114,6 +113,77 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         )
                     )
                 }
+            } else {
+                coroutineScope() {
+                    val allAgentsAsync = async { agentRepository.getAllAgents().first() }
+
+                    val typeSpinnerItemViewStateList = listOf(
+                        AddOrModifyRealEstateTypeSpinnerItemViewState(
+                            R.drawable.ic_baseline_house_24,
+                            application.getString(R.string.house)
+                        ),
+                        AddOrModifyRealEstateTypeSpinnerItemViewState(
+                            R.drawable.ic_baseline_apartment_24,
+                            application.getString(R.string.apartment)
+                        ),
+                        AddOrModifyRealEstateTypeSpinnerItemViewState(
+                            R.drawable.ic_baseline_bed_24,
+                            application.getString(R.string.studio)
+                        )
+                    )
+
+                    val allAgents = allAgentsAsync.await()
+
+                    val agentSpinnerItemViewStateList = allAgents.map { agentEntity ->
+                        AddOrModifyRealEstateAgentSpinnerItemViewState(
+                            agentIdInCharge = agentEntity.agentId,
+                            agentNameInCharge = agentEntity.name,
+                            agentPhoto = agentEntity.photoUrl
+                        )
+                    }
+
+                    val photoListItemViewStateList =
+                        listOf(
+                            RealEstatePhotoItemViewState.AddRealEstatePhoto {
+                                val intent = Intent("android.media.action.IMAGE_CAPTURE")
+                                intentSingleLiveEvent.setValue(intent)
+
+                                Log.d(
+                                    "Hangyeol",
+                                    "AddOrModifyRealEstateViewModel.onAddPhotoClicked() called"
+                                )
+                            }
+                        )
+
+
+                    emit(
+                        AddOrModifyRealEstateViewState(
+                            typeSpinnerItemViewStateList = typeSpinnerItemViewStateList,
+                            agentSpinnerItemViewStateList = agentSpinnerItemViewStateList,
+                            realEstatePhotoListItemViewStateList = photoListItemViewStateList,
+                            address = "",
+                            city = "",
+                            numberOfRooms = "",
+                            numberOfBathrooms = "",
+                            numberOfBedrooms = "",
+                            squareMeter = "",
+                            marketSince = "",
+                            price = "",
+                            garage = false,
+                            guard = false,
+                            garden = false,
+                            elevator = false,
+                            groceryStoreNearby = false,
+                            isSoldOut = false,
+                            dateOfSold = null,
+                            description = "",
+                        )
+                    )
+
+
+                }
+
+
             }
         }
 
@@ -189,6 +259,10 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         price = userInput?.toIntOrNull()
     }
 
+    fun onDefaultMarketSinceValueSet(date: String) {
+        marketSince = date
+    }
+
     fun onUserMarketSinceDateSet(year: Int, month: Int, day: Int) {
         marketSince = "$day/$month/$year"
     }
@@ -232,16 +306,19 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     fun onSaveButtonClicked() {
         if (
             type != null &&
-            description != null &&
+            address != null &&
+            city != null &&
             numberOfRooms != null &&
             numberOfBedRooms != null &&
             numberOfBathRooms != null &&
-            address != null &&
             sqm != null &&
             price != null &&
             marketSince != null &&
+            description != null &&
             agentIdInCharge != null
         ) {
+
+
             viewModelScope.launch(Dispatchers.IO) {
                 realEstateRepository.upsertRealEstate(
                     RealEstateEntity(

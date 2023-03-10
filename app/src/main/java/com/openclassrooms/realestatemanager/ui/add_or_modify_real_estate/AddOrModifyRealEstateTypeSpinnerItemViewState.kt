@@ -7,5 +7,7 @@ data class AddOrModifyRealEstateTypeSpinnerItemViewState(
     @DrawableRes val icon: Int,
     val type: String,
 ) {
-//    TODO ToString()
+    override fun toString(): String {
+        return "AddOrModifyRealEstateTypeSpinnerItemViewState(icon=$icon, type='$type')"
+    }
 }

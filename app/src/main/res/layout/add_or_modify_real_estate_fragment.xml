@@ -93,8 +93,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_TextInputLayout_price">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addOrModifyRealEstate_TextInputEditText_city"
+            <AutoCompleteTextView
+                android:id="@+id/addOrModifyRealEstate_AutoCompleteTextView_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="city" />

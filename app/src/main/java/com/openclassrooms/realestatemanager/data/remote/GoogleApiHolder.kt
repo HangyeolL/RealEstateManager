@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object GoogleApiHolder {
 
-    val googlePlaceSearchUrl = "https://maps.googleapis.com/maps/api/place/"
+    val googlePlaceSearchUrl = "https://maps.googleapis.com/maps/api/"
 
     fun getInstance(): Retrofit =
         Retrofit.Builder()

@@ -8,6 +8,7 @@ data class AddOrModifyRealEstateViewState(
     val agentSpinnerItemViewStateList: List<AddOrModifyRealEstateAgentSpinnerItemViewState>,
     val realEstatePhotoListItemViewStateList: List<RealEstatePhotoItemViewState>,
     val address: String,
+    val city: String,
     val numberOfRooms: String,
     val numberOfBathrooms: String,
     val numberOfBedrooms: String,

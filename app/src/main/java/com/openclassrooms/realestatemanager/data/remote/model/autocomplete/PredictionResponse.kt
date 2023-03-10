@@ -34,8 +34,7 @@ data class PredictionResponse(
     val types: List<String>? = null,
 
 ) {
-    //TODO if i do properly toString maybe autosuggestion will work ?
     override fun toString(): String {
-        return super.toString()
+        return "PredictionResponse(description='$description', matchedSubstrings=$matchedSubstrings, placeId='$placeId', reference='$reference', structuredFormattingResponse=$structuredFormattingResponse, termResponses=$termResponses, types=$types)"
     }
 }

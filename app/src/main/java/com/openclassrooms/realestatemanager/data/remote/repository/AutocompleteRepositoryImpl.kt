@@ -25,7 +25,7 @@ class AutocompleteRepositoryImpl @Inject constructor(
     private val autocompleteOfCityStateFlow = autocompleteOfAddressMutableStateFlow.asStateFlow()
 
     override fun requestMyAutocompleteResponseOfAddress(userInput: String) {
-        val call = googleApi.getAutocompleteResponse(
+        val call = googleApi.requestAutocompleteResponse(
             userInput,
             "country:fr",
             "address",
@@ -51,7 +51,7 @@ class AutocompleteRepositoryImpl @Inject constructor(
     override fun getMyAutocompleteResponseOfAddress(): StateFlow<MyAutocompleteResponse?> = autocompleteOfAddressStateFlow
 
     override fun requestMyAutocompleteResponseOfCity(userInput: String) {
-        val call = googleApi.getAutocompleteResponse(
+        val call = googleApi.requestAutocompleteResponse(
             userInput,
             "country:fr",
             "cities",

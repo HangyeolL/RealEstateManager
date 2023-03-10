@@ -13,6 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.PredictionResponse
 import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoListAdapter
 import com.openclassrooms.realestatemanager.utils.viewBinding
@@ -65,44 +66,49 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             R.layout.add_or_modify_real_estate_spinner_item
         )
         val realEstatePhotoListAdapter = RealEstatePhotoListAdapter()
+        val autocompleteAdapter = ArrayAdapter<PredictionResponse>(
+            requireContext(),
+            android.R.layout.simple_list_item_1
+        )
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setAdapter(typeSpinnerAdapter)
-        binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setAdapter(
-            agentSpinnerAdapter
-        )
-        binding.addOrModifyRealEstateRecyclerViewRealEstatePhotoList.adapter =
-            realEstatePhotoListAdapter
+        binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setAdapter(agentSpinnerAdapter)
+        binding.addOrModifyRealEstateRecyclerViewRealEstatePhotoList.adapter = realEstatePhotoListAdapter
+        binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setAdapter(autocompleteAdapter)
+        binding.addOrModifyRealEstateAutoCompleteTextViewCity.setAdapter(autocompleteAdapter)
 
-        viewModel.initialViewStateLiveData.observe(viewLifecycleOwner) {
+        viewModel.initialViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
 
             typeSpinnerAdapter.clear()
-            typeSpinnerAdapter.addAll(it.typeSpinnerItemViewStateList)
+            typeSpinnerAdapter.addAll(viewState.typeSpinnerItemViewStateList)
 
             agentSpinnerAdapter.clear()
-            agentSpinnerAdapter.addAll(it.agentSpinnerItemViewStateList)
+            agentSpinnerAdapter.addAll(viewState.agentSpinnerItemViewStateList)
 
-            realEstatePhotoListAdapter.submitList(it.realEstatePhotoListItemViewStateList)
+            realEstatePhotoListAdapter.submitList(viewState.realEstatePhotoListItemViewStateList)
 
-            binding.addOrModifyRealEstateTextInputEditTextNumberOfRooms.setText(it.numberOfRooms)
-            binding.addOrModifyRealEstateTextInputEditTextNumberOfBedRooms.setText(it.numberOfBedrooms)
-            binding.addOrModifyRealEstateTextInputEditTextNumberOfBathRooms.setText(it.numberOfBathrooms)
+            binding.addOrModifyRealEstateTextInputEditTextNumberOfRooms.setText(viewState.numberOfRooms)
+            binding.addOrModifyRealEstateTextInputEditTextNumberOfBedRooms.setText(viewState.numberOfBedrooms)
+            binding.addOrModifyRealEstateTextInputEditTextNumberOfBathRooms.setText(viewState.numberOfBathrooms)
 
-            binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setText(it.address)
-            binding.addOrModifyRealEstateTextInputEditTextDescriptionBody.setText(it.description)
-            binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText(it.marketSince)
-            binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(it.dateOfSold)
-            binding.addOrModifyRealEstateTextInputEditTextPrice.setText(it.price)
-            binding.addOrModifyRealEstateTextInputEditTextSqm.setText(it.squareMeter)
+            binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setText(viewState.address)
+            binding.addOrModifyRealEstateAutoCompleteTextViewCity.setText(viewState.city)
+
+            binding.addOrModifyRealEstateTextInputEditTextDescriptionBody.setText(viewState.description)
+            binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText(viewState.marketSince)
+            binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(viewState.dateOfSold)
+            binding.addOrModifyRealEstateTextInputEditTextPrice.setText(viewState.price)
+            binding.addOrModifyRealEstateTextInputEditTextSqm.setText(viewState.squareMeter)
         }
 
         viewModel.addressPredictionsLiveData.observe(viewLifecycleOwner) { addressAutocompletePredictions ->
-            binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setAdapter(
-                ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_list_item_1,
-                    addressAutocompletePredictions
-                )
-            )
+            autocompleteAdapter.clear()
+            autocompleteAdapter.addAll(addressAutocompletePredictions)
+        }
+
+        viewModel.cityPredictionsLiveData.observe(viewLifecycleOwner) { cityAutocompletePredictions ->
+            autocompleteAdapter.clear()
+            autocompleteAdapter.addAll(cityAutocompletePredictions)
         }
 
         viewModel.stringSingleLiveEvent.observe(viewLifecycleOwner) { string ->
@@ -113,8 +119,10 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             startActivity(intent)
         }
 
-        binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setOnItemClickListener { adapter, _, position, _ ->
-            viewModel.onTypeSpinnerItemClicked(adapter.getItemAtPosition(position) as AddOrModifyRealEstateTypeSpinnerItemViewState)
+        binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setOnItemClickListener { _, _, position, _ ->
+            typeSpinnerAdapter.getItem(position)?.let { typeSpinnerItemViewState ->
+                viewModel.onTypeSpinnerItemClicked(typeSpinnerItemViewState)
+            }
         }
 
 
@@ -122,7 +130,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             viewModel.onEditTextAddressChanged(it?.toString())
         }
 
-        binding.addOrModifyRealEstateTextInputEditTextCity.addTextChangedListener {
+        binding.addOrModifyRealEstateAutoCompleteTextViewCity.addTextChangedListener {
             viewModel.onEditTextCityChanged(it?.toString())
         }
 
@@ -141,6 +149,8 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         binding.addOrModifyRealEstateTextInputEditTextSqm.addTextChangedListener {
             viewModel.onEditTextSqmChanged(it?.toString())
         }
+
+        viewModel.onDefaultMarketSinceValueSet(binding.addOrModifyRealEstateTextInputEditTextMarketSince.text.toString())
 
         binding.addOrModifyRealEstateTextInputEditTextMarketSince.setOnClickListener {
             val bundle = Bundle()
@@ -207,8 +217,10 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             viewModel.onEditTextDescriptionChanged(it?.toString())
         }
 
-        binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setOnItemClickListener { adapter, _, position, _ ->
-            viewModel.onAgentSpinnerItemClicked(adapter.getItemAtPosition(position) as AddOrModifyRealEstateAgentSpinnerItemViewState)
+        binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setOnItemClickListener { _, _, position, _ ->
+            agentSpinnerAdapter.getItem(position)?.let { agentSpinnerItemViewState ->
+                viewModel.onAgentSpinnerItemClicked(agentSpinnerItemViewState)
+            }
         }
 
         binding.addOrModifyRealEstateButtonSave.setOnClickListener {

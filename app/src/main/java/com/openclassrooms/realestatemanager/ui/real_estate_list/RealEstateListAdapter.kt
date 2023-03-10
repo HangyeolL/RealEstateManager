@@ -10,9 +10,7 @@ import com.openclassrooms.realestatemanager.databinding.RealEstateListItemBindin
 
 class RealEstateListAdapter(
     private val itemIdListener: (id: Int) -> Unit
-) : ListAdapter<RealEstateListItemViewState, RealEstateListAdapter.ViewHolder>(
-    RealEstateListDiffCallback
-) {
+) : ListAdapter<RealEstateListItemViewState, RealEstateListAdapter.ViewHolder>(RealEstateListDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
@@ -22,6 +20,7 @@ class RealEstateListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position), itemIdListener)
     }
+
 
     class ViewHolder(
         private val itemBinding: RealEstateListItemBinding

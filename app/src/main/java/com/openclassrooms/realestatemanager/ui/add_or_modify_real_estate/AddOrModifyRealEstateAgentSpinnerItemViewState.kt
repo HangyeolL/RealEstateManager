@@ -5,5 +5,7 @@ data class AddOrModifyRealEstateAgentSpinnerItemViewState(
     val agentNameInCharge: String,
     val agentPhoto: String,
 ) {
-        //TODO ToString
+    override fun toString(): String {
+        return "AddOrModifyRealEstateAgentSpinnerItemViewState(agentIdInCharge=$agentIdInCharge, agentNameInCharge='$agentNameInCharge', agentPhoto='$agentPhoto')"
+    }
 }
