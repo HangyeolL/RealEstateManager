@@ -5,7 +5,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object GoogleApiHolder {
+object MyGoogleApiHolder {
 
     val googlePlaceSearchUrl = "https://maps.googleapis.com/maps/api/"
 

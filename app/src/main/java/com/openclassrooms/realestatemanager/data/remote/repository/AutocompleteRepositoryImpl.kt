@@ -2,7 +2,7 @@ package com.openclassrooms.realestatemanager.data.remote.repository
 
 import android.util.Log
 import com.openclassrooms.realestatemanager.BuildConfig
-import com.openclassrooms.realestatemanager.data.remote.GoogleApi
+import com.openclassrooms.realestatemanager.data.remote.MyGoogleApi
 import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.MyAutocompleteResponse
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.model.AutocompleteEntity
@@ -14,14 +14,17 @@ import javax.inject.Inject
 
 
 class AutocompleteRepositoryImpl @Inject constructor(
-    private val googleApi: GoogleApi,
+    private val googleApi: MyGoogleApi,
 ) : AutocompleteRepository {
 
-    private val autocompleteOfAddressMutableSharedFlow = MutableSharedFlow<List<AutocompleteEntity>>(replay = 1)
-    private val autocompleteOfAddressSharedFlow = autocompleteOfAddressMutableSharedFlow.asSharedFlow()
+    private val autocompleteOfAddressMutableSharedFlow =
+        MutableSharedFlow<List<AutocompleteEntity>>(replay = 1)
+    private val autocompleteOfAddressSharedFlow =
+        autocompleteOfAddressMutableSharedFlow.asSharedFlow()
 
-    private val autocompleteOfCityMutableSharedFlow = MutableSharedFlow<List<AutocompleteEntity>>(replay = 1)
-    private val autocompleteOfCitySharedFlow = autocompleteOfAddressMutableSharedFlow.asSharedFlow()
+    private val autocompleteOfCityMutableSharedFlow =
+        MutableSharedFlow<List<AutocompleteEntity>>(replay = 1)
+    private val autocompleteOfCitySharedFlow = autocompleteOfCityMutableSharedFlow.asSharedFlow()
 
     override fun requestMyAutocompleteResponseOfAddress(userInput: String) {
         val call = googleApi.requestAutocompleteResponse(
@@ -56,13 +59,14 @@ class AutocompleteRepositoryImpl @Inject constructor(
 
     }
 
-    override fun getAutocompleteEntitiesForAddress(): SharedFlow<List<AutocompleteEntity>> = autocompleteOfAddressSharedFlow
+    override fun getAutocompleteEntitiesForAddress(): SharedFlow<List<AutocompleteEntity>> =
+        autocompleteOfAddressSharedFlow
 
     override fun requestMyAutocompleteResponseOfCity(userInput: String) {
         val call = googleApi.requestAutocompleteResponse(
             userInput,
             "country:fr",
-            "cities",
+            "(cities)",
             BuildConfig.GOOGLE_API_KEY
         )
 
@@ -76,7 +80,7 @@ class AutocompleteRepositoryImpl @Inject constructor(
                         it.predictions.map { predictionResponse ->
                             AutocompleteEntity(
                                 placeId = predictionResponse.placeId,
-                                text = predictionResponse.description,
+                                text = predictionResponse.structuredFormattingResponse.mainText,
                             )
                         }
                     } ?: emptyList()
@@ -90,5 +94,6 @@ class AutocompleteRepositoryImpl @Inject constructor(
         })
     }
 
-    override fun getAutocompleteEntitiesForCity(): SharedFlow<List<AutocompleteEntity>> = autocompleteOfCitySharedFlow
+    override fun getAutocompleteEntitiesForCity(): SharedFlow<List<AutocompleteEntity>> =
+        autocompleteOfCitySharedFlow
 }

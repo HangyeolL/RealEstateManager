@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface GoogleApi {
+interface MyGoogleApi {
 
     @GET("place/autocomplete/json")
     fun requestAutocompleteResponse(

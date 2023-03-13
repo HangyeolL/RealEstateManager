@@ -7,14 +7,14 @@ data class StructuredFormattingResponse(
 
     @SerializedName("main_text")
     @Expose
-    private val mainText: String,
+    val mainText: String,
 
     @SerializedName("main_text_matched_substrings")
     @Expose
-    private val mainTextMatchedSubstringResponses: List<MainTextMatchedSubstringResponse>,
+    val mainTextMatchedSubstringResponses: List<MainTextMatchedSubstringResponse>,
 
     @SerializedName("secondary_text")
     @Expose
-    private val secondaryText: String,
+    val secondaryText: String,
 
     )

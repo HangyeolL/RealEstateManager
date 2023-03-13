@@ -7,7 +7,6 @@ import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
-import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.PredictionResponse
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
@@ -19,7 +18,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -157,7 +155,6 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                             }
                         )
 
-
                     emit(
                         AddOrModifyRealEstateViewState(
                             typeSpinnerItemViewStateList = typeSpinnerItemViewStateList,
@@ -189,37 +186,40 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
             }
         }
 
-    val addressPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAddressAutocompleteViewStateItem>> = liveData(Dispatchers.IO) {
+
+
+
+    val addressPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem>> = liveData(Dispatchers.IO) {
         autoCompleteRepository.getAutocompleteEntitiesForAddress().collect { autocompleteEntities ->
             emit(
                 autocompleteEntities.map { autocompleteEntity ->
-                    AddOrModifyRealEstateAddressAutocompleteViewStateItem(
+                    AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem(
                         text = autocompleteEntity.text
                     ) {
-                        Log.d("Nino", "AddOrModifyRealEstateViewModel.address.onClick() called with $autocompleteEntity")
+                        Log.d("HL", "AddOrModifyRealEstateViewModel.address.onClick() called with $autocompleteEntity")
                     }
                 }
             )
         }
     }
 
-    val cityPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAddressAutocompleteViewStateItem>> = liveData(Dispatchers.IO) {
+    val cityPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem>> = liveData(Dispatchers.IO) {
         autoCompleteRepository.getAutocompleteEntitiesForCity().collect { autocompleteEntities ->
             emit(
                 autocompleteEntities.map { autocompleteEntity ->
-                    AddOrModifyRealEstateAddressAutocompleteViewStateItem(
+                    AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem(
                         text = autocompleteEntity.text
                     ) {
-                        Log.d("Nino", "AddOrModifyRealEstateViewModel.city.onClick() called with $autocompleteEntity")
+                        //TODO what is the point of having on click inside of viewState data class
+                        Log.d("HL", "AddOrModifyRealEstateViewModel.city.onClick() called with $autocompleteEntity")
                     }
                 }
             )
         }
     }
-
-    private var type: String? = null
     private var address: String? = null
     private var city: String? = null
+    private var type: String? = null
     private var numberOfRooms: Int? = null
     private var numberOfBedRooms: Int? = null
     private var numberOfBathRooms: Int? = null
@@ -240,12 +240,15 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         type = selectedItem.type
     }
 
-    fun onEditTextAddressChanged(userInput: String?) {
+    fun onAutocompleteAddressChanged(userInput: String?) {
         if (userInput != null) {
             autoCompleteRepository.requestMyAutocompleteResponseOfAddress(userInput)
         }
-        address = userInput
 
+    }
+
+    fun onAutocompleteAddressItemClicked(selectedItem: AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem) {
+        address = selectedItem.text
     }
 
     fun onEditTextCityChanged(userInput: String?) {
@@ -253,6 +256,10 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
             autoCompleteRepository.requestMyAutocompleteResponseOfCity(userInput)
         }
         city = userInput
+    }
+
+    fun onAutocompleteCityItemClicked(selectedItem: AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem) {
+        city = selectedItem.text
     }
 
     fun onEditTextNumberOfRoomsChanged(userInput: String?) {
@@ -333,7 +340,6 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
             description != null &&
             agentIdInCharge != null
         ) {
-
 
             viewModelScope.launch(Dispatchers.IO) {
                 realEstateRepository.upsertRealEstate(

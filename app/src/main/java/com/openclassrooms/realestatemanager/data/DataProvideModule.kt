@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.data
 import android.app.Application
 import androidx.room.Room
 import androidx.work.WorkManager
+import com.google.android.gms.common.api.GoogleApi
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
@@ -11,8 +12,8 @@ import com.openclassrooms.realestatemanager.data.local.AppDatabase
 import com.openclassrooms.realestatemanager.data.local.AppDatabase.Companion.DATABASE_NAME
 import com.openclassrooms.realestatemanager.data.local.dao.AgentDao
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
-import com.openclassrooms.realestatemanager.data.remote.GoogleApi
-import com.openclassrooms.realestatemanager.data.remote.GoogleApiHolder
+import com.openclassrooms.realestatemanager.data.remote.MyGoogleApi
+import com.openclassrooms.realestatemanager.data.remote.MyGoogleApiHolder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -65,6 +66,6 @@ object DataProvideModule {
 
     @Provides
     @Singleton
-    fun provideGoogleApi(): GoogleApi = GoogleApiHolder.getInstance().create(GoogleApi::class.java)
+    fun provideMyGoogleApi(): MyGoogleApi = MyGoogleApiHolder.getInstance().create(MyGoogleApi::class.java)
 
 }

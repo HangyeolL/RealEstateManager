@@ -5,8 +5,6 @@ import android.app.DatePickerDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.ListAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -14,7 +12,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.PredictionResponse
 import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoListAdapter
 import com.openclassrooms.realestatemanager.utils.viewBinding
@@ -67,13 +64,17 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             R.layout.add_or_modify_real_estate_spinner_item
         )
         val realEstatePhotoListAdapter = RealEstatePhotoListAdapter()
-        val autocompleteAdapter = AddOrModifyRealEstateAddressAutocompleteAdapter()
+        val autocompleteAdapter = AddOrModifyRealEstateAutocompleteAdapter()
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setAdapter(typeSpinnerAdapter)
         binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setAdapter(agentSpinnerAdapter)
         binding.addOrModifyRealEstateRecyclerViewRealEstatePhotoList.adapter = realEstatePhotoListAdapter
         binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setAdapter(autocompleteAdapter)
         binding.addOrModifyRealEstateAutoCompleteTextViewCity.setAdapter(autocompleteAdapter)
+
+        /**
+         * Observer set up
+         */
 
         viewModel.initialViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
 
@@ -88,15 +89,18 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             binding.addOrModifyRealEstateTextInputEditTextNumberOfRooms.setText(viewState.numberOfRooms)
             binding.addOrModifyRealEstateTextInputEditTextNumberOfBedRooms.setText(viewState.numberOfBedrooms)
             binding.addOrModifyRealEstateTextInputEditTextNumberOfBathRooms.setText(viewState.numberOfBathrooms)
+            binding.addOrModifyRealEstateTextInputEditTextPrice.setText(viewState.price)
+            binding.addOrModifyRealEstateTextInputEditTextSqm.setText(viewState.squareMeter)
 
             binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setText(viewState.address)
             binding.addOrModifyRealEstateAutoCompleteTextViewCity.setText(viewState.city)
 
             binding.addOrModifyRealEstateTextInputEditTextDescriptionBody.setText(viewState.description)
+
             binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText(viewState.marketSince)
+            viewModel.onDefaultMarketSinceValueSet(binding.addOrModifyRealEstateTextInputEditTextMarketSince.text.toString())
+
             binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(viewState.dateOfSold)
-            binding.addOrModifyRealEstateTextInputEditTextPrice.setText(viewState.price)
-            binding.addOrModifyRealEstateTextInputEditTextSqm.setText(viewState.squareMeter)
         }
 
         viewModel.addressPredictionsLiveData.observe(viewLifecycleOwner) { viewStates ->
@@ -115,19 +119,34 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             startActivity(intent)
         }
 
+        /**
+         * Listener set up
+         */
+
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setOnItemClickListener { _, _, position, _ ->
             typeSpinnerAdapter.getItem(position)?.let { typeSpinnerItemViewState ->
                 viewModel.onTypeSpinnerItemClicked(typeSpinnerItemViewState)
             }
         }
 
-
         binding.addOrModifyRealEstateAutoCompleteTextViewAddress.addTextChangedListener {
-            viewModel.onEditTextAddressChanged(it?.toString())
+            viewModel.onAutocompleteAddressChanged(it?.toString())
+        }
+
+        binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setOnItemClickListener { adapterView, view, position, l ->
+            autocompleteAdapter.getItem(position)?.let { addressAutocompleteItemViewState ->
+                viewModel.onAutocompleteAddressItemClicked(addressAutocompleteItemViewState)
+            }
         }
 
         binding.addOrModifyRealEstateAutoCompleteTextViewCity.addTextChangedListener {
             viewModel.onEditTextCityChanged(it?.toString())
+        }
+
+        binding.addOrModifyRealEstateAutoCompleteTextViewCity.setOnItemClickListener { adapterView, view, position, l ->
+            autocompleteAdapter.getItem(position)?.let { addressAutocompleteItemViewState ->
+                viewModel.onAutocompleteCityItemClicked(addressAutocompleteItemViewState)
+            }
         }
 
         binding.addOrModifyRealEstateTextInputEditTextNumberOfRooms.addTextChangedListener {
@@ -146,8 +165,6 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             viewModel.onEditTextSqmChanged(it?.toString())
         }
 
-        viewModel.onDefaultMarketSinceValueSet(binding.addOrModifyRealEstateTextInputEditTextMarketSince.text.toString())
-
         binding.addOrModifyRealEstateTextInputEditTextMarketSince.setOnClickListener {
             val bundle = Bundle()
             bundle.putInt("DATE", 1)
@@ -159,12 +176,6 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             datePicker.arguments = bundle
             datePicker.show(childFragmentManager, "datePicker")
         }
-
-//        val marketSinceDatePicker = object: DatePickerDialog.OnDateSetListener {
-//            override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
-//
-//            }
-//        }
 
         binding.addOrModifyRealEstateTextInputEditTextPrice.addTextChangedListener {
             viewModel.onEditTextPriceChanged(it?.toString())
