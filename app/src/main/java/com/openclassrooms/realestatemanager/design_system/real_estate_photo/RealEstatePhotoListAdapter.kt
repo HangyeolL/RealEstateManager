@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.design_system.photo_carousel
+package com.openclassrooms.realestatemanager.design_system.real_estate_photo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.RealEstatePhotoListItemAddBinding
 import com.openclassrooms.realestatemanager.databinding.RealEstatePhotoListItemBinding
-import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState.*
-import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState.PhotoCarouselType.ADD_PHOTO
-import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState.PhotoCarouselType.CONTENT
+import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState.*
+import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState.PhotoCarouselType.ADD_PHOTO
+import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState.PhotoCarouselType.CONTENT
 
 class RealEstatePhotoListAdapter :
     ListAdapter<RealEstatePhotoItemViewState, ViewHolder>(PhotoCarouselDiffCallback) {

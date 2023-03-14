@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.design_system.photo_carousel
+package com.openclassrooms.realestatemanager.design_system.real_estate_photo
 
 sealed class RealEstatePhotoItemViewState(
     val type: PhotoCarouselType,

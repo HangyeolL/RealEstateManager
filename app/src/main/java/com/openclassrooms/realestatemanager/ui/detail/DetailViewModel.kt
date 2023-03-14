@@ -8,7 +8,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.local.model.AgentEntity
-import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository

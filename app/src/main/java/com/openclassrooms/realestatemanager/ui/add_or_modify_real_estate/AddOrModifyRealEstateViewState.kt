@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
-import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.PredictionResponse
-import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 
 data class AddOrModifyRealEstateViewState(
     val typeSpinnerItemViewStateList: List<AddOrModifyRealEstateTypeSpinnerItemViewState>,

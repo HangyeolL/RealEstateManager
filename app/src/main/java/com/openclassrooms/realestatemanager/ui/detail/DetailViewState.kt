@@ -1,6 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
-import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 
 data class DetailViewState(
 

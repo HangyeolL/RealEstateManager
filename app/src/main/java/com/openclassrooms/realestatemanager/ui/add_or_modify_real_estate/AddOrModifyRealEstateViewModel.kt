@@ -7,9 +7,10 @@ import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
-import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoItemViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
+import com.openclassrooms.realestatemanager.domain.geocoding.GeocodingRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragment.Companion.KEY_REAL_ESTATE_ID
 import com.openclassrooms.realestatemanager.ui.main.MainActivity
@@ -30,6 +31,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private val agentRepository: AgentRepository,
     private val realEstateRepository: RealEstateRepository,
     private val autoCompleteRepository: AutocompleteRepository,
+    private val geocodingRepository: GeocodingRepository,
 ) : ViewModel() {
 
     val intentSingleLiveEvent: SingleLiveEvent<Intent> = SingleLiveEvent()
@@ -187,36 +189,44 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         }
 
 
-
-
-    val addressPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem>> = liveData(Dispatchers.IO) {
-        autoCompleteRepository.getAutocompleteEntitiesForAddress().collect { autocompleteEntities ->
-            emit(
-                autocompleteEntities.map { autocompleteEntity ->
-                    AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem(
-                        text = autocompleteEntity.text
-                    ) {
-                        Log.d("HL", "AddOrModifyRealEstateViewModel.address.onClick() called with $autocompleteEntity")
-                    }
+    val addressPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem>> =
+        liveData(Dispatchers.IO) {
+            autoCompleteRepository.getAutocompleteEntitiesForAddress()
+                .collect { autocompleteEntities ->
+                    emit(
+                        autocompleteEntities.map { autocompleteEntity ->
+                            AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem(
+                                text = autocompleteEntity.text
+                            ) {
+                                Log.d(
+                                    "HL",
+                                    "AddOrModifyRealEstateViewModel.address.onClick() called with $autocompleteEntity"
+                                )
+                            }
+                        }
+                    )
                 }
-            )
         }
-    }
 
-    val cityPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem>> = liveData(Dispatchers.IO) {
-        autoCompleteRepository.getAutocompleteEntitiesForCity().collect { autocompleteEntities ->
-            emit(
-                autocompleteEntities.map { autocompleteEntity ->
-                    AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem(
-                        text = autocompleteEntity.text
-                    ) {
-                        //TODO what is the point of having on click inside of viewState data class
-                        Log.d("HL", "AddOrModifyRealEstateViewModel.city.onClick() called with $autocompleteEntity")
-                    }
+    val cityPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem>> =
+        liveData(Dispatchers.IO) {
+            autoCompleteRepository.getAutocompleteEntitiesForCity()
+                .collect { autocompleteEntities ->
+                    emit(
+                        autocompleteEntities.map { autocompleteEntity ->
+                            AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem(
+                                text = autocompleteEntity.text
+                            ) {
+                                //TODO what is the point of having on click inside of viewState data class
+                                Log.d(
+                                    "HL",
+                                    "AddOrModifyRealEstateViewModel.city.onClick() called with $autocompleteEntity"
+                                )
+                            }
+                        }
+                    )
                 }
-            )
         }
-    }
     private var address: String? = null
     private var city: String? = null
     private var type: String? = null
@@ -244,7 +254,6 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         if (userInput != null) {
             autoCompleteRepository.requestMyAutocompleteResponseOfAddress(userInput)
         }
-
     }
 
     fun onAutocompleteAddressItemClicked(selectedItem: AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem) {
@@ -255,7 +264,6 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         if (userInput != null) {
             autoCompleteRepository.requestMyAutocompleteResponseOfCity(userInput)
         }
-        city = userInput
     }
 
     fun onAutocompleteCityItemClicked(selectedItem: AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem) {
@@ -340,6 +348,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
             description != null &&
             agentIdInCharge != null
         ) {
+            geocodingRepository.requestMyGeocodingResponse(address!!)
 
             viewModelScope.launch(Dispatchers.IO) {
                 realEstateRepository.upsertRealEstate(
@@ -362,7 +371,8 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         dateOfSold = dateOfSold,
                         marketSince = marketSince ?: return@launch,
                         agentIdInCharge = agentIdInCharge ?: return@launch,
-                        latLng = LatLng(0.0, 0.0)
+                        latLng = geocodingRepository.getGeocodingEntities().value?.latLng
+                            ?: return@launch
                     )
                 )
             }

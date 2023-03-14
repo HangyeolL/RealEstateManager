@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.DetailFragmentBinding
-import com.openclassrooms.realestatemanager.design_system.photo_carousel.RealEstatePhotoListAdapter
+import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListAdapter
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 

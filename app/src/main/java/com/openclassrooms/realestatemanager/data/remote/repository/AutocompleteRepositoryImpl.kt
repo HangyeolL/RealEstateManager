@@ -17,13 +17,10 @@ class AutocompleteRepositoryImpl @Inject constructor(
     private val googleApi: MyGoogleApi,
 ) : AutocompleteRepository {
 
-    private val autocompleteOfAddressMutableSharedFlow =
-        MutableSharedFlow<List<AutocompleteEntity>>(replay = 1)
-    private val autocompleteOfAddressSharedFlow =
-        autocompleteOfAddressMutableSharedFlow.asSharedFlow()
+    private val autocompleteOfAddressMutableSharedFlow = MutableSharedFlow<List<AutocompleteEntity>>(replay = 1)
+    private val autocompleteOfAddressSharedFlow = autocompleteOfAddressMutableSharedFlow.asSharedFlow()
 
-    private val autocompleteOfCityMutableSharedFlow =
-        MutableSharedFlow<List<AutocompleteEntity>>(replay = 1)
+    private val autocompleteOfCityMutableSharedFlow = MutableSharedFlow<List<AutocompleteEntity>>(replay = 1)
     private val autocompleteOfCitySharedFlow = autocompleteOfCityMutableSharedFlow.asSharedFlow()
 
     override fun requestMyAutocompleteResponseOfAddress(userInput: String) {

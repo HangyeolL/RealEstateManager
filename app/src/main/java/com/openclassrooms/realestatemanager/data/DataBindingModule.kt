@@ -5,8 +5,10 @@ import com.openclassrooms.realestatemanager.data.local.repository.CurrentRealEst
 import com.openclassrooms.realestatemanager.data.local.repository.LocationRepositoryImpl
 import com.openclassrooms.realestatemanager.data.local.repository.RealEstateRepositoryImpl
 import com.openclassrooms.realestatemanager.data.remote.repository.AutocompleteRepositoryImpl
+import com.openclassrooms.realestatemanager.data.remote.repository.GeocodingRepositoryImpl
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
+import com.openclassrooms.realestatemanager.domain.geocoding.GeocodingRepository
 import com.openclassrooms.realestatemanager.domain.location.LocationRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
@@ -40,5 +42,8 @@ abstract class DataBindingModule {
     @Singleton
     abstract fun bindAutocompleteRepository(impl: AutocompleteRepositoryImpl): AutocompleteRepository
 
+    @Binds
+    @Singleton
+    abstract fun bindGeocodingRepository(impl: GeocodingRepositoryImpl): GeocodingRepository
 
 }
