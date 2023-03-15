@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface AutocompleteRepository {
 
-    fun requestMyAutocompleteResponseOfAddress(userInput: String,)
+    suspend fun requestMyAutocompleteResponseOfAddress(userInput: String,)
 
     fun getAutocompleteEntitiesForAddress(): SharedFlow<List<AutocompleteEntity>>
 
-    fun requestMyAutocompleteResponseOfCity(userInput: String)
+    suspend fun requestMyAutocompleteResponseOfCity(userInput: String)
 
     fun getAutocompleteEntitiesForCity(): SharedFlow<List<AutocompleteEntity>>
 

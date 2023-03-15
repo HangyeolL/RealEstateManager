@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.*
-import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
@@ -16,11 +15,8 @@ import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrMo
 import com.openclassrooms.realestatemanager.ui.main.MainActivity
 import com.openclassrooms.realestatemanager.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -252,7 +248,9 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
     fun onAutocompleteAddressChanged(userInput: String?) {
         if (userInput != null) {
-            autoCompleteRepository.requestMyAutocompleteResponseOfAddress(userInput)
+            viewModelScope.launch(Dispatchers.IO) {
+                autoCompleteRepository.requestMyAutocompleteResponseOfAddress(userInput)
+            }
         }
     }
 
@@ -262,7 +260,9 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
     fun onEditTextCityChanged(userInput: String?) {
         if (userInput != null) {
-            autoCompleteRepository.requestMyAutocompleteResponseOfCity(userInput)
+            viewModelScope.launch(Dispatchers.IO) {
+                autoCompleteRepository.requestMyAutocompleteResponseOfCity(userInput)
+            }
         }
     }
 
@@ -335,22 +335,24 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     }
 
     fun onSaveButtonClicked() {
-        if (
-            type != null &&
-            address != null &&
-            city != null &&
-            numberOfRooms != null &&
-            numberOfBedRooms != null &&
-            numberOfBathRooms != null &&
-            sqm != null &&
-            price != null &&
-            marketSince != null &&
-            description != null &&
-            agentIdInCharge != null
-        ) {
-            geocodingRepository.requestMyGeocodingResponse(address!!)
+        val capturedAddress = address
 
+        if (
+            type != null
+            && capturedAddress != null
+            && city != null
+            && numberOfRooms != null
+            && numberOfBedRooms != null
+            && numberOfBathRooms != null
+            && sqm != null
+            && price != null
+            && marketSince != null
+            && description != null
+            && agentIdInCharge != null
+        ) {
             viewModelScope.launch(Dispatchers.IO) {
+                val latLng = geocodingRepository.requestMyGeocodingResponse(capturedAddress)?.latLng ?: return@launch
+
                 realEstateRepository.upsertRealEstate(
                     RealEstateEntity(
                         type = type ?: return@launch,
@@ -371,12 +373,14 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         dateOfSold = dateOfSold,
                         marketSince = marketSince ?: return@launch,
                         agentIdInCharge = agentIdInCharge ?: return@launch,
-                        latLng = geocodingRepository.getGeocodingEntities().value?.latLng
-                            ?: return@launch
+                        latLng = latLng
                     )
                 )
+
+                withContext(Dispatchers.Main) {
+                    intentSingleLiveEvent.setValue(MainActivity.navigate(application))
+                }
             }
-            intentSingleLiveEvent.setValue(MainActivity.navigate(application))
         } else {
             stringSingleLiveEvent.setValue(application.getString(R.string.please_fill_out_all_the_forms))
         }

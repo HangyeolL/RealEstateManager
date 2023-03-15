@@ -6,7 +6,5 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface GeocodingRepository {
 
-    fun requestMyGeocodingResponse(userInput: String,)
-
-    fun getGeocodingEntities(): StateFlow<GeocodingEntity?>
+    suspend fun requestMyGeocodingResponse(userInput: String) : GeocodingEntity?
 }
