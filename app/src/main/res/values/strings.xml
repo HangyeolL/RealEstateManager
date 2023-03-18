@@ -22,4 +22,5 @@
     <string name="apartment">Apartment</string>
     <string name="studio">Studio</string>
     <string name="paris">Paris</string>
+    <string name="please_describe_your_photo">Please describe your photo:)</string>
 </resources>

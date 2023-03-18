@@ -2,10 +2,13 @@ package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
 import android.app.Application
 import android.content.Intent
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
+import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
@@ -30,7 +33,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private val geocodingRepository: GeocodingRepository,
 ) : ViewModel() {
 
-    val intentSingleLiveEvent: SingleLiveEvent<Intent> = SingleLiveEvent()
+    val viewActionSingleLiveEvent: SingleLiveEvent<AddOrModifyRealEstateViewAction> = SingleLiveEvent()
     val stringSingleLiveEvent: SingleLiveEvent<String> = SingleLiveEvent()
 
     val initialViewStateLiveData: LiveData<AddOrModifyRealEstateViewState> =
@@ -78,8 +81,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                                 photoDescription = photoEntity.description
                             )
                         } + RealEstatePhotoItemViewState.AddRealEstatePhoto {
-                            val intent = Intent("android.media.action.IMAGE_CAPTURE")
-                            intentSingleLiveEvent.setValue(intent)
+                            viewActionSingleLiveEvent.setValue(AddOrModifyRealEstateViewAction.OpenCamera)
 
                             Log.d(
                                 "Hangyeol",
@@ -144,7 +146,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         listOf(
                             RealEstatePhotoItemViewState.AddRealEstatePhoto {
                                 val intent = Intent("android.media.action.IMAGE_CAPTURE")
-                                intentSingleLiveEvent.setValue(intent)
+                                intentSingleLiveEvent.setValue()
 
                                 Log.d(
                                     "Hangyeol",
@@ -385,6 +387,5 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
             stringSingleLiveEvent.setValue(application.getString(R.string.please_fill_out_all_the_forms))
         }
     }
-
 
 }

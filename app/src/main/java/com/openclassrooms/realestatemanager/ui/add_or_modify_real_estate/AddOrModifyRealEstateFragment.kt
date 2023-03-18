@@ -1,21 +1,30 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
 import android.Manifest
+import android.R.attr.data
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateFragmentBinding
+import com.openclassrooms.realestatemanager.databinding.AddPhotoDialogFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListAdapter
+import com.openclassrooms.realestatemanager.ui.main.MainActivity
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+
 
 @AndroidEntryPoint
 class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estate_fragment) {
@@ -30,30 +39,37 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
     }
 
+    private var latestTmpUri: Uri? = null
+
     private val binding by viewBinding { AddOrModifyRealEstateFragmentBinding.bind(it) }
     private val viewModel by viewModels<AddOrModifyRealEstateViewModel>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        // Camera permission request TODO how to do this in ViewModel
-        val requestPermissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-                if (isGranted) {
+    val takePictureResult = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+        if (isSuccess) {
+            latestTmpUri.let { uri ->
 
-                } else {
+                //TODO need to show AddPhotoDialogFragment and set the image taken by user in there..
+                val bundle = Bundle()
+                bundle.putString("PICTURE", uri.toString())
 
-                }
-            }
+                val addPhotoDialogFragment = AddPhotoDialogFragment()
+                addPhotoDialogFragment.arguments = bundle
+                addPhotoDialogFragment.show(childFragmentManager, "addPhotoDialog")
 
-        when (PackageManager.PERMISSION_GRANTED) {
-            ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) -> {
-
-            }
-            else -> {
-                requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
         }
+    }
+
+    private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri?.let {
+
+        }
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val typeSpinnerAdapter = AddOrModifyRealEstateTypeSpinnerAdapter(
             requireContext(),
@@ -75,7 +91,6 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         /**
          * Observer set up
          */
-
         viewModel.initialViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
 
             typeSpinnerAdapter.clear()
@@ -115,8 +130,17 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             Toast.makeText(requireContext(), string, Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.intentSingleLiveEvent.observe(viewLifecycleOwner) { intent ->
-            startActivity(intent)
+        viewModel.viewActionSingleLiveEvent.observe(viewLifecycleOwner) { viewAction ->
+            when (viewAction) {
+                is AddOrModifyRealEstateViewAction.OpenCamera ->
+                    getTmpFileUri().let { uri ->
+                        latestTmpUri = uri
+                        takePictureResult.launch(uri)
+                    }
+
+                is AddOrModifyRealEstateViewAction.NavigateToMainActivity ->
+                    startActivity(MainActivity.navigate(requireContext()))
+            }
         }
 
         /**
@@ -234,6 +258,15 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             viewModel.onSaveButtonClicked()
         }
 
+    }
+
+    private fun getTmpFileUri(): Uri {
+        val tmpFile = File.createTempFile("tmp_image_file", ".png", cacheDir).apply {
+            createNewFile()
+            deleteOnExit()
+        }
+
+        return FileProvider.getUriForFile(requireContext(), "${BuildConfig.APPLICATION_ID}.provider", tmpFile)
     }
 
 }

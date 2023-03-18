@@ -1,5 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
@@ -14,6 +16,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
+
+    companion object {
+        fun navigate(context: Context): Intent = Intent(context, DetailActivity::class.java)
+    }
 
     private val binding by viewBinding { DetailActivityBinding.inflate(it) }
 
@@ -46,8 +52,8 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             R.id.detail_toolbar_menu_modify -> {
-               viewModel.onToolBarMenuModifyClicked()
-               true
+                viewModel.onToolBarMenuModifyClicked()
+                true
             }
             else -> super.onOptionsItemSelected(item)
         }

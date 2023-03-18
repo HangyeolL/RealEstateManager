@@ -1,19 +1,19 @@
 package com.openclassrooms.realestatemanager.design_system.real_estate_photo
 
 sealed class RealEstatePhotoItemViewState(
-    val type: PhotoCarouselType,
+    val type: RealEstatePhotoType,
 ) {
     data class Content(
         val photoId: Int,
         val photoUrl: String,
         val photoDescription: String?,
-    ):RealEstatePhotoItemViewState(PhotoCarouselType.CONTENT)
+    ):RealEstatePhotoItemViewState(RealEstatePhotoType.CONTENT)
 
     data class AddRealEstatePhoto(
         val onClick: () -> Unit,
-    ): RealEstatePhotoItemViewState(PhotoCarouselType.ADD_PHOTO)
+    ): RealEstatePhotoItemViewState(RealEstatePhotoType.ADD_PHOTO)
 
-    enum class PhotoCarouselType {
+    enum class RealEstatePhotoType {
         CONTENT,
         ADD_PHOTO
     }

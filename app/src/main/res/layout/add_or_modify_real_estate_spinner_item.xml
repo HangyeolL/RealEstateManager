@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/add_real_estate_spinner_item_ImageView"
+            android:id="@+id/add_or_modify_real_estate_spinner_item_ImageView"
             android:layout_width="50dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +23,7 @@
             tools:srcCompat="@drawable/ic_baseline_add_24" />
 
         <TextView
-            android:id="@+id/add_real_estate_spinner_item_TextView"
+            android:id="@+id/add_or_modify_real_estate_spinner_item_TextView"
             style="@style/Widget.AppCompat.TextView.SpinnerItem"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -35,7 +35,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_real_estate_spinner_item_ImageView"
+            app:layout_constraintStart_toEndOf="@+id/add_or_modify_real_estate_spinner_item_ImageView"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Apartment or AgentName" />
 

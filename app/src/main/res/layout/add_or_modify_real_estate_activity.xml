@@ -7,7 +7,7 @@
     tools:context=".ui.add_or_modify_real_estate.AddOrModifyRealEstateActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/addOrModifyRealEstate_Toolbar"
+        android:id="@+id/add_or_modify_real_estate_Toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimaryDark"
@@ -22,13 +22,13 @@
         app:titleTextColor="@color/colorPrimary" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/addOrModifyRealEstate_FragmentContainerView"
+        android:id="@+id/add_or_modify_real_estate_FragmentContainerView"
         android:name="com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_Toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_Toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

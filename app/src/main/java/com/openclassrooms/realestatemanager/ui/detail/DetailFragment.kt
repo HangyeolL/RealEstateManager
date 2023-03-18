@@ -14,7 +14,6 @@ import com.openclassrooms.realestatemanager.design_system.real_estate_photo.Real
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class DetailFragment : Fragment(R.layout.detail_fragment) {
 
@@ -42,19 +41,19 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         pagerSnapHelper.attachToRecyclerView(binding.detailRecyclerViewImages)
         binding.detailRecyclerViewImages.addItemDecoration(RealEstatePhotoListPagingIndicationDecoration())
 
-        viewModel.mediatorFlow.observe(viewLifecycleOwner) {
+        viewModel.mediatorFlow.observe(viewLifecycleOwner) { detailViewState ->
 
-            binding.detailConstraintLayoutParent.isVisible = it.isViewVisible
+            binding.detailConstraintLayoutParent.isVisible = detailViewState.isViewVisible
 
-            binding.detailTextViewDescriptionBody.text = it.descriptionBody
-            binding.detailTextViewSquareMeter.text = it.squareMeter.toString()
-            binding.detailTextViewRooms.text = it.numberOfRooms.toString()
-            binding.detailTextViewBathrooms.text = it.numberOfBathrooms.toString()
-            binding.detailTextViewBedrooms.text = it.numberOfBedrooms.toString()
-            binding.detailTextViewAddress.text = it.address
-            binding.detailTextViewAgentName.text = it.agentName
+            binding.detailTextViewDescriptionBody.text = detailViewState.descriptionBody
+            binding.detailTextViewSquareMeter.text = detailViewState.squareMeter.toString()
+            binding.detailTextViewRooms.text = detailViewState.numberOfRooms.toString()
+            binding.detailTextViewBathrooms.text = detailViewState.numberOfBathrooms.toString()
+            binding.detailTextViewBedrooms.text = detailViewState.numberOfBedrooms.toString()
+            binding.detailTextViewAddress.text = detailViewState.address
+            binding.detailTextViewAgentName.text = detailViewState.agentName
 
-            adapter.submitList(it.itemViewStateList)
+            adapter.submitList(detailViewState.itemViewStateList)
         }
     }
 

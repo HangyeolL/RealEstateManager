@@ -2,7 +2,7 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_DrawerLayout"
+    android:id="@+id/main_land_DrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/main_Toolbar"
+            android:id="@+id/main_land_Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimaryDark"
@@ -29,18 +29,18 @@
             app:titleTextColor="@color/colorPrimary" />
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/main_FragmentContainerView_realEstateList"
+            android:id="@+id/main_land_FragmentContainerView_realEstateList"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_Toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/main_land_Toolbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/NavigationView"
+        android:id="@+id/main_NavigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

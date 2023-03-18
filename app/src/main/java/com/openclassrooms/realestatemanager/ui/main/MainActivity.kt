@@ -55,10 +55,7 @@ class MainActivity : AppCompatActivity() {
             when (it) {
                 is MainViewAction.NavigateToDetailActivity ->
                     startActivity(
-                        Intent(
-                            this,
-                            DetailActivity::class.java
-                        )
+                        DetailActivity.navigate(this)
                     )
                 is MainViewAction.NavigateToAddOrModifyRealEstateActivity ->
                     startActivity(

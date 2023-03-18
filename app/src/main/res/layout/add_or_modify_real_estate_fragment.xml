@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_asTypeSpinner"
+            android:id="@+id/add_or_modify_real_estate_TextInputLayout_asTypeSpinner"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             app:placeholderText="Select the type">
 
             <AutoCompleteTextView
-                android:id="@+id/addOrModifyRealEstate_AutoCompleteTextView_asTypeSpinner"
+                android:id="@+id/add_or_modify_real_estate_AutoCompleteTextView_asTypeSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -34,7 +34,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_address"
+            android:id="@+id/add_or_modify_real_estate_TextInputLayout_address"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,18 +44,18 @@
             android:hint="address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_asTypeSpinner"
+            app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_TextInputLayout_asTypeSpinner"
             app:startIconDrawable="@drawable/ic_baseline_location_on_24">
 
             <AutoCompleteTextView
-                android:id="@+id/addOrModifyRealEstate_AutoCompleteTextView_address"
+                android:id="@+id/add_or_modify_real_estate_AutoCompleteTextView_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_price"
+            android:id="@+id/add_or_modify_real_estate_TextInputLayout_price"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -63,14 +63,14 @@
             android:layout_marginTop="16dp"
             app:endIconDrawable="@drawable/ic_round_euro_24"
             app:expandedHintEnabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_TextInputLayout_city"
+            app:layout_constraintEnd_toStartOf="@+id/add_or_modify_real_estate_TextInputLayout_city"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_address"
+            app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_TextInputLayout_address"
             app:suffixText="@string/euro_symbol_as_string">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addOrModifyRealEstate_TextInputEditText_price"
+                android:id="@+id/add_or_modify_real_estate_TextInputEditText_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Price"
@@ -79,7 +79,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_city"
+            android:id="@+id/add_or_modify_real_estate_TextInputLayout_city"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -87,13 +87,13 @@
             android:layout_marginEnd="16dp"
             app:placeholderText="@string/paris"
             app:expandedHintEnabled="false"
-            app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_TextInputLayout_price"
+            app:layout_constraintBaseline_toBaselineOf="@+id/add_or_modify_real_estate_TextInputLayout_price"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_TextInputLayout_price">
+            app:layout_constraintStart_toEndOf="@+id/add_or_modify_real_estate_TextInputLayout_price">
 
             <AutoCompleteTextView
-                android:id="@+id/addOrModifyRealEstate_AutoCompleteTextView_city"
+                android:id="@+id/add_or_modify_real_estate_AutoCompleteTextView_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="city" />
@@ -101,7 +101,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_numberOfRooms"
+            android:id="@+id/add_or_modify_real_estate_TextInputLayout_numberOfRooms"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -109,14 +109,14 @@
             android:layout_marginTop="16dp"
             android:hint="room"
             app:expandedHintEnabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBedRooms"
+            app:layout_constraintEnd_toStartOf="@+id/add_or_modify_real_estate_TextInputLayout_numberOfBedRooms"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_price"
+            app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_TextInputLayout_price"
             app:startIconDrawable="@drawable/ic_baseline_house_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addOrModifyRealEstate_TextInputEditText_numberOfRooms"
+                android:id="@+id/add_or_modify_real_estate_TextInputEditText_numberOfRooms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number" />
@@ -124,21 +124,21 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBedRooms"
+            android:id="@+id/add_or_modify_real_estate_TextInputLayout_numberOfBedRooms"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:hint="bedroom"
             app:expandedHintEnabled="false"
-            app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfRooms"
-            app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBathRooms"
+            app:layout_constraintBaseline_toBaselineOf="@+id/add_or_modify_real_estate_TextInputLayout_numberOfRooms"
+            app:layout_constraintEnd_toStartOf="@+id/add_or_modify_real_estate_TextInputLayout_numberOfBathRooms"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfRooms"
+            app:layout_constraintStart_toEndOf="@+id/add_or_modify_real_estate_TextInputLayout_numberOfRooms"
             app:startIconDrawable="@drawable/ic_baseline_bed_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addOrModifyRealEstate_TextInputEditText_numberOfBedRooms"
+                android:id="@+id/add_or_modify_real_estate_TextInputEditText_numberOfBedRooms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number" />
@@ -146,7 +146,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBathRooms"
+            android:id="@+id/add_or_modify_real_estate_TextInputLayout_numberOfBathRooms"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -154,14 +154,14 @@
             android:layout_marginEnd="16dp"
             android:hint="bathroom"
             app:expandedHintEnabled="false"
-            app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBedRooms"
+            app:layout_constraintBaseline_toBaselineOf="@+id/add_or_modify_real_estate_TextInputLayout_numberOfBedRooms"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfBedRooms"
+            app:layout_constraintStart_toEndOf="@+id/add_or_modify_real_estate_TextInputLayout_numberOfBedRooms"
             app:startIconDrawable="@drawable/ic_baseline_bathtub_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addOrModifyRealEstate_TextInputEditText_numberOfBathRooms"
+                android:id="@+id/add_or_modify_real_estate_TextInputEditText_numberOfBathRooms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number" />
@@ -169,7 +169,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_sqm"
+            android:id="@+id/add_or_modify_real_estate_TextInputLayout_sqm"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -177,15 +177,15 @@
             android:layout_marginTop="16dp"
             android:hint="square meter"
             app:expandedHintEnabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_TextInputLayout_marketSince"
+            app:layout_constraintEnd_toStartOf="@+id/add_or_modify_real_estate_TextInputLayout_marketSince"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_numberOfRooms"
+            app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_TextInputLayout_numberOfRooms"
             app:startIconDrawable="@drawable/ic_baseline_zoom_out_map_24"
             app:suffixText="m2">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addOrModifyRealEstate_TextInputEditText_sqm"
+                android:id="@+id/add_or_modify_real_estate_TextInputEditText_sqm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number" />
@@ -193,7 +193,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_marketSince"
+            android:id="@+id/add_or_modify_real_estate_TextInputLayout_marketSince"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -202,15 +202,15 @@
             android:hint="Market since"
             app:expandedHintEnabled="false"
             app:hintAnimationEnabled="true"
-            app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_TextInputLayout_sqm"
+            app:layout_constraintBaseline_toBaselineOf="@+id/add_or_modify_real_estate_TextInputLayout_sqm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_TextInputLayout_sqm"
+            app:layout_constraintStart_toEndOf="@+id/add_or_modify_real_estate_TextInputLayout_sqm"
             app:placeholderText="Date"
             app:startIconDrawable="@drawable/ic_outline_calendar_month_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addOrModifyRealEstate_TextInputEditText_marketSince"
+                android:id="@+id/add_or_modify_real_estate_TextInputEditText_marketSince"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -219,7 +219,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup"
+            android:id="@+id/add_or_modify_real_estate_chipGroup"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -227,14 +227,14 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_sqm">
+            app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_TextInputLayout_sqm">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/addOrModifyRealEstate_chip_guard"
+                    android:id="@+id/add_or_modify_real_estate_chip_guard"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
@@ -245,13 +245,13 @@
                     app:chipIconVisible="true"
                     app:chipMinTouchTargetSize="50dp"
                     app:ensureMinTouchTargetSize="false"
-                    app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_chip_garage"
+                    app:layout_constraintEnd_toStartOf="@+id/add_or_modify_real_estate_chip_garage"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/addOrModifyRealEstate_chip_garage"
+                    android:id="@+id/add_or_modify_real_estate_chip_garage"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
@@ -261,13 +261,13 @@
                     app:chipIcon="@drawable/ic_baseline_garage_24"
                     app:chipIconVisible="true"
                     app:ensureMinTouchTargetSize="false"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_chip_guard"
-                    app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_chip_garden"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/add_or_modify_real_estate_chip_guard"
+                    app:layout_constraintEnd_toStartOf="@+id/add_or_modify_real_estate_chip_garden"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_chip_guard" />
+                    app:layout_constraintStart_toEndOf="@+id/add_or_modify_real_estate_chip_guard" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/addOrModifyRealEstate_chip_garden"
+                    android:id="@+id/add_or_modify_real_estate_chip_garden"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
@@ -278,13 +278,13 @@
                     app:chipIconVisible="true"
                     app:chipMinTouchTargetSize="50dp"
                     app:ensureMinTouchTargetSize="false"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_chip_garage"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/add_or_modify_real_estate_chip_garage"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_chip_garage" />
+                    app:layout_constraintStart_toEndOf="@+id/add_or_modify_real_estate_chip_garage" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/addOrModifyRealEstate_chip_elevator"
+                    android:id="@+id/add_or_modify_real_estate_chip_elevator"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
@@ -298,12 +298,12 @@
                     app:chipMinTouchTargetSize="50dp"
                     app:ensureMinTouchTargetSize="false"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/addOrModifyRealEstate_chip_guard"
+                    app:layout_constraintEnd_toEndOf="@+id/add_or_modify_real_estate_chip_guard"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_chip_guard" />
+                    app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_chip_guard" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/addOrModifyRealEstate_chip_groceryStoreNextBy"
+                    android:id="@+id/add_or_modify_real_estate_chip_groceryStoreNextBy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -316,10 +316,10 @@
                     app:chipIconVisible="true"
                     app:chipMinTouchTargetSize="50dp"
                     app:ensureMinTouchTargetSize="false"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/addOrModifyRealEstate_chip_elevator"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/add_or_modify_real_estate_chip_elevator"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_chip_elevator" />
+                    app:layout_constraintStart_toEndOf="@+id/add_or_modify_real_estate_chip_elevator" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -327,7 +327,7 @@
         </com.google.android.material.chip.ChipGroup>
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/addOrModifyRealEstate_chip_isSoldOut"
+            android:id="@+id/add_or_modify_real_estate_chip_isSoldOut"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
@@ -337,14 +337,14 @@
             app:checkedIconVisible="true"
             app:chipIcon="@drawable/ic_outline_sell_24"
             app:chipIconVisible="true"
-            app:layout_constraintEnd_toStartOf="@+id/addOrModifyRealEstate_TextInputLayout_soldOutDate"
+            app:layout_constraintEnd_toStartOf="@+id/add_or_modify_real_estate_TextInputLayout_soldOutDate"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_weight="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
+            app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_chipGroup" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_soldOutDate"
+            android:id="@+id/add_or_modify_real_estate_TextInputLayout_soldOutDate"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -352,17 +352,17 @@
             android:layout_marginEnd="16dp"
             android:hint="Date"
             app:expandedHintEnabled="false"
-            app:layout_constraintBottom_toBottomOf="@+id/addOrModifyRealEstate_chip_isSoldOut"
+            app:layout_constraintBottom_toBottomOf="@+id/add_or_modify_real_estate_chip_isSoldOut"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@+id/addOrModifyRealEstate_chip_isSoldOut"
-            app:layout_constraintTop_toTopOf="@+id/addOrModifyRealEstate_chip_isSoldOut"
+            app:layout_constraintStart_toEndOf="@+id/add_or_modify_real_estate_chip_isSoldOut"
+            app:layout_constraintTop_toTopOf="@+id/add_or_modify_real_estate_chip_isSoldOut"
             app:placeholderText="Date"
             app:startIconDrawable="@drawable/ic_outline_calendar_month_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addOrModifyRealEstate_TextInputEditText_dateOfSold"
+                android:id="@+id/add_or_modify_real_estate_TextInputEditText_dateOfSold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -371,7 +371,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_description"
+            android:id="@+id/add_or_modify_real_estate_TextInputLayout_description"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -382,18 +382,18 @@
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_chip_isSoldOut"
+            app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_chip_isSoldOut"
             app:placeholderText="Tell us about your real estate ! :)">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addOrModifyRealEstate_TextInputEditText_descriptionBody"
+                android:id="@+id/add_or_modify_real_estate_TextInputEditText_descriptionBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/addOrModifyRealEstate_Button_save"
+            android:id="@+id/add_or_modify_real_estate_Button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -403,7 +403,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addOrModifyRealEstate_TextInputLayout_asAgentSpinner"
+            android:id="@+id/add_or_modify_real_estate_TextInputLayout_asAgentSpinner"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -414,11 +414,11 @@
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_description"
+            app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_TextInputLayout_description"
             app:placeholderText="Select the agent in charge">
 
             <AutoCompleteTextView
-                android:id="@+id/addOrModifyRealEstate_autoCompleteTextView_asAgentSpinner"
+                android:id="@+id/add_or_modify_real_estate_autoCompleteTextView_asAgentSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -427,7 +427,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/addOrModifyRealEstate_RecyclerView_realEstatePhotoList"
+            android:id="@+id/add_or_modify_real_estate_RecyclerView_realEstatePhotoList"
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:layout_marginStart="16dp"
@@ -436,10 +436,10 @@
             android:layout_marginBottom="16dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/addOrModifyRealEstate_Button_save"
+            app:layout_constraintBottom_toTopOf="@+id/add_or_modify_real_estate_Button_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addOrModifyRealEstate_TextInputLayout_asAgentSpinner" />
+            app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_TextInputLayout_asAgentSpinner" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
