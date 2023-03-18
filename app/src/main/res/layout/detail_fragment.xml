@@ -11,17 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/detail_TextView_media"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/media"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/detail_RecyclerView_images"
             android:layout_width="0dp"
@@ -35,14 +24,14 @@
             app:layout_constraintBottom_toTopOf="@+id/detail_Guideline_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_TextView_media" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/detail_Guideline_up"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="200dp" />
+            app:layout_constraintGuide_begin="300dp" />
 
         <TextView
             android:id="@+id/detail_TextView_description"
@@ -74,7 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="400dp" />
+            app:layout_constraintGuide_begin="500dp" />
 
         <ImageView
             android:id="@+id/detail_ImageView_iconSurface"
@@ -90,7 +79,7 @@
             android:id="@+id/detail_TextView_surface"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:text="@string/surface"
             android:textColor="@android:color/black"
@@ -121,17 +110,17 @@
             android:id="@+id/detail_ImageView_iconHouse"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintEnd_toEndOf="@+id/detail_ImageView_iconSurface"
-            app:layout_constraintStart_toStartOf="@+id/detail_ImageView_iconSurface"
-            app:layout_constraintTop_toBottomOf="@+id/detail_ImageView_iconSurface"
+            android:layout_marginStart="170dp"
+            app:layout_constraintBottom_toBottomOf="@+id/detail_ImageView_iconSurface"
+            app:layout_constraintStart_toEndOf="@+id/detail_ImageView_iconSurface"
+            app:layout_constraintTop_toTopOf="@+id/detail_ImageView_iconSurface"
             app:srcCompat="@drawable/ic_baseline_house_24" />
 
         <TextView
             android:id="@+id/detail_TextView_numberOfRooms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:text="@string/number_of_rooms"
             android:textColor="@android:color/black"
             app:layout_constraintStart_toEndOf="@+id/detail_ImageView_iconHouse"
@@ -153,16 +142,16 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginTop="32dp"
-            app:layout_constraintEnd_toEndOf="@+id/detail_ImageView_iconHouse"
-            app:layout_constraintStart_toStartOf="@+id/detail_ImageView_iconHouse"
-            app:layout_constraintTop_toBottomOf="@+id/detail_ImageView_iconHouse"
+            app:layout_constraintEnd_toEndOf="@+id/detail_ImageView_iconSurface"
+            app:layout_constraintStart_toStartOf="@+id/detail_ImageView_iconSurface"
+            app:layout_constraintTop_toBottomOf="@+id/detail_ImageView_iconSurface"
             app:srcCompat="@drawable/ic_baseline_bathtub_24" />
 
         <TextView
             android:id="@+id/detail_TextView_numberOfBathrooms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:text="@string/number_of_bathrooms"
             android:textColor="@android:color/black"
             app:layout_constraintStart_toEndOf="@+id/detail_ImageView_iconBathroom"
@@ -184,16 +173,16 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginTop="32dp"
-            app:layout_constraintEnd_toEndOf="@+id/detail_ImageView_iconBathroom"
-            app:layout_constraintStart_toStartOf="@+id/detail_ImageView_iconBathroom"
-            app:layout_constraintTop_toBottomOf="@+id/detail_ImageView_iconBathroom"
+            app:layout_constraintEnd_toEndOf="@+id/detail_ImageView_iconHouse"
+            app:layout_constraintStart_toStartOf="@+id/detail_ImageView_iconHouse"
+            app:layout_constraintTop_toBottomOf="@+id/detail_ImageView_iconHouse"
             app:srcCompat="@drawable/ic_baseline_bed_24" />
 
         <TextView
             android:id="@+id/detail_TextView_numberOfBedrooms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:text="@string/number_of_bedrooms"
             android:textColor="@android:color/black"
             app:layout_constraintStart_toEndOf="@+id/detail_ImageView_iconBedroom"
@@ -215,16 +204,16 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginTop="32dp"
-            app:layout_constraintEnd_toEndOf="@+id/detail_ImageView_iconBedroom"
-            app:layout_constraintStart_toStartOf="@+id/detail_ImageView_iconBedroom"
-            app:layout_constraintTop_toBottomOf="@+id/detail_ImageView_iconBedroom"
+            app:layout_constraintEnd_toEndOf="@+id/detail_ImageView_iconBathroom"
+            app:layout_constraintStart_toStartOf="@+id/detail_ImageView_iconBathroom"
+            app:layout_constraintTop_toBottomOf="@+id/detail_ImageView_iconBathroom"
             app:srcCompat="@drawable/ic_baseline_location_on_24" />
 
         <TextView
             android:id="@+id/detail_TextView_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:text="@string/location"
             android:textColor="@android:color/black"
             app:layout_constraintStart_toEndOf="@+id/detail_ImageView_iconLocation"
@@ -232,9 +221,11 @@
 
         <TextView
             android:id="@+id/detail_TextView_address"
-            android:layout_width="150dp"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/detail_TextView_location"
             app:layout_constraintTop_toBottomOf="@+id/detail_TextView_location"
             tools:text="740 Paris avenu brooklin Newyork 77899 second floor bro united states" />

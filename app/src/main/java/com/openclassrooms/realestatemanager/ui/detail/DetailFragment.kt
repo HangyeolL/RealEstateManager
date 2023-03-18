@@ -5,11 +5,15 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.DetailFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListAdapter
+import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListPagingIndicationDecoration
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class DetailFragment : Fragment(R.layout.detail_fragment) {
@@ -26,6 +30,17 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = RealEstatePhotoListAdapter()
+        binding.detailRecyclerViewImages.adapter = adapter
+        binding.detailRecyclerViewImages.layoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+
+        // add pager behavior to RecyclerView
+        val pagerSnapHelper = PagerSnapHelper()
+        pagerSnapHelper.attachToRecyclerView(binding.detailRecyclerViewImages)
+        binding.detailRecyclerViewImages.addItemDecoration(RealEstatePhotoListPagingIndicationDecoration())
 
         viewModel.mediatorFlow.observe(viewLifecycleOwner) {
 
@@ -39,7 +54,6 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             binding.detailTextViewAddress.text = it.address
             binding.detailTextViewAgentName.text = it.agentName
 
-            binding.detailRecyclerViewImages.adapter = adapter
             adapter.submitList(it.itemViewStateList)
         }
     }
