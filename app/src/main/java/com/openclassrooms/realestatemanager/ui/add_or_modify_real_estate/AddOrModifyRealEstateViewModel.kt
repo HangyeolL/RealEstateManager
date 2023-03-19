@@ -1,21 +1,16 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
 import android.app.Application
-import android.content.Intent
-import android.net.Uri
-import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
-import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
 import com.openclassrooms.realestatemanager.domain.geocoding.GeocodingRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragment.Companion.KEY_REAL_ESTATE_ID
-import com.openclassrooms.realestatemanager.ui.main.MainActivity
 import com.openclassrooms.realestatemanager.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -40,10 +35,11 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         liveData(Dispatchers.IO) {
             val realEstateId: Int? = savedStateHandle[KEY_REAL_ESTATE_ID]
 
+            //TODO why realEstateAsync doesnt get the photoList with new elements added ?
+
             if (realEstateId != null) {
                 coroutineScope {
-                    val realEstateAsync =
-                        async { realEstateRepository.getRealEstateById(realEstateId).first() }
+                    val realEstateAsync = async { realEstateRepository.getRealEstateById(realEstateId).first() }
                     val allAgentsAsync = async { agentRepository.getAllAgents().first() }
 
                     val typeSpinnerItemViewStateList = listOf(
@@ -145,8 +141,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                     val photoListItemViewStateList =
                         listOf(
                             RealEstatePhotoItemViewState.AddRealEstatePhoto {
-                                val intent = Intent("android.media.action.IMAGE_CAPTURE")
-                                intentSingleLiveEvent.setValue()
+                                viewActionSingleLiveEvent.setValue(AddOrModifyRealEstateViewAction.OpenCamera)
 
                                 Log.d(
                                     "Hangyeol",
@@ -380,7 +375,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                 )
 
                 withContext(Dispatchers.Main) {
-                    intentSingleLiveEvent.setValue(MainActivity.navigate(application))
+                    viewActionSingleLiveEvent.setValue(AddOrModifyRealEstateViewAction.NavigateToMainActivity)
                 }
             }
         } else {

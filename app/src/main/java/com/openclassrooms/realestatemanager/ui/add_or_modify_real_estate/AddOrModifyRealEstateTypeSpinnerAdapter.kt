@@ -31,9 +31,9 @@ class AddOrModifyRealEstateTypeSpinnerAdapter(
         val itemViewState = getItem(position)
 
         Glide.with(context).load(itemViewState?.icon)
-            .into(itemBinding.addRealEstateSpinnerItemImageView)
+            .into(itemBinding.addOrModifyRealEstateSpinnerItemImageView)
 
-        itemBinding.addRealEstateSpinnerItemTextView.text = itemViewState?.type
+        itemBinding.addOrModifyRealEstateSpinnerItemTextView.text = itemViewState?.type
 
         return itemBinding.root
     }

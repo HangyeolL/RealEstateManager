@@ -1,33 +1,50 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
 import android.app.Dialog
-import android.net.Uri
+import android.content.res.Resources
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.AddPhotoDialogFragmentBinding
 import com.openclassrooms.realestatemanager.utils.viewBinding
 
-class AddPhotoDialogFragment() : DialogFragment(R.layout.add_photo_dialog_fragment) {
-
+class AddPhotoDialogFragment : DialogFragment(R.layout.add_photo_dialog_fragment) {
 
     private val binding by viewBinding { AddPhotoDialogFragmentBinding.bind(it) }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
-        //TODO set image and capture textView -> Insert in the database...
-        Glide.with(this).load(this.requireArguments().getString("PICTURE"))
-            .into(binding.addPhotoDialogImageView)
-
-
-        return super.onCreateDialog(savedInstanceState)
-    }
+    private val viewModel by viewModels<AddPhotoDialogViewModel>(ownerProducer = { requireParentFragment() })
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val picUriToString = this.requireArguments().getString("PICTURE")
+        val realEstateId = this.requireArguments().getInt("KEY_REAL_ESTATE_ID")
 
+        //TODO set image and capture textView -> Insert in the database...
+        Glide.with(this).load(picUriToString)
+            .centerCrop()
+            .into(binding.addPhotoDialogImageView)
+
+        binding.addPhotoDialogButtonCancel.setOnClickListener {
+            dismiss()
+        }
+
+        binding.addPhotoDialogButtonOk.setOnClickListener {
+            picUriToString?.let { picUriToString ->
+                viewModel.onButtonOkClicked(
+                    realEstateId,
+                    picUriToString,
+                    binding.addPhotoDialogTextInputEditTextDescription.text.toString()
+                )
+                dismiss()
+            }
+        }
+
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
+
 }

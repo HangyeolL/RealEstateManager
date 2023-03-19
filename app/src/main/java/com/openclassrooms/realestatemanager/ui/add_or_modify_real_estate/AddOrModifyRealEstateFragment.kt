@@ -1,16 +1,11 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
-import android.Manifest
-import android.R.attr.data
-import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -18,13 +13,13 @@ import androidx.fragment.app.viewModels
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateFragmentBinding
-import com.openclassrooms.realestatemanager.databinding.AddPhotoDialogFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListAdapter
 import com.openclassrooms.realestatemanager.ui.main.MainActivity
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
+//TODO back button on Toolbar doesnt appear
 
 @AndroidEntryPoint
 class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estate_fragment) {
@@ -39,25 +34,32 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
     }
 
-    private var latestTmpUri: Uri? = null
-
     private val binding by viewBinding { AddOrModifyRealEstateFragmentBinding.bind(it) }
     private val viewModel by viewModels<AddOrModifyRealEstateViewModel>()
 
+    private var realEstateId: Int? = null
+    private var latestTmpUri: Uri? = null
 
-    val takePictureResult = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+    private val takePictureResult = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
         if (isSuccess) {
+            val addPhotoDialogFragment = AddPhotoDialogFragment()
+            val bundle = Bundle()
+
             latestTmpUri.let { uri ->
+//                val capturedRealEstateId = realEstateId
 
-                //TODO need to show AddPhotoDialogFragment and set the image taken by user in there..
-                val bundle = Bundle()
-                bundle.putString("PICTURE", uri.toString())
-
-                val addPhotoDialogFragment = AddPhotoDialogFragment()
-                addPhotoDialogFragment.arguments = bundle
-                addPhotoDialogFragment.show(childFragmentManager, "addPhotoDialog")
-
+                addPhotoDialogFragment.arguments = bundle.apply {
+                    putString("PICTURE", uri.toString())
+                }
             }
+            realEstateId?.let { int ->
+                addPhotoDialogFragment.arguments = bundle.apply {
+                    putInt(KEY_REAL_ESTATE_ID, int)
+                }
+            }
+
+            addPhotoDialogFragment.arguments = bundle
+            addPhotoDialogFragment.show(childFragmentManager, "addPhotoDialog")
         }
     }
 
@@ -70,6 +72,10 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (this.arguments != null) {
+            realEstateId = this.requireArguments().getInt("KEY_REAL_ESTATE_ID")
+        }
 
         val typeSpinnerAdapter = AddOrModifyRealEstateTypeSpinnerAdapter(
             requireContext(),
@@ -261,7 +267,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
     }
 
     private fun getTmpFileUri(): Uri {
-        val tmpFile = File.createTempFile("tmp_image_file", ".png", cacheDir).apply {
+        val tmpFile = File.createTempFile("tmp_image_file", ".png", requireContext().cacheDir).apply {
             createNewFile()
             deleteOnExit()
         }

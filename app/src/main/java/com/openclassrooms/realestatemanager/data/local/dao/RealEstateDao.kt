@@ -12,7 +12,7 @@ interface RealEstateDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertRealEstate(realEstateEntity: RealEstateEntity)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity)
 
     @Query("DELETE FROM realEstates WHERE realEstateId = :realEstateId")

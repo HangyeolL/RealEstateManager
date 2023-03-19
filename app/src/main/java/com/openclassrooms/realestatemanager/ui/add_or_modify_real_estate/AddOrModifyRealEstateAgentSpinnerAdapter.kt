@@ -42,9 +42,9 @@ class AddOrModifyRealEstateAgentSpinnerAdapter(
         val itemViewState = getItem(position)
 
         Glide.with(context).load(itemViewState?.agentPhoto)
-            .into(itemBinding.addRealEstateSpinnerItemImageView)
+            .into(itemBinding.addOrModifyRealEstateSpinnerItemImageView)
 
-        itemBinding.addRealEstateSpinnerItemTextView.text = itemViewState?.agentNameInCharge
+        itemBinding.addOrModifyRealEstateSpinnerItemTextView.text = itemViewState?.agentNameInCharge
 
         return itemBinding.root
     }

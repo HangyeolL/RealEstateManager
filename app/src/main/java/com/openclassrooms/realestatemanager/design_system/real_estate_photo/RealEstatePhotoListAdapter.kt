@@ -9,22 +9,20 @@ import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.RealEstatePhotoListItemAddBinding
 import com.openclassrooms.realestatemanager.databinding.RealEstatePhotoListItemBinding
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState.*
-import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState.PhotoCarouselType.ADD_PHOTO
-import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState.PhotoCarouselType.CONTENT
 
 class RealEstatePhotoListAdapter :
     ListAdapter<RealEstatePhotoItemViewState, ViewHolder>(PhotoCarouselDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        when (PhotoCarouselType.values()[viewType]) {
-            CONTENT -> RealEstatePhotoViewHolder(
+        when (RealEstatePhotoType.values()[viewType]) {
+            RealEstatePhotoType.CONTENT -> RealEstatePhotoViewHolder(
                 RealEstatePhotoListItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
             )
-            ADD_PHOTO -> RealEstateAddViewHolder(
+            RealEstatePhotoType.ADD_PHOTO -> RealEstateAddViewHolder(
                 RealEstatePhotoListItemAddBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -58,7 +56,7 @@ class RealEstatePhotoListAdapter :
         ViewHolder(itemBinding.root) {
 
         fun bind(viewState: AddRealEstatePhoto) {
-            itemBinding.ImageButton.setOnClickListener {
+            itemBinding.realEstatePhotoListItemAddImageButton.setOnClickListener {
                 viewState.onClick()
             }
         }

@@ -29,7 +29,7 @@ class RealEstateListAdapter(
         fun bind(viewState: RealEstateListItemViewState, itemIdListener: (id: Int) -> Unit) {
             itemBinding.realEstateListItemTextViewType.text = viewState.type
             itemBinding.realEstateListItemTextViewCity.text = viewState.city
-            itemBinding.realEstateListTiemTextViewPrice.text = viewState.price.toString()
+            itemBinding.realEstateListItemTextViewPrice.text = viewState.price.toString()
             Glide.with(itemView.context).load(viewState.imageUrl)
                 .into(itemBinding.realEstateListItemImageView)
 

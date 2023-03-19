@@ -9,6 +9,7 @@ data class RealEstateEntity(
 
     @PrimaryKey(autoGenerate = true)
     val realEstateId: Int = 0,
+
     val type: String,
     val descriptionBody: String,
     val squareMeter: Int,

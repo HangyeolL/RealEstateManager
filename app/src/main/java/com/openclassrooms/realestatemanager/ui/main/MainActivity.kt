@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
 
-        val containerDetailsId = binding.mainFragmentContainerViewDetail?.id
+        val containerDetailsId = binding.mainLandFragmentContainerViewDetail?.id
         if (containerDetailsId != null && supportFragmentManager.findFragmentById(containerDetailsId) == null) {
             supportFragmentManager.beginTransaction()
                 .replace(containerDetailsId, DetailFragment())
