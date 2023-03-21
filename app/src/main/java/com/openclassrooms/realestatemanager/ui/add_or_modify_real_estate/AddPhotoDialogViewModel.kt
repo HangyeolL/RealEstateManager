@@ -14,7 +14,7 @@ class AddPhotoDialogViewModel @Inject constructor(
     private val realEstateRepository: RealEstateRepository
 ) : ViewModel() {
 
-    fun onButtonOkClicked(realEstateId: Int, picUriToString: String, description: String) {
+    fun onButtonOkClicked(realEstateId: Int?, picUriToString: String, description: String) {
         viewModelScope.launch(Dispatchers.IO) {
             realEstateRepository.insertRealEstatePhoto(
                 RealEstatePhotoEntity(

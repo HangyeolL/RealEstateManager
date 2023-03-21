@@ -21,8 +21,14 @@ class AddPhotoDialogFragment : DialogFragment(R.layout.add_photo_dialog_fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var realEstateId: Int? = null
         val picUriToString = this.requireArguments().getString("PICTURE")
-        val realEstateId = this.requireArguments().getInt("KEY_REAL_ESTATE_ID")
+
+        if (this.requireArguments().getInt("KEY_REAL_ESTATE_ID") == 0) {
+            realEstateId = null
+        } else {
+            realEstateId = this.requireArguments().getInt("KEY_REAL_ESTATE_ID")
+        }
 
         //TODO set image and capture textView -> Insert in the database...
         Glide.with(this).load(picUriToString)

@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
+import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
@@ -28,7 +29,8 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private val geocodingRepository: GeocodingRepository,
 ) : ViewModel() {
 
-    val viewActionSingleLiveEvent: SingleLiveEvent<AddOrModifyRealEstateViewAction> = SingleLiveEvent()
+    val viewActionSingleLiveEvent: SingleLiveEvent<AddOrModifyRealEstateViewAction> =
+        SingleLiveEvent()
     val stringSingleLiveEvent: SingleLiveEvent<String> = SingleLiveEvent()
 
     val initialViewStateLiveData: LiveData<AddOrModifyRealEstateViewState> =
@@ -39,7 +41,8 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
             if (realEstateId != null) {
                 coroutineScope {
-                    val realEstateAsync = async { realEstateRepository.getRealEstateById(realEstateId).first() }
+                    val realEstateAsync =
+                        async { realEstateRepository.getRealEstateById(realEstateId).first() }
                     val allAgentsAsync = async { agentRepository.getAllAgents().first() }
 
                     val typeSpinnerItemViewStateList = listOf(
@@ -142,7 +145,6 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         listOf(
                             RealEstatePhotoItemViewState.AddRealEstatePhoto {
                                 viewActionSingleLiveEvent.setValue(AddOrModifyRealEstateViewAction.OpenCamera)
-
                                 Log.d(
                                     "Hangyeol",
                                     "AddOrModifyRealEstateViewModel.onAddPhotoClicked() called"
@@ -221,6 +223,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                 }
         }
     private var address: String? = null
+    private var latLng: LatLng?= null
     private var city: String? = null
     private var type: String? = null
     private var numberOfRooms: Int? = null
@@ -245,8 +248,11 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
     fun onAutocompleteAddressChanged(userInput: String?) {
         if (userInput != null) {
+            address = userInput
+
             viewModelScope.launch(Dispatchers.IO) {
                 autoCompleteRepository.requestMyAutocompleteResponseOfAddress(userInput)
+                latLng = geocodingRepository.requestMyGeocodingResponse(userInput)?.latLng
             }
         }
     }
@@ -257,6 +263,8 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
     fun onEditTextCityChanged(userInput: String?) {
         if (userInput != null) {
+            city = userInput
+
             viewModelScope.launch(Dispatchers.IO) {
                 autoCompleteRepository.requestMyAutocompleteResponseOfCity(userInput)
             }
@@ -348,8 +356,6 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
             && agentIdInCharge != null
         ) {
             viewModelScope.launch(Dispatchers.IO) {
-                val latLng = geocodingRepository.requestMyGeocodingResponse(capturedAddress)?.latLng ?: return@launch
-
                 realEstateRepository.upsertRealEstate(
                     RealEstateEntity(
                         type = type ?: return@launch,
@@ -370,7 +376,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         dateOfSold = dateOfSold,
                         marketSince = marketSince ?: return@launch,
                         agentIdInCharge = agentIdInCharge ?: return@launch,
-                        latLng = latLng
+                        latLng = latLng ?: return@launch
                     )
                 )
 
