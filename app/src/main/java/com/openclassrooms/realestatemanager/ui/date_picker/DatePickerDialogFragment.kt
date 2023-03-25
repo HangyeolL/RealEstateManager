@@ -1,12 +1,12 @@
-package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
+package com.openclassrooms.realestatemanager.ui.date_picker
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateViewModel
 import java.time.LocalDateTime
 
 class DatePickerDialogFragment(

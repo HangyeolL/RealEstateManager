@@ -2,18 +2,17 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_DrawerLayout"
+    android:id="@+id/real_estate_list_DrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.main.MainActivity">
+    android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/main_Toolbar"
+            android:id="@+id/real_estate_list_Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimaryDark"
@@ -28,34 +27,44 @@
             app:title="@string/app_name"
             app:titleTextColor="@color/colorPrimary" />
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/main_FragmentContainerView_realEstateList"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/real_estate_list_RecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="2dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/main_land_GuideLine"
+            app:layout_constraintEnd_toStartOf="@+id/real_estate_list_land_GuideLine"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_Toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/real_estate_list_Toolbar"
+            tools:listitem="@layout/real_estate_list_item" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/main_land_GuideLine"
+            android:id="@+id/real_estate_list_land_GuideLine"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="200dp" />
+            app:layout_constraintGuide_begin="400dp" />
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/main_land_FragmentContainerView_detail"
+            android:id="@+id/real_estate_list_land_FragmentContainerView_detail"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/main_land_GuideLine"
-            app:layout_constraintTop_toBottomOf="@+id/main_Toolbar" />
-
+            app:layout_constraintStart_toStartOf="@+id/real_estate_list_land_GuideLine"
+            app:layout_constraintTop_toBottomOf="@+id/real_estate_list_Toolbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/real_estate_list_NavigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/main_navigation_view_header"
+        app:itemIconTint="@color/colorPrimary"
+        app:menu="@menu/main_navigation_view_menu" />
+
 </androidx.drawerlayout.widget.DrawerLayout>
+

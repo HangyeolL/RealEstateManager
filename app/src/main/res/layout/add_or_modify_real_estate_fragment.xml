@@ -429,7 +429,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/add_or_modify_real_estate_RecyclerView_realEstatePhotoList"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="300dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"

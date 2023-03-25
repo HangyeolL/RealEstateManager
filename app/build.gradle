@@ -4,7 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 //To hide Google Map API key
 apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
-
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
     compileSdkVersion 33
@@ -38,9 +38,13 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
     implementation "androidx.core:core-ktx:1.9.0"
 
+    // Navigation components
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
+
     // To Make ViewModel without using ViewModelProvider (Kotlin Delegation)
-    implementation "androidx.activity:activity-ktx:1.6.1"
-    implementation "androidx.fragment:fragment-ktx:1.5.5"
+    implementation "androidx.activity:activity-ktx:1.7.0"
+    implementation "androidx.fragment:fragment-ktx:1.5.6"
 
     // Kotlin - to serialize JSON
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"

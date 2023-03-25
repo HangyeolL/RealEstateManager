@@ -10,11 +10,11 @@ import android.widget.TextView
 
 class AddOrModifyRealEstateAutocompleteAdapter : BaseAdapter(), Filterable {
 
-    private var items = emptyList<AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem>()
+    private var items = emptyList<AddOrModifyRealEstateAutocompleteItemViewState>()
 
     override fun getCount(): Int = items.size
 
-    override fun getItem(position: Int): AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem? = items.getOrNull(position)
+    override fun getItem(position: Int): AddOrModifyRealEstateAutocompleteItemViewState? = items.getOrNull(position)
 
     override fun getItemId(position: Int): Long = position.toLong()
 
@@ -32,11 +32,11 @@ class AddOrModifyRealEstateAutocompleteAdapter : BaseAdapter(), Filterable {
         override fun performFiltering(constraint: CharSequence?) = FilterResults()
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {}
         override fun convertResultToString(resultValue: Any): CharSequence {
-            return (resultValue as AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem).text
+            return (resultValue as AddOrModifyRealEstateAutocompleteItemViewState).text
         }
     }
 
-    fun setData(items: List<AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem>) {
+    fun setData(items: List<AddOrModifyRealEstateAutocompleteItemViewState>) {
         this.items = items
         notifyDataSetChanged()
     }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/realEstateListFragment">
+    <fragment
+        android:id="@+id/realEstateListFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragment"
+        android:label="RealEstateListFragment" >
+        <action
+            android:id="@+id/action_realEstateListFragment_to_addOrModifyRealEstateFragment"
+            app:destination="@id/addOrModifyRealEstateFragment" />
+        <action
+            android:id="@+id/action_realEstateListFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_realEstateListFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addOrModifyRealEstateFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragment"
+        android:label="AddOrModifyRealEstateFragment" >
+        <action
+            android:id="@+id/action_addOrModifyRealEstateFragment_to_addPhotoDialogFragment"
+            app:destination="@id/addPhotoDialogFragment" />
+        <action
+            android:id="@+id/action_addOrModifyRealEstateFragment_to_datePickerDialogFragment"
+            app:destination="@id/datePickerDialogFragment" />
+        <action
+            android:id="@+id/action_addOrModifyRealEstateFragment_to_realEstateListFragment"
+            app:popUpTo="@id/realEstateListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.detail.DetailFragment"
+        android:label="DetailFragment" >
+        <action
+            android:id="@+id/action_detailFragment_to_addOrModifyRealEstateFragment"
+            app:destination="@id/addOrModifyRealEstateFragment" />
+        <action
+            android:id="@+id/action_detailFragment_pop"
+            app:popUpTo="@id/realEstateListFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="realEstateId"
+            app:argType="integer" />
+    </fragment>
+    <dialog
+        android:id="@+id/addPhotoDialogFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.add_photo.AddPhotoDialogFragment"
+        android:label="AddPhotoDialogFragment" >
+        <action
+            android:id="@+id/action_addPhotoDialogFragment_to_addOrModifyRealEstateFragment"
+            app:popUpTo="@id/addOrModifyRealEstateFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/datePickerDialogFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.date_picker.DatePickerDialogFragment"
+        android:label="DatePickerDialogFragment" >
+        <action
+            android:id="@+id/action_datePickerDialogFragment_pop"
+            app:popUpTo="@id/addOrModifyRealEstateFragment"
+            app:popUpToInclusive="false" />
+    </dialog>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.map.MapFragment"
+        android:label="MapFragment" >
+        <action
+            android:id="@+id/action_mapFragment_pop"
+            app:popUpTo="@id/realEstateListFragment" />
+    </fragment>
+</navigation>

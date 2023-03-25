@@ -1,8 +1,5 @@
-package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
+package com.openclassrooms.realestatemanager.ui.add_photo
 
-import android.app.Dialog
-import android.content.res.Resources
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +27,6 @@ class AddPhotoDialogFragment : DialogFragment(R.layout.add_photo_dialog_fragment
             realEstateId = this.requireArguments().getInt("KEY_REAL_ESTATE_ID")
         }
 
-        //TODO set image and capture textView -> Insert in the database...
         Glide.with(this).load(picUriToString)
             .centerCrop()
             .into(binding.addPhotoDialogImageView)

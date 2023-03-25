@@ -14,6 +14,8 @@ import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListAdapter
+import com.openclassrooms.realestatemanager.ui.add_photo.AddPhotoDialogFragment
+import com.openclassrooms.realestatemanager.ui.date_picker.DatePickerDialogFragment
 import com.openclassrooms.realestatemanager.ui.main.MainActivity
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint

@@ -5,6 +5,9 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.openclassrooms.realestatemanager.R
@@ -25,16 +28,18 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
 
     private val viewModel by viewModels<DetailViewModel>()
 
+    private lateinit var navController: NavController
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        navController = Navigation.findNavController(
+            requireActivity(),
+            R.id.main_FragmentContainerView_navHost
+        )
+
         val adapter = RealEstatePhotoListAdapter()
         binding.detailRecyclerViewImages.adapter = adapter
-        binding.detailRecyclerViewImages.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
 
         // add pager behavior to RecyclerView
         val pagerSnapHelper = PagerSnapHelper()
@@ -57,17 +62,12 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         }
     }
 
-//        val requestPermissionLauncher =
-//            registerForActivityResult(
-//                ActivityResultContracts.RequestPermission()
-//            ) { isGranted: Boolean ->
-//                if (isGranted) {
-//                    viewModel.startLocationRequest()
-//                } else {
-//                    viewModel.stopLocationRequest()
-//                }
-//            }
-//
+    override fun onResume() {
+        super.onResume()
 
+        if (activity?.resources?.getBoolean(R.bool.isTablet) == true) {
+            navController.navigateUp()
+        }
+    }
 
 }

@@ -29,8 +29,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private val geocodingRepository: GeocodingRepository,
 ) : ViewModel() {
 
-    val viewActionSingleLiveEvent: SingleLiveEvent<AddOrModifyRealEstateViewAction> =
-        SingleLiveEvent()
+    val viewActionSingleLiveEvent: SingleLiveEvent<AddOrModifyRealEstateViewAction> = SingleLiveEvent()
     val stringSingleLiveEvent: SingleLiveEvent<String> = SingleLiveEvent()
 
     val initialViewStateLiveData: LiveData<AddOrModifyRealEstateViewState> =
@@ -184,13 +183,13 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         }
 
 
-    val addressPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem>> =
+    val addressPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAutocompleteItemViewState>> =
         liveData(Dispatchers.IO) {
             autoCompleteRepository.getAutocompleteEntitiesForAddress()
                 .collect { autocompleteEntities ->
                     emit(
                         autocompleteEntities.map { autocompleteEntity ->
-                            AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem(
+                            AddOrModifyRealEstateAutocompleteItemViewState(
                                 text = autocompleteEntity.text
                             ) {
                                 Log.d(
@@ -203,13 +202,13 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                 }
         }
 
-    val cityPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem>> =
+    val cityPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAutocompleteItemViewState>> =
         liveData(Dispatchers.IO) {
             autoCompleteRepository.getAutocompleteEntitiesForCity()
                 .collect { autocompleteEntities ->
                     emit(
                         autocompleteEntities.map { autocompleteEntity ->
-                            AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem(
+                            AddOrModifyRealEstateAutocompleteItemViewState(
                                 text = autocompleteEntity.text
                             ) {
                                 //TODO what is the point of having on click inside of viewState data class
@@ -257,7 +256,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         }
     }
 
-    fun onAutocompleteAddressItemClicked(selectedItem: AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem) {
+    fun onAutocompleteAddressItemClicked(selectedItem: AddOrModifyRealEstateAutocompleteItemViewState) {
         address = selectedItem.text
     }
 
@@ -271,7 +270,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         }
     }
 
-    fun onAutocompleteCityItemClicked(selectedItem: AddOrModifyRealEstateAddressAndCityAutocompleteViewStateItem) {
+    fun onAutocompleteCityItemClicked(selectedItem: AddOrModifyRealEstateAutocompleteItemViewState) {
         city = selectedItem.text
     }
 

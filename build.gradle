@@ -13,6 +13,8 @@ buildscript {
         classpath "com.google.dagger:hilt-android-gradle-plugin:2.44.2"
         // To hide sensitive information using google plugin
         classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
+        // Navigation safe args
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
     }
 }
 

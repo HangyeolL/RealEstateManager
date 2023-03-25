@@ -5,5 +5,5 @@ data class RealEstateListItemViewState(
     val imageUrl: String,
     val type: String,
     val city: String,
-    val price: Int
+    val price: Int,
 )

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
+package com.openclassrooms.realestatemanager.ui.add_photo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

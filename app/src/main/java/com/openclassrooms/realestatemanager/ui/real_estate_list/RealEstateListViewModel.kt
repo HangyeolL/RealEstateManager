@@ -5,8 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
+import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateViewAction
+import com.openclassrooms.realestatemanager.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -15,23 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RealEstateListViewModel @Inject constructor(
     private val realEstateRepository: RealEstateRepository,
-    private val currentRealEstateRepository: CurrentRealEstateRepository
 ) : ViewModel() {
-
-//    val realEstateListLiveData: LiveData<List<RealEstateListItemViewState>> =
-//        liveData(Dispatchers.IO) {
-//            realEstateRepository.getAllRealEstates().collect() { realEstateEntities ->
-//                emit(realEstateEntities.map {
-//                    RealEstateListItemViewState(
-//                        it.realEstateId,
-//                        1,
-//                        it.type,
-//                        it.city,
-//                        it.price
-//                    )
-//                })
-//            }
-//        }
 
     val viewStateLiveData: LiveData<RealEstateListViewState> =
         liveData(Dispatchers.IO) {
@@ -52,7 +37,7 @@ class RealEstateListViewModel @Inject constructor(
                                         .toString(),
                                 realEstateWithPhotos.realEstateEntity.type,
                                 realEstateWithPhotos.realEstateEntity.city,
-                                realEstateWithPhotos.realEstateEntity.price
+                                realEstateWithPhotos.realEstateEntity.price,
                             )
                         )
                     }
@@ -62,7 +47,7 @@ class RealEstateListViewModel @Inject constructor(
 
         }
 
-    fun onRealEstateItemClicked(id: Int) {
-        currentRealEstateRepository.setCurrentRealEstateId(id)
+    fun onRealEstateItemClicked(it: Int) {
+
     }
 }
