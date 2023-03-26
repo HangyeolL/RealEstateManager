@@ -138,18 +138,18 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             Toast.makeText(requireContext(), string, Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.viewActionSingleLiveEvent.observe(viewLifecycleOwner) { viewAction ->
-            when (viewAction) {
-                is AddOrModifyRealEstateViewAction.OpenCamera ->
-                    getTmpFileUri().let { uri ->
-                        latestTmpUri = uri
-                        takePictureResult.launch(uri)
-                    }
-
-                is AddOrModifyRealEstateViewAction.NavigateToMainActivity ->
-                    startActivity(MainActivity.navigate(requireContext()))
-            }
-        }
+//        viewModel.viewActionSingleLiveEvent.observe(viewLifecycleOwner) { viewAction ->
+//            when (viewAction) {
+//                is AddOrModifyRealEstateViewAction.OpenCamera ->
+//                    getTmpFileUri().let { uri ->
+//                        latestTmpUri = uri
+//                        takePictureResult.launch(uri)
+//                    }
+//
+////                is AddOrModifyRealEstateViewAction.NavigateToMainActivity ->
+////                    startActivity(MainActivity.navigate(requireContext()))
+//            }
+//        }
 
         /**
          * Listener set up

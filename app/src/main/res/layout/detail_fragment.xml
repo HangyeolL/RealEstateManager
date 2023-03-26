@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/detail_ConstraintLayout_parent"
         android:layout_width="match_parent"
@@ -110,7 +109,7 @@
             android:id="@+id/detail_ImageView_iconHouse"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginStart="170dp"
+            android:layout_marginStart="160dp"
             app:layout_constraintBottom_toBottomOf="@+id/detail_ImageView_iconSurface"
             app:layout_constraintStart_toEndOf="@+id/detail_ImageView_iconSurface"
             app:layout_constraintTop_toTopOf="@+id/detail_ImageView_iconSurface"
@@ -183,10 +182,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
             android:text="@string/number_of_bedrooms"
             android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/detail_ImageView_iconBedroom"
             app:layout_constraintTop_toTopOf="@+id/detail_ImageView_iconBedroom" />
 
@@ -234,7 +231,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/detail_FragmentContainerView_googleMap"
-            android:name="com.openclassrooms.realestatemanager.ui.map.MapFragment"
+            android:name="com.openclassrooms.realestatemanager.ui.detail_map.DetailMapFragment"
             android:layout_width="0dp"
             android:layout_height="300dp"
             android:layout_marginStart="16dp"
@@ -304,7 +301,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

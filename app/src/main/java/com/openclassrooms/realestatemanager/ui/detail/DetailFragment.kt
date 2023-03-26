@@ -46,7 +46,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         pagerSnapHelper.attachToRecyclerView(binding.detailRecyclerViewImages)
         binding.detailRecyclerViewImages.addItemDecoration(RealEstatePhotoListPagingIndicationDecoration())
 
-        viewModel.mediatorFlow.observe(viewLifecycleOwner) { detailViewState ->
+        viewModel.detailViewStateLiveData.observe(viewLifecycleOwner) { detailViewState ->
 
             binding.detailConstraintLayoutParent.isVisible = detailViewState.isViewVisible
 

@@ -4,7 +4,7 @@
     tools:showIn="navigation_view">
 
     <item
-        android:id="@+id/main_NavigationView_menu_mapView"
+        android:id="@+id/mapViewFragment"
         android:icon="@drawable/ic_baseline_map_24"
         android:title="@string/map_view" />
 

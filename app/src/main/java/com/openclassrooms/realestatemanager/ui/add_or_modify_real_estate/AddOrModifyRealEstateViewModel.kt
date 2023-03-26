@@ -40,8 +40,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
             if (realEstateId != null) {
                 coroutineScope {
-                    val realEstateAsync =
-                        async { realEstateRepository.getRealEstateById(realEstateId).first() }
+                    val realEstateAsync = async { realEstateRepository.getRealEstateById(realEstateId).first() }
                     val allAgentsAsync = async { agentRepository.getAllAgents().first() }
 
                     val typeSpinnerItemViewStateList = listOf(
