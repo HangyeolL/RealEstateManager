@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
-import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -10,13 +9,13 @@ import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListAdapter
-import com.openclassrooms.realestatemanager.ui.add_photo.AddPhotoDialogFragment
-import com.openclassrooms.realestatemanager.ui.date_picker.DatePickerDialogFragment
-import com.openclassrooms.realestatemanager.ui.main.MainActivity
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -26,58 +25,59 @@ import java.io.File
 @AndroidEntryPoint
 class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estate_fragment) {
 
-    companion object {
-        const val KEY_REAL_ESTATE_ID = "KEY_REAL_ESTATE_ID"
+//    companion object {
+//        const val KEY_REAL_ESTATE_ID = "KEY_REAL_ESTATE_ID"
+//
+//        fun newInstance(realEstateId: Int?) = AddOrModifyRealEstateFragment().apply {
+//            arguments = Bundle().apply {
+//                realEstateId?.let { putInt(KEY_REAL_ESTATE_ID, realEstateId) }
+//            }
+//        }
+//    }
 
-        fun newInstance(realEstateId: Int?) = AddOrModifyRealEstateFragment().apply {
-            arguments = Bundle().apply {
-                realEstateId?.let { putInt(KEY_REAL_ESTATE_ID, realEstateId) }
-            }
-        }
+    companion object {
+        private const val MARKET_SINCE = 1
+        private const val DATE_OF_SOLD = 2
     }
 
     private val binding by viewBinding { AddOrModifyRealEstateFragmentBinding.bind(it) }
+
     private val viewModel by viewModels<AddOrModifyRealEstateViewModel>()
 
-    private var realEstateId: Int? = null
+    private lateinit var navController: NavController
+
+    private val args: AddOrModifyRealEstateFragmentArgs by navArgs()
+
     private var latestTmpUri: Uri? = null
 
-    private val takePictureResult = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
-        if (isSuccess) {
-            val addPhotoDialogFragment = AddPhotoDialogFragment()
-            val bundle = Bundle()
-
-            latestTmpUri.let { uri ->
-//                val capturedRealEstateId = realEstateId
-
-                addPhotoDialogFragment.arguments = bundle.apply {
-                    putString("PICTURE", uri.toString())
-                }
+    private val takePictureResult =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+            if (isSuccess) {
+                navController.navigate(
+                    AddOrModifyRealEstateFragmentDirections.actionAddOrModifyRealEstateFragmentToAddPhotoDialogFragment(
+                        args.realEstateId, latestTmpUri.toString()
+                    )
+                )
             }
-            realEstateId?.let { int ->
-                addPhotoDialogFragment.arguments = bundle.apply {
-                    putInt(KEY_REAL_ESTATE_ID, int)
-                }
+        }
+
+    private val selectImageFromGalleryResult =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+
             }
-
-            addPhotoDialogFragment.arguments = bundle
-            addPhotoDialogFragment.show(childFragmentManager, "addPhotoDialog")
         }
-    }
-
-    private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        uri?.let {
-
-        }
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (this.arguments != null) {
-            realEstateId = this.requireArguments().getInt("KEY_REAL_ESTATE_ID")
-        }
+        navController = Navigation.findNavController(
+            requireActivity(),
+            R.id.main_FragmentContainerView_navHost
+        )
+
+        // Adapter set up
 
         val typeSpinnerAdapter = AddOrModifyRealEstateTypeSpinnerAdapter(
             requireContext(),
@@ -87,7 +87,10 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             requireContext(),
             R.layout.add_or_modify_real_estate_spinner_item
         )
-        val realEstatePhotoListAdapter = RealEstatePhotoListAdapter()
+        val realEstatePhotoListAdapter = RealEstatePhotoListAdapter() {
+            latestTmpUri = getTmpFileUri()
+            takePictureResult.launch(latestTmpUri)
+        }
         val autocompleteAdapter = AddOrModifyRealEstateAutocompleteAdapter()
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setAdapter(typeSpinnerAdapter)
@@ -96,9 +99,8 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setAdapter(autocompleteAdapter)
         binding.addOrModifyRealEstateAutoCompleteTextViewCity.setAdapter(autocompleteAdapter)
 
-        /**
-         * Observer set up
-         */
+        // Observer set up
+
         viewModel.initialViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
 
             typeSpinnerAdapter.clear()
@@ -126,6 +128,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(viewState.dateOfSold)
         }
 
+        // Observer : Autocomplete dynamic liveData
         viewModel.addressPredictionsLiveData.observe(viewLifecycleOwner) { viewStates ->
             autocompleteAdapter.setData(viewStates)
         }
@@ -134,26 +137,27 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             autocompleteAdapter.setData(viewStates)
         }
 
+        // Observer : SingleLiveEvent for Toast
+
         viewModel.stringSingleLiveEvent.observe(viewLifecycleOwner) { string ->
             Toast.makeText(requireContext(), string, Toast.LENGTH_SHORT).show()
         }
 
-//        viewModel.viewActionSingleLiveEvent.observe(viewLifecycleOwner) { viewAction ->
-//            when (viewAction) {
-//                is AddOrModifyRealEstateViewAction.OpenCamera ->
-//                    getTmpFileUri().let { uri ->
-//                        latestTmpUri = uri
-//                        takePictureResult.launch(uri)
-//                    }
-//
-////                is AddOrModifyRealEstateViewAction.NavigateToMainActivity ->
-////                    startActivity(MainActivity.navigate(requireContext()))
-//            }
-//        }
+        // Observer : NavController retrieving data from DatePickerDialogFragment
 
-        /**
-         * Listener set up
-         */
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("MarketSince")
+            ?.observe(viewLifecycleOwner) { pickedDate ->
+                viewModel.onUserMarketSinceDateSet(pickedDate)
+                binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(pickedDate)
+        }
+
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("MarketSince")
+            ?.observe(viewLifecycleOwner) { pickedDate ->
+                viewModel.onUserDateOfSoldSet(pickedDate)
+                binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(pickedDate)
+            }
+
+        // Listener set up //
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setOnItemClickListener { _, _, position, _ ->
             typeSpinnerAdapter.getItem(position)?.let { typeSpinnerItemViewState ->
@@ -198,15 +202,11 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         binding.addOrModifyRealEstateTextInputEditTextMarketSince.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putInt("DATE", 1)
-
-            val datePicker = DatePickerDialogFragment { p0, year, month, day ->
-                viewModel.onUserMarketSinceDateSet(year, month, day)
-                binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText("$day/$month/$year")
-            }
-            datePicker.arguments = bundle
-            datePicker.show(childFragmentManager, "datePicker")
+            navController.navigate(
+                AddOrModifyRealEstateFragmentDirections.actionAddOrModifyRealEstateFragmentToDatePickerDialogFragment(
+                    MARKET_SINCE
+                )
+            )
         }
 
         binding.addOrModifyRealEstateTextInputEditTextPrice.addTextChangedListener {
@@ -237,19 +237,12 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             viewModel.onChipIsSoldOutClicked(binding.addOrModifyRealEstateChipIsSoldOut.isChecked)
         }
 
-        val dateOfSoldDatePicker =
-            DatePickerDialog.OnDateSetListener { p0, year, month, day ->
-                viewModel.onUserDateOfSoldSet(year, month, day)
-                binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText("$day/$month/$year")
-            }
-
         binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putInt("DATE", 2)
-
-            val datePicker = DatePickerDialogFragment(dateOfSoldDatePicker)
-            datePicker.arguments = bundle
-            datePicker.show(childFragmentManager, "datePicker")
+            navController.navigate(
+                AddOrModifyRealEstateFragmentDirections.actionAddOrModifyRealEstateFragmentToDatePickerDialogFragment(
+                    DATE_OF_SOLD
+                )
+            )
         }
 
         binding.addOrModifyRealEstateTextInputEditTextDescriptionBody.addTextChangedListener {
@@ -264,17 +257,23 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
         binding.addOrModifyRealEstateButtonSave.setOnClickListener {
             viewModel.onSaveButtonClicked()
+            navController.popBackStack()
         }
 
     }
 
     private fun getTmpFileUri(): Uri {
-        val tmpFile = File.createTempFile("tmp_image_file", ".png", requireContext().cacheDir).apply {
-            createNewFile()
-            deleteOnExit()
-        }
+        val tmpFile =
+            File.createTempFile("tmp_image_file", ".png", requireContext().cacheDir).apply {
+                createNewFile()
+                deleteOnExit()
+            }
 
-        return FileProvider.getUriForFile(requireContext(), "${BuildConfig.APPLICATION_ID}.provider", tmpFile)
+        return FileProvider.getUriForFile(
+            requireContext(),
+            "${BuildConfig.APPLICATION_ID}.provider",
+            tmpFile
+        )
     }
 
 }

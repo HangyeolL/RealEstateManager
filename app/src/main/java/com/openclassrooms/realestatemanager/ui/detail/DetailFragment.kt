@@ -38,7 +38,9 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             R.id.main_FragmentContainerView_navHost
         )
 
-        val adapter = RealEstatePhotoListAdapter()
+        val adapter = RealEstatePhotoListAdapter() {
+
+        }
         binding.detailRecyclerViewImages.adapter = adapter
 
         // add pager behavior to RecyclerView

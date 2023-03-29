@@ -11,7 +11,6 @@ import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
 import com.openclassrooms.realestatemanager.domain.geocoding.GeocodingRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
-import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragment.Companion.KEY_REAL_ESTATE_ID
 import com.openclassrooms.realestatemanager.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -29,16 +28,18 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private val geocodingRepository: GeocodingRepository,
 ) : ViewModel() {
 
-    val viewActionSingleLiveEvent: SingleLiveEvent<AddOrModifyRealEstateViewAction> = SingleLiveEvent()
+    companion object {
+        private const val DEFAULT_REAL_ESTATE_ID = -1
+    }
+
     val stringSingleLiveEvent: SingleLiveEvent<String> = SingleLiveEvent()
 
     val initialViewStateLiveData: LiveData<AddOrModifyRealEstateViewState> =
         liveData(Dispatchers.IO) {
-            val realEstateId: Int? = savedStateHandle[KEY_REAL_ESTATE_ID]
+            val realEstateId: Int? = savedStateHandle.get<Int>("realEstateId")
 
             //TODO why realEstateAsync doesnt get the photoList with new elements added ?
-
-            if (realEstateId != null) {
+            if (realEstateId != DEFAULT_REAL_ESTATE_ID && realEstateId != null) {
                 coroutineScope {
                     val realEstateAsync = async { realEstateRepository.getRealEstateById(realEstateId).first() }
                     val allAgentsAsync = async { agentRepository.getAllAgents().first() }
@@ -77,14 +78,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                                 photoUrl = photoEntity.url,
                                 photoDescription = photoEntity.description
                             )
-                        } + RealEstatePhotoItemViewState.AddRealEstatePhoto {
-                            viewActionSingleLiveEvent.setValue(AddOrModifyRealEstateViewAction.OpenCamera)
-
-                            Log.d(
-                                "Hangyeol",
-                                "AddOrModifyRealEstateViewModel.onAddPhotoClicked() called"
-                            )
-                        }
+                        }.plus(RealEstatePhotoItemViewState.AddRealEstatePhoto)
 
                     emit(
                         AddOrModifyRealEstateViewState(
@@ -110,7 +104,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         )
                     )
                 }
-            } else {
+            } else if (realEstateId == DEFAULT_REAL_ESTATE_ID) {
                 coroutineScope() {
                     val allAgentsAsync = async { agentRepository.getAllAgents().first() }
 
@@ -141,13 +135,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
                     val photoListItemViewStateList =
                         listOf(
-                            RealEstatePhotoItemViewState.AddRealEstatePhoto {
-                                viewActionSingleLiveEvent.setValue(AddOrModifyRealEstateViewAction.OpenCamera)
-                                Log.d(
-                                    "Hangyeol",
-                                    "AddOrModifyRealEstateViewModel.onAddPhotoClicked() called"
-                                )
-                            }
+                            RealEstatePhotoItemViewState.AddRealEstatePhoto
                         )
 
                     emit(
@@ -221,7 +209,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                 }
         }
     private var address: String? = null
-    private var latLng: LatLng?= null
+    private var latLng: LatLng? = null
     private var city: String? = null
     private var type: String? = null
     private var numberOfRooms: Int? = null
@@ -297,8 +285,8 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         marketSince = date
     }
 
-    fun onUserMarketSinceDateSet(year: Int, month: Int, day: Int) {
-        marketSince = "$day/$month/$year"
+    fun onUserMarketSinceDateSet(date: String) {
+        marketSince = date
     }
 
     fun onChipGuardClicked(checked: Boolean) {
@@ -325,8 +313,8 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         isSoldOut = checked
     }
 
-    fun onUserDateOfSoldSet(year: Int, month: Int, day: Int) {
-        dateOfSold = "$day/$month/$year"
+    fun onUserDateOfSoldSet(date: String) {
+        dateOfSold = date
     }
 
     fun onEditTextDescriptionChanged(userInput: String?) {
@@ -379,12 +367,13 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                 )
 
                 withContext(Dispatchers.Main) {
-                    viewActionSingleLiveEvent.setValue(AddOrModifyRealEstateViewAction.NavigateToMainActivity)
+//                    viewActionSingleLiveEvent.setValue(AddOrModifyRealEstateViewAction.NavigateToMainActivity)
                 }
             }
         } else {
             stringSingleLiveEvent.setValue(application.getString(R.string.please_fill_out_all_the_forms))
         }
     }
+
 
 }

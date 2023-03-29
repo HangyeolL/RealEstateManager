@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         return super.onCreateOptionsMenu(menu)
     }
 
+    // TODO need to inflate different toolBar menu from different fragment stage and use different callbacks to navigate
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             R.id.main_toolbar_menu_create -> {

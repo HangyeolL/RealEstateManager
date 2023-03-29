@@ -10,7 +10,9 @@ import com.openclassrooms.realestatemanager.databinding.RealEstatePhotoListItemA
 import com.openclassrooms.realestatemanager.databinding.RealEstatePhotoListItemBinding
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState.*
 
-class RealEstatePhotoListAdapter :
+class RealEstatePhotoListAdapter(
+    private val addPhotoOnClick: () -> Unit
+) :
     ListAdapter<RealEstatePhotoItemViewState, ViewHolder>(PhotoCarouselDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -34,7 +36,7 @@ class RealEstatePhotoListAdapter :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (val item = getItem(position)) {
             is Content -> (holder as RealEstatePhotoViewHolder).bind(item)
-            is AddRealEstatePhoto -> (holder as RealEstateAddViewHolder).bind(item)
+            is AddRealEstatePhoto -> (holder as RealEstateAddViewHolder).bind(addPhotoOnClick)
         }
     }
 
@@ -55,9 +57,9 @@ class RealEstatePhotoListAdapter :
     class RealEstateAddViewHolder(private val itemBinding: RealEstatePhotoListItemAddBinding) :
         ViewHolder(itemBinding.root) {
 
-        fun bind(viewState: AddRealEstatePhoto) {
+        fun bind(addPhotoOnClick: () -> Unit) {
             itemBinding.realEstatePhotoListItemAddImageButton.setOnClickListener {
-                viewState.onClick()
+                addPhotoOnClick.invoke()
             }
         }
     }

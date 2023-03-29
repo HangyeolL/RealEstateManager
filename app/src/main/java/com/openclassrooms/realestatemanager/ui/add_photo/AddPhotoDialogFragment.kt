@@ -5,29 +5,34 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.AddPhotoDialogFragmentBinding
+import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragmentArgs
 import com.openclassrooms.realestatemanager.utils.viewBinding
 
 class AddPhotoDialogFragment : DialogFragment(R.layout.add_photo_dialog_fragment) {
 
     private val binding by viewBinding { AddPhotoDialogFragmentBinding.bind(it) }
+
     private val viewModel by viewModels<AddPhotoDialogViewModel>(ownerProducer = { requireParentFragment() })
+
+    private val args: AddPhotoDialogFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var realEstateId: Int? = null
-        val picUriToString = this.requireArguments().getString("PICTURE")
+        // set dialog's width and height
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
 
-        if (this.requireArguments().getInt("KEY_REAL_ESTATE_ID") == 0) {
-            realEstateId = null
-        } else {
-            realEstateId = this.requireArguments().getInt("KEY_REAL_ESTATE_ID")
-        }
+        val realEstateId = args.realEstateId
+        val picUriToString = args.picUriToString
 
-        Glide.with(this).load(picUriToString)
+        Glide.with(this).load(args.picUriToString)
             .centerCrop()
             .into(binding.addPhotoDialogImageView)
 
@@ -36,17 +41,15 @@ class AddPhotoDialogFragment : DialogFragment(R.layout.add_photo_dialog_fragment
         }
 
         binding.addPhotoDialogButtonOk.setOnClickListener {
-            picUriToString?.let { picUriToString ->
-                viewModel.onButtonOkClicked(
-                    realEstateId,
-                    picUriToString,
-                    binding.addPhotoDialogTextInputEditTextDescription.text.toString()
-                )
-                dismiss()
-            }
-        }
 
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            viewModel.onButtonOkClicked(
+                realEstateId,
+                picUriToString,
+                binding.addPhotoDialogTextInputEditTextDescription.text.toString()
+            )
+            dismiss()
+
+        }
     }
 
 }

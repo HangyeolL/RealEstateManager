@@ -9,9 +9,7 @@ sealed class RealEstatePhotoItemViewState(
         val photoDescription: String?,
     ):RealEstatePhotoItemViewState(RealEstatePhotoType.CONTENT)
 
-    data class AddRealEstatePhoto(
-        val onClick: () -> Unit,
-    ): RealEstatePhotoItemViewState(RealEstatePhotoType.ADD_PHOTO)
+    object AddRealEstatePhoto: RealEstatePhotoItemViewState(RealEstatePhotoType.ADD_PHOTO)
 
     enum class RealEstatePhotoType {
         CONTENT,
