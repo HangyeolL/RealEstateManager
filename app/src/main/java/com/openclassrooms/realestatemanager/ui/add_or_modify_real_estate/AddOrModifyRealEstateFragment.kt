@@ -20,8 +20,6 @@ import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
-//TODO back button on Toolbar doesnt appear
-
 @AndroidEntryPoint
 class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estate_fragment) {
 
@@ -148,10 +146,10 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("MarketSince")
             ?.observe(viewLifecycleOwner) { pickedDate ->
                 viewModel.onUserMarketSinceDateSet(pickedDate)
-                binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(pickedDate)
+                binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText(pickedDate)
         }
 
-        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("MarketSince")
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("DateOfSold")
             ?.observe(viewLifecycleOwner) { pickedDate ->
                 viewModel.onUserDateOfSoldSet(pickedDate)
                 binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(pickedDate)
@@ -256,8 +254,9 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         binding.addOrModifyRealEstateButtonSave.setOnClickListener {
-            viewModel.onSaveButtonClicked()
-            navController.popBackStack()
+            if (viewModel.onSaveButtonClicked()) {
+                navController.popBackStack()
+            }
         }
 
     }

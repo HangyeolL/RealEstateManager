@@ -9,14 +9,16 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.AddPhotoDialogFragmentBinding
-import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragmentArgs
 import com.openclassrooms.realestatemanager.utils.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddPhotoDialogFragment : DialogFragment(R.layout.add_photo_dialog_fragment) {
 
     private val binding by viewBinding { AddPhotoDialogFragmentBinding.bind(it) }
 
-    private val viewModel by viewModels<AddPhotoDialogViewModel>(ownerProducer = { requireParentFragment() })
+    // When viewModel is shared with parent : do ownerProducer if not just delegation wo
+    private val viewModel by viewModels<AddPhotoDialogViewModel>()
 
     private val args: AddPhotoDialogFragmentArgs by navArgs()
 

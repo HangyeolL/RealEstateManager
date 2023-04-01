@@ -25,17 +25,6 @@ class GeocodingRepositoryImpl @Inject constructor(
             null
         }
 
-//        return response?.results?.find { resultResponse ->
-//            userInput == resultResponse.formattedAddress
-//        }?.let { resultResponse ->
-//            GeocodingEntity(
-//                LatLng(
-//                    resultResponse.geometry.location.lat,
-//                    resultResponse.geometry.location.lng
-//                )
-//            )
-//        }
-
         var geocodingEntity: GeocodingEntity? = null
 
         response?.results?.forEach { foundResult ->

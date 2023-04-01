@@ -23,4 +23,16 @@
     <string name="studio">Studio</string>
     <string name="paris">Paris</string>
     <string name="please_describe_your_photo">Please describe your photo:)</string>
+    <string name="agent">Agent</string>
+    <string name="type">type</string>
+    <string name="address">address</string>
+    <string name="price">price</string>
+    <string name="city">city</string>
+    <string name="room">room</string>
+    <string name="bedroom">bedroom</string>
+    <string name="bathroom">bathroom</string>
+    <string name="square_meter">square meter</string>
+    <string name="market_since">Market since</string>
+    <string name="guard">Guard</string>
+
 </resources>

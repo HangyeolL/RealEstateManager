@@ -16,6 +16,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
+import kotlin.math.log
 
 
 @HiltViewModel
@@ -178,12 +179,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         autocompleteEntities.map { autocompleteEntity ->
                             AddOrModifyRealEstateAutocompleteItemViewState(
                                 text = autocompleteEntity.text
-                            ) {
-                                Log.d(
-                                    "HL",
-                                    "AddOrModifyRealEstateViewModel.address.onClick() called with $autocompleteEntity"
-                                )
-                            }
+                            )
                         }
                     )
                 }
@@ -197,13 +193,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         autocompleteEntities.map { autocompleteEntity ->
                             AddOrModifyRealEstateAutocompleteItemViewState(
                                 text = autocompleteEntity.text
-                            ) {
-                                //TODO what is the point of having on click inside of viewState data class
-                                Log.d(
-                                    "HL",
-                                    "AddOrModifyRealEstateViewModel.city.onClick() called with $autocompleteEntity"
-                                )
-                            }
+                            )
                         }
                     )
                 }
@@ -217,13 +207,13 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private var numberOfBathRooms: Int? = null
     private var sqm: Int? = null
     private var price: Int? = null
-    private var marketSince: String? = null
     private var garage: Boolean = false
     private var guard: Boolean = false
     private var garden: Boolean = false
     private var elevator: Boolean = false
     private var groceryStoreNearby: Boolean = false
     private var isSoldOut: Boolean = false
+    private var marketSince: String? = null
     private var dateOfSold: String? = null
     private var description: String? = null
     private var agentIdInCharge: Int? = null
@@ -238,13 +228,17 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
             viewModelScope.launch(Dispatchers.IO) {
                 autoCompleteRepository.requestMyAutocompleteResponseOfAddress(userInput)
-                latLng = geocodingRepository.requestMyGeocodingResponse(userInput)?.latLng
             }
         }
     }
 
     fun onAutocompleteAddressItemClicked(selectedItem: AddOrModifyRealEstateAutocompleteItemViewState) {
         address = selectedItem.text
+
+        viewModelScope.launch(Dispatchers.IO) {
+            latLng = geocodingRepository.requestMyGeocodingResponse(selectedItem.text)?.latLng
+            Log.d("HG:Geocoding", "$latLng")
+        }
     }
 
     fun onEditTextCityChanged(userInput: String?) {
@@ -325,7 +319,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         agentIdInCharge = selectedItem.agentIdInCharge
     }
 
-    fun onSaveButtonClicked() {
+    fun onSaveButtonClicked(): Boolean {
         val capturedAddress = address
 
         if (
@@ -365,13 +359,11 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         latLng = latLng ?: return@launch
                     )
                 )
-
-                withContext(Dispatchers.Main) {
-//                    viewActionSingleLiveEvent.setValue(AddOrModifyRealEstateViewAction.NavigateToMainActivity)
-                }
             }
+            return true
         } else {
             stringSingleLiveEvent.setValue(application.getString(R.string.please_fill_out_all_the_forms))
+            return false
         }
     }
 

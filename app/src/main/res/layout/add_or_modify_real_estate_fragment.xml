@@ -16,7 +16,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="Type"
+            android:hint="@string/type"
             android:minHeight="50dp"
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="address"
+            android:hint="@string/address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_TextInputLayout_asTypeSpinner"
@@ -73,7 +73,7 @@
                 android:id="@+id/add_or_modify_real_estate_TextInputEditText_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Price"
+                android:hint="@string/price"
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -82,21 +82,22 @@
             android:id="@+id/add_or_modify_real_estate_TextInputLayout_city"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:placeholderText="@string/paris"
+            android:hint="@string/city"
             app:expandedHintEnabled="false"
-            app:layout_constraintBaseline_toBaselineOf="@+id/add_or_modify_real_estate_TextInputLayout_price"
+            app:layout_constraintBottom_toBottomOf="@+id/add_or_modify_real_estate_TextInputLayout_price"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/add_or_modify_real_estate_TextInputLayout_price">
+            app:layout_constraintStart_toEndOf="@+id/add_or_modify_real_estate_TextInputLayout_price"
+            app:layout_constraintTop_toTopOf="@+id/add_or_modify_real_estate_TextInputLayout_price"
+            app:placeholderText="@string/paris">
 
             <AutoCompleteTextView
                 android:id="@+id/add_or_modify_real_estate_AutoCompleteTextView_city"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="city" />
+                android:layout_height="match_parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:hint="room"
+            android:hint="@string/room"
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/add_or_modify_real_estate_TextInputLayout_numberOfBedRooms"
             app:layout_constraintHorizontal_bias="0.5"
@@ -129,7 +130,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:hint="bedroom"
+            android:hint="@string/bedroom"
             app:expandedHintEnabled="false"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_or_modify_real_estate_TextInputLayout_numberOfRooms"
             app:layout_constraintEnd_toStartOf="@+id/add_or_modify_real_estate_TextInputLayout_numberOfBathRooms"
@@ -152,7 +153,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="bathroom"
+            android:hint="@string/bathroom"
             app:expandedHintEnabled="false"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_or_modify_real_estate_TextInputLayout_numberOfBedRooms"
             app:layout_constraintEnd_toEndOf="parent"
@@ -175,7 +176,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:hint="square meter"
+            android:hint="@string/square_meter"
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/add_or_modify_real_estate_TextInputLayout_marketSince"
             app:layout_constraintHorizontal_bias="0.5"
@@ -199,7 +200,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="Market since"
+            android:hint="@string/market_since"
             app:expandedHintEnabled="false"
             app:hintAnimationEnabled="true"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_or_modify_real_estate_TextInputLayout_sqm"
@@ -239,7 +240,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:checkable="true"
-                    android:text="Guard"
+                    android:text="@string/guard"
                     app:checkedIconVisible="true"
                     app:chipIcon="@drawable/ic_outline_shield_24"
                     app:chipIconVisible="true"

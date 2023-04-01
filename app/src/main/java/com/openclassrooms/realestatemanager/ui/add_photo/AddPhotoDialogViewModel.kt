@@ -16,6 +16,7 @@ class AddPhotoDialogViewModel @Inject constructor(
 
     fun onButtonOkClicked(realEstateId: Int?, picUriToString: String, description: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            //TODO how to link photo and realEstate when the realEstateId is -1(default value?)
             realEstateRepository.insertRealEstatePhoto(
                 RealEstatePhotoEntity(
                     realEstateIdOfPhoto = realEstateId,

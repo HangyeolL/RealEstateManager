@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.openclassrooms.realestatemanager.R
@@ -37,10 +38,9 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             requireActivity(),
             R.id.main_FragmentContainerView_navHost
         )
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
 
-        val adapter = RealEstatePhotoListAdapter() {
-
-        }
+        val adapter = RealEstatePhotoListAdapter() {}
         binding.detailRecyclerViewImages.adapter = adapter
 
         // add pager behavior to RecyclerView

@@ -37,25 +37,13 @@ class DatePickerDialogFragment(
             R.id.main_FragmentContainerView_navHost
         )
 
-        return when (args.fragmentNumber) {
-            MARKET_SINCE -> DatePickerDialog(
+        return DatePickerDialog(
                 requireContext(),
                 this,
                 LocalDateTime.now().year,
                 LocalDateTime.now().monthValue,
-                LocalDateTime.now().dayOfMonth)
-
-            DATE_OF_SOLD ->DatePickerDialog(
-                requireContext(),
-                this,
-                LocalDateTime.now().year,
-                LocalDateTime.now().monthValue,
-                LocalDateTime.now().dayOfMonth)
-
-            else -> {
-                throw Exception("unknown DatePicker")
-            }
-        }
+                LocalDateTime.now().dayOfMonth
+        )
     }
 
 

@@ -2,12 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/nav_graph_portrait"
     app:startDestination="@id/realEstateListFragment">
     <fragment
         android:id="@+id/realEstateListFragment"
         android:name="com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragment"
-        android:label="RealEstateListFragment"
+        android:label="List View"
         tools:layout="@layout/real_estate_list_fragment">
         <action
             android:id="@+id/action_realEstateListFragment_to_addOrModifyRealEstateFragment"
@@ -17,12 +17,12 @@
             app:destination="@id/detailFragment" />
         <action
             android:id="@+id/action_realEstateListFragment_to_placeholder"
-            app:destination="@id/placeholder" />
+            app:destination="@id/mapViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/addOrModifyRealEstateFragment"
         android:name="com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragment"
-        android:label="AddOrModifyRealEstateFragment"
+        android:label="Add or Modify"
         tools:layout="@layout/add_or_modify_real_estate_fragment">
         <action
             android:id="@+id/action_addOrModifyRealEstateFragment_to_addPhotoDialogFragment"
@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.openclassrooms.realestatemanager.ui.detail.DetailFragment"
-        android:label="DetailFragment"
+        android:label="Detail View"
         tools:layout="@layout/detail_fragment">
         <action
             android:id="@+id/action_detailFragment_to_addOrModifyRealEstateFragment"
@@ -54,15 +54,15 @@
             android:name="realEstateId"
             app:argType="integer" />
     </fragment>
-    <fragment android:id="@+id/placeholder">
+    <fragment android:id="@+id/mapViewFragment">
         <action
-            android:id="@+id/action_placeholder_to_realEstateListFragment"
+            android:id="@+id/action_mapViewFragment_to_realEstateListFragment"
             app:popUpTo="@id/realEstateListFragment" />
     </fragment>
     <dialog
         android:id="@+id/addPhotoDialogFragment"
         android:name="com.openclassrooms.realestatemanager.ui.add_photo.AddPhotoDialogFragment"
-        android:label="AddPhotoDialogFragment"
+        android:label="Add Photo"
         tools:layout="@layout/add_photo_dialog_fragment">
         <action
             android:id="@+id/action_addPhotoDialogFragment_to_addOrModifyRealEstateFragment"
@@ -77,7 +77,7 @@
     <dialog
         android:id="@+id/datePickerDialogFragment"
         android:name="com.openclassrooms.realestatemanager.ui.date_picker.DatePickerDialogFragment"
-        android:label="DatePickerDialogFragment">
+        android:label="Date Picker">
         <action
             android:id="@+id/action_datePickerDialogFragment_pop"
             app:popUpTo="@id/addOrModifyRealEstateFragment"

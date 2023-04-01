@@ -23,7 +23,6 @@ package com.openclassrooms.realestatemanager.ui.main
 //    val viewActionSingleLiveEvent: SingleLiveEvent<MainViewAction> = SingleLiveEvent()
 //
 //    init {
-//        // TODO Need to improve Navigation part here <BUG>
 ////        1. doing navigation via RV adapter by passing viewState Id when opening DetailActivity -> Should I unit test RV ?
 //        if (!isTablet) {
 //            viewActionSingleLiveEvent.setValue(MainViewAction.NavigateToDetailActivity)
