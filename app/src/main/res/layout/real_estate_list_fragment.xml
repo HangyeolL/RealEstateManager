@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.slidingpanelayout.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/real_estate_list_SlidingPaneLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/real_estate_list_Toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimaryDark"
-        android:elevation="4dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/real_estate_list_toolbar_menu"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@color/colorPrimary" />
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/real_estate_list_Toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="?attr/colorPrimaryDark"-->
+<!--        android:elevation="4dp"-->
+<!--        android:minHeight="?attr/actionBarSize"-->
+<!--        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:menu="@menu/real_estate_list_toolbar_menu"-->
+<!--        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+<!--        app:titleTextColor="@color/colorPrimary" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/real_estate_list_RecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="550dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/real_estate_list_Toolbar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/real_estate_list_item" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/real_estate_list_detail_FragmentContainerView"
+        android:name="com.openclassrooms.realestatemanager.ui.detail.DetailFragment"
+        android:layout_weight="1"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        tools:layout="@layout/detail_fragment"/>
+
+</androidx.slidingpanelayout.widget.SlidingPaneLayout>
 
 
 

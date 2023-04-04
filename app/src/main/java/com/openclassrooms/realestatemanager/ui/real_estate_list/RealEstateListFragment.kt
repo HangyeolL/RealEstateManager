@@ -49,39 +49,19 @@ class RealEstateListFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("HG", "is tablet:${resources.getBoolean(R.bool.isTablet)}")
 
-        val fragmentDetailContainer: View? = view.findViewById(R.id.FragmentContainerView_detail)
+        navController = Navigation.findNavController(
+            requireActivity(),
+            R.id.main_FragmentContainerView_navHost
+        )
+        appBarConfiguration = AppBarConfiguration(navController.graph)
 
-        if (resources.getBoolean(R.bool.isTablet) && fragmentDetailContainer != null ) {
+//        binding.realEstateListToolbar.setupWithNavController(navController, appBarConfiguration)
+//        binding.realEstateListToolbar.setOnMenuItemClickListener(this)
 
-            navController = fragmentDetailContainer.findNavController()
-            appBarConfiguration = AppBarConfiguration(navController.graph)
-
-            recyclerViewAdapter = RealEstateListAdapter() {
-                // Taking realEstateId from Adapter / Adapter is getting the id from ViewState
-                navController.navigate(R.id.detailFragment)
-            }
-        } else {
-
-            navController = Navigation.findNavController(
-                requireActivity(),
-                R.id.main_FragmentContainerView_navHost
-            )
-            appBarConfiguration = AppBarConfiguration(navController.graph)
-
-            recyclerViewAdapter = RealEstateListAdapter() {
-                // Taking realEstateId from Adapter / Adapter is getting the id from ViewState
-                navController.navigate(
-                    RealEstateListFragmentDirections.actionRealEstateListFragmentToDetailFragment(
-                        it
-                    )
-                )
-            }
+        recyclerViewAdapter = RealEstateListAdapter() {
+            binding.realEstateListSlidingPaneLayout.openPane()
         }
-
-        binding.realEstateListToolbar.setupWithNavController(navController, appBarConfiguration)
-        binding.realEstateListToolbar.setOnMenuItemClickListener(this)
 
         binding.realEstateListRecyclerView.adapter = recyclerViewAdapter
 

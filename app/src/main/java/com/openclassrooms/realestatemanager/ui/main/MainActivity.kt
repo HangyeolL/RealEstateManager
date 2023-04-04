@@ -31,8 +31,11 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             supportFragmentManager.findFragmentById(binding.mainFragmentContainerViewNavHost.id) as NavHostFragment
 
         navController = navHostFragment.navController
+
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.mainDrawerLayout)
+
         navController.addOnDestinationChangedListener(this)
+
         binding.mainNavigationView.setupWithNavController(navController)
 
     }

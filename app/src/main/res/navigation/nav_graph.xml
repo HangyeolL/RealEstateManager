@@ -32,7 +32,10 @@
             app:destination="@id/datePickerDialogFragment" />
         <action
             android:id="@+id/action_addOrModifyRealEstateFragment_to_realEstateListFragment"
-            app:popUpTo="@id/realEstateListFragment" />
+            app:destination="@id/realEstateListFragment" />
+        <action
+            android:id="@+id/action_addOrModifyRealEstateFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
         <argument
             android:name="realEstateId"
             android:defaultValue="-1"
@@ -48,8 +51,7 @@
             app:destination="@id/addOrModifyRealEstateFragment" />
         <action
             android:id="@+id/action_detailFragment_pop"
-            app:popUpTo="@id/realEstateListFragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/realEstateListFragment" />
         <argument
             android:name="realEstateId"
             app:argType="integer" />
