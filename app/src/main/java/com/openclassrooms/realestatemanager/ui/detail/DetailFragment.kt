@@ -2,14 +2,13 @@ package com.openclassrooms.realestatemanager.ui.detail
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.INVISIBLE
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.DetailFragmentBinding
@@ -38,7 +37,10 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             requireActivity(),
             R.id.main_FragmentContainerView_navHost
         )
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        if(resources.getBoolean(R.bool.isTablet)) {
+            binding.detailToolbar.visibility = GONE
+        }
 
         val adapter = RealEstatePhotoListAdapter() {}
         binding.detailRecyclerViewImages.adapter = adapter

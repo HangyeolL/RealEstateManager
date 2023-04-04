@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph_land">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_land"
+    app:startDestination="@id/detailFragment">
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.detail.DetailFragment"
+        android:label="DetailFragment"
+        tools:layout="@layout/detail_fragment">
+        <action
+            android:id="@+id/action_detailFragment_to_addOrModifyRealEstateFragment"
+            app:destination="@id/addOrModifyRealEstateFragment" />
+        <argument
+            android:name="realEstateId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/addOrModifyRealEstateFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragment"
+        android:label="AddOrModifyRealEstateFragment"
+        tools:layout="@layout/add_or_modify_real_estate_fragment">
+        <action
+            android:id="@+id/action_addOrModifyRealEstateFragment_to_detailFragment"
+            app:popUpTo="@id/detailFragment" />
+        <action
+            android:id="@+id/action_addOrModifyRealEstateFragment_to_datePickerDialogFragment"
+            app:destination="@id/datePickerDialogFragment" />
+        <action
+            android:id="@+id/action_addOrModifyRealEstateFragment_to_addPhotoDialogFragment"
+            app:destination="@id/addPhotoDialogFragment" />
+        <argument
+            android:name="realEstateId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
+    <dialog
+        android:id="@+id/datePickerDialogFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.date_picker.DatePickerDialogFragment"
+        android:label="Date Picker">
+        <action
+            android:id="@+id/action_datePickerDialogFragment_pop"
+            app:popUpTo="@id/addOrModifyRealEstateFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="fragmentNumber"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </dialog>
+    <dialog
+        android:id="@+id/addPhotoDialogFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.add_photo.AddPhotoDialogFragment"
+        android:label="AddPhotoDialogFragment"
+        tools:layout="@layout/add_photo_dialog_fragment">
+        <argument
+            android:name="realEstateId"
+            app:argType="integer" />
+        <argument
+            android:name="picUriToString"
+            app:argType="string" />
+    </dialog>
+
 
 </navigation>
