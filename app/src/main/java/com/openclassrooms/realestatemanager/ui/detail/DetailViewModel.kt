@@ -8,6 +8,7 @@ import androidx.lifecycle.liveData
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
+import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import com.openclassrooms.realestatemanager.ui.detail_map.DetailMapViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,12 +22,12 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val application: Application,
-    private val savedStateHandle: SavedStateHandle,
+    private val currentRealEstateRepository: CurrentRealEstateRepository,
     realEstateRepository: RealEstateRepository,
     agentRepository: AgentRepository,
 ) : ViewModel() {
 
-    private val realEstateId = savedStateHandle.get<Int>("realEstateId")
+    private val realEstateId = currentRealEstateRepository.getCurrentRealEstateId().value
 
     val detailViewStateLiveData: LiveData<DetailViewState> = liveData(Dispatchers.IO) {
 

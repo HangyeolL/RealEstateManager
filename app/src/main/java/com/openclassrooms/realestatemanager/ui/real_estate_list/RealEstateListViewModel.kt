@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RealEstateListViewModel @Inject constructor(
     private val realEstateRepository: RealEstateRepository,
+    private val currentRealEstateRepository: CurrentRealEstateRepository,
 ) : ViewModel() {
 
     val viewStateLiveData: LiveData<RealEstateListViewState> =
@@ -45,7 +47,7 @@ class RealEstateListViewModel @Inject constructor(
 
         }
 
-    fun onRealEstateItemClicked(it: Int) {
-
+    fun onRealEstateListItemClicked(itemId: Int) {
+        currentRealEstateRepository.setCurrentRealEstateId(itemId)
     }
 }

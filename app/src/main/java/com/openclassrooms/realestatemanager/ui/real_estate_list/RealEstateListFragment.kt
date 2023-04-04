@@ -59,7 +59,8 @@ class RealEstateListFragment : Fragment(),
 //        binding.realEstateListToolbar.setupWithNavController(navController, appBarConfiguration)
 //        binding.realEstateListToolbar.setOnMenuItemClickListener(this)
 
-        recyclerViewAdapter = RealEstateListAdapter() {
+        recyclerViewAdapter = RealEstateListAdapter() { itemId ->
+            viewModel.onRealEstateListItemClicked(itemId)
             binding.realEstateListSlidingPaneLayout.openPane()
         }
 
