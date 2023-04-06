@@ -4,7 +4,7 @@ import com.openclassrooms.realestatemanager.design_system.real_estate_photo.Real
 
 data class DetailViewState(
 
-    val itemViewStateList: List<RealEstatePhotoItemViewState>,
+    val itemViewStateList: List<RealEstatePhotoItemViewState.Content>,
 
     val descriptionBody: String,
     val squareMeter: Int,

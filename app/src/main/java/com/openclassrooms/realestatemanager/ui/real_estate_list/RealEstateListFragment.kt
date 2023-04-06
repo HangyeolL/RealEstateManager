@@ -35,8 +35,6 @@ class RealEstateListFragment : Fragment(),
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    private lateinit var recyclerViewAdapter: RealEstateListAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,7 +57,7 @@ class RealEstateListFragment : Fragment(),
 //        binding.realEstateListToolbar.setupWithNavController(navController, appBarConfiguration)
 //        binding.realEstateListToolbar.setOnMenuItemClickListener(this)
 
-        recyclerViewAdapter = RealEstateListAdapter() { itemId ->
+        val recyclerViewAdapter = RealEstateListAdapter() { itemId ->
             viewModel.onRealEstateListItemClicked(itemId)
             binding.realEstateListSlidingPaneLayout.openPane()
         }

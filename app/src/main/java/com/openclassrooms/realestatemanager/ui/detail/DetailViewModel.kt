@@ -1,11 +1,10 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.data.local.model.AgentEntity
+import com.openclassrooms.realestatemanager.data.local.model.RealEstateWithPhotos
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
@@ -13,10 +12,10 @@ import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateReposito
 import com.openclassrooms.realestatemanager.ui.detail_map.DetailMapViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,61 +26,63 @@ class DetailViewModel @Inject constructor(
     agentRepository: AgentRepository,
 ) : ViewModel() {
 
-    private val realEstateId = currentRealEstateRepository.getCurrentRealEstateId().value
+    private val currentRealEstateFlow = currentRealEstateRepository.getCurrentRealEstateId()
+        .filterNotNull()
+        .flatMapLatest { currentId ->
+            realEstateRepository.getRealEstateById(currentId)
+        }
+
+    private val allAgentsListFlow = agentRepository.getAllAgents()
 
     val detailViewStateLiveData: LiveData<DetailViewState> = liveData(Dispatchers.IO) {
-
-        if (realEstateId != null) {
-            coroutineScope {
-                val realEstateFlow =
-                    async { realEstateRepository.getRealEstateById(realEstateId).first() }
-                val realEstate = realEstateFlow.await()
-
-                val agentListFlow = async { agentRepository.getAllAgents().first() }
-                val agentList = agentListFlow.await()
-
-                val photoListItemViewStateList =
-                    realEstate.realEstatePhotoLists.map { realEstateWithPhoto ->
+        combine(
+            currentRealEstateFlow,
+            allAgentsListFlow,
+        ) { currentRealEstate, allAgentsList ->
+            emit(
+                DetailViewState(
+                    itemViewStateList = currentRealEstate.realEstatePhotoLists.map {
                         RealEstatePhotoItemViewState.Content(
-                            realEstateWithPhoto.photoId,
-                            realEstateWithPhoto.url,
-                            realEstateWithPhoto.description
+                            it.photoId,
+                            it.url,
+                            it.description
                         )
-                    }
+                    },
 
-                val agentInChargeName = agentList.find { agent ->
-                    agent.agentId == realEstate.realEstateEntity.agentIdInCharge
-                }?.name
+                    agentName = allAgentsList.find { agent ->
+                        agent.agentId == currentRealEstate.realEstateEntity.agentIdInCharge
+                    }?.name ?: application.getString(R.string.none),
 
-                emit(
-                    DetailViewState(
-                        photoListItemViewStateList,
-                        realEstate.realEstateEntity.descriptionBody,
-                        realEstate.realEstateEntity.squareMeter,
-                        realEstate.realEstateEntity.numberOfRooms,
-                        realEstate.realEstateEntity.numberOfBathrooms,
-                        realEstate.realEstateEntity.numberOfBedrooms,
-                        realEstate.realEstateEntity.address,
-                        agentInChargeName ?: application.getString(R.string.none),
-                        true
-                    )
+                    descriptionBody = currentRealEstate.realEstateEntity.descriptionBody,
+                    squareMeter = currentRealEstate.realEstateEntity.squareMeter,
+                    numberOfBedrooms = currentRealEstate.realEstateEntity.numberOfBedrooms,
+                    numberOfRooms = currentRealEstate.realEstateEntity.numberOfRooms,
+                    numberOfBathrooms = currentRealEstate.realEstateEntity.numberOfBathrooms,
+                    address = currentRealEstate.realEstateEntity.address,
+                    isViewVisible = true
                 )
-            }
-        } else {
-            // TODO Supposed to not arrive here ! or invisible Ui ? empty
-        }
+            )
+        }.collectLatest {}
     }
 
     val mapViewStateLiveData: LiveData<DetailMapViewState> = liveData(Dispatchers.IO) {
-        realEstateId?.let {
-            realEstateRepository.getRealEstateById(it).collectLatest { realEstateWithPhotosEntity ->
-                emit(
-                    DetailMapViewState(
-                        realEstateWithPhotosEntity.realEstateEntity.latLng
-                    )
+        currentRealEstateFlow.collectLatest { currentRealEstate ->
+            emit(
+                DetailMapViewState(
+                    currentRealEstate.realEstateEntity.latLng
                 )
-            }
+            )
         }
     }
+//        realEstateId?.let {
+//            realEstateRepository.getRealEstateById(it).collectLatest { realEstateWithPhotosEntity ->
+//                emit(
+//                    DetailMapViewState(
+//                        realEstateWithPhotosEntity.realEstateEntity.latLng
+//                    )
+//                )
+//            }
+//        }
+
 
 }

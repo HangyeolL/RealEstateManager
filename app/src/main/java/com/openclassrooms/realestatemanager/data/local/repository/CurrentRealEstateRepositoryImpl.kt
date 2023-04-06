@@ -10,13 +10,13 @@ class CurrentRealEstateRepositoryImpl @Inject constructor(
 
 ) : CurrentRealEstateRepository {
 
-    private val currentMailIdMutableStateFlow: MutableStateFlow<Int?> = MutableStateFlow<Int?>(null)
-    val currentMailIdStateFlow: StateFlow<Int?> = currentMailIdMutableStateFlow.asStateFlow()
+    private val currentRealEstateIdMutableStateFlow: MutableStateFlow<Int?> = MutableStateFlow<Int?>(null)
+    val currentRealEstateIdStateFlow: StateFlow<Int?> = currentRealEstateIdMutableStateFlow.asStateFlow()
 
-    override fun getCurrentRealEstateId(): StateFlow<Int?> = currentMailIdStateFlow
+    override fun getCurrentRealEstateId(): StateFlow<Int?> = currentRealEstateIdStateFlow
 
     override fun setCurrentRealEstateId(currentId: Int) {
-        currentMailIdMutableStateFlow.value = currentId
+        currentRealEstateIdMutableStateFlow.value = currentId
     }
 
 }
