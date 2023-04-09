@@ -53,12 +53,19 @@ class DetailViewModel @Inject constructor(
                         agent.agentId == currentRealEstate.realEstateEntity.agentIdInCharge
                     }?.name ?: application.getString(R.string.none),
 
+                    agentPhotoUrl = allAgentsList.find { agent ->
+                        agent.agentId == currentRealEstate.realEstateEntity.agentIdInCharge
+                    }?.photoUrl ?: application.getString(R.string.none),
+
                     descriptionBody = currentRealEstate.realEstateEntity.descriptionBody,
                     squareMeter = currentRealEstate.realEstateEntity.squareMeter,
                     numberOfBedrooms = currentRealEstate.realEstateEntity.numberOfBedrooms,
                     numberOfRooms = currentRealEstate.realEstateEntity.numberOfRooms,
                     numberOfBathrooms = currentRealEstate.realEstateEntity.numberOfBathrooms,
                     address = currentRealEstate.realEstateEntity.address,
+
+
+
                     isViewVisible = true
                 )
             )
@@ -74,15 +81,5 @@ class DetailViewModel @Inject constructor(
             )
         }
     }
-//        realEstateId?.let {
-//            realEstateRepository.getRealEstateById(it).collectLatest { realEstateWithPhotosEntity ->
-//                emit(
-//                    DetailMapViewState(
-//                        realEstateWithPhotosEntity.realEstateEntity.latLng
-//                    )
-//                )
-//            }
-//        }
-
 
 }

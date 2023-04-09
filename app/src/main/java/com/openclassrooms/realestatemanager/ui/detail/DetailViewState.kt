@@ -13,6 +13,7 @@ data class DetailViewState(
     val numberOfBedrooms: Int,
     val address: String,
     val agentName: String,
+    val agentPhotoUrl: String,
 
     val isViewVisible: Boolean = false
 

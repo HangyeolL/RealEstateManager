@@ -10,10 +10,10 @@ class CurrentRealEstateRepositoryImpl @Inject constructor(
 
 ) : CurrentRealEstateRepository {
 
-    private val currentRealEstateIdMutableStateFlow: MutableStateFlow<Int?> = MutableStateFlow<Int?>(null)
-    val currentRealEstateIdStateFlow: StateFlow<Int?> = currentRealEstateIdMutableStateFlow.asStateFlow()
+    private val currentRealEstateIdMutableStateFlow: MutableStateFlow<Int> = MutableStateFlow(1)
+    private val currentRealEstateIdStateFlow: StateFlow<Int> = currentRealEstateIdMutableStateFlow.asStateFlow()
 
-    override fun getCurrentRealEstateId(): StateFlow<Int?> = currentRealEstateIdStateFlow
+    override fun getCurrentRealEstateId(): StateFlow<Int> = currentRealEstateIdStateFlow
 
     override fun setCurrentRealEstateId(currentId: Int) {
         currentRealEstateIdMutableStateFlow.value = currentId

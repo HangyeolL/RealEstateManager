@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.DetailFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListAdapter
@@ -38,9 +39,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             R.id.main_FragmentContainerView_navHost
         )
 
-        if(resources.getBoolean(R.bool.isTablet)) {
-            binding.detailToolbar.visibility = GONE
-        }
+
 
         val adapter = RealEstatePhotoListAdapter() {}
         binding.detailRecyclerViewImages.adapter = adapter
@@ -61,6 +60,11 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             binding.detailTextViewBedrooms.text = detailViewState.numberOfBedrooms.toString()
             binding.detailTextViewAddress.text = detailViewState.address
             binding.detailTextViewAgentName.text = detailViewState.agentName
+
+            Glide.with(this)
+                .load(detailViewState.agentPhotoUrl)
+                .centerCrop()
+                .into(binding.detailShapeableImageViewAgent)
 
             adapter.submitList(detailViewState.itemViewStateList)
         }
