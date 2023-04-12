@@ -1,15 +1,18 @@
 package com.openclassrooms.realestatemanager.ui.real_estate_list
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,6 +20,17 @@ class RealEstateListViewModel @Inject constructor(
     private val realEstateRepository: RealEstateRepository,
     private val currentRealEstateRepository: CurrentRealEstateRepository,
 ) : ViewModel() {
+
+    var selectedRealEstateId: Int? = null
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            currentRealEstateRepository.getCurrentRealEstateId().collectLatest { currentRealEstateId ->
+                selectedRealEstateId = currentRealEstateId
+                }
+        }
+    }
+
 
     val viewStateLiveData: LiveData<RealEstateListViewState> =
         liveData(Dispatchers.IO) {
@@ -31,10 +45,7 @@ class RealEstateListViewModel @Inject constructor(
                                 realEstateWithPhotos.realEstateEntity.realEstateId,
                                 if (realEstateWithPhotos.realEstatePhotoLists.isNotEmpty())
                                     realEstateWithPhotos.realEstatePhotoLists[0].url
-                                else
-                                // TODO How to use drawable resource with Glide ! or is there a better way ?
-                                    Uri.parse("android.resource://com.example.project/" + R.drawable.image_not_available)
-                                        .toString(),
+                                else R.drawable.image_not_available.toString(),
                                 realEstateWithPhotos.realEstateEntity.type,
                                 realEstateWithPhotos.realEstateEntity.city,
                                 realEstateWithPhotos.realEstateEntity.price,
@@ -48,6 +59,7 @@ class RealEstateListViewModel @Inject constructor(
         }
 
     fun onRealEstateListItemClicked(itemId: Int) {
+        Log.d("HG", "ListFrag viewModel onRealEstateListItemClicked called")
         currentRealEstateRepository.setCurrentRealEstateId(itemId)
     }
 }

@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.data.local.repository
 
+import android.util.Log
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,6 +18,7 @@ class CurrentRealEstateRepositoryImpl @Inject constructor(
 
     override fun setCurrentRealEstateId(currentId: Int) {
         currentRealEstateIdMutableStateFlow.value = currentId
+        Log.d("HG", "CurrentRealEstateRepository setting realEstateId to ${currentRealEstateIdStateFlow.value}")
     }
 
 }

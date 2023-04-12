@@ -16,8 +16,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
-import kotlin.math.log
-
 
 @HiltViewModel
 class AddOrModifyRealEstateViewModel @Inject constructor(
@@ -38,8 +36,9 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     val initialViewStateLiveData: LiveData<AddOrModifyRealEstateViewState> =
         liveData(Dispatchers.IO) {
             val realEstateId: Int? = savedStateHandle.get<Int>("realEstateId")
+            Log.d("HG", "AddOrModifyReceived:$realEstateId")
 
-            //TODO why realEstateAsync doesnt get the photoList with new elements added ?
+            //TODO why realEstateAsync doesn't get the photoList with new elements added ?
             if (realEstateId != DEFAULT_REAL_ESTATE_ID && realEstateId != null) {
                 coroutineScope {
                     val realEstateAsync = async { realEstateRepository.getRealEstateById(realEstateId).first() }

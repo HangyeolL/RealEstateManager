@@ -52,7 +52,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
             if (isSuccess) {
                 navController.navigate(
-                    AddOrModifyRealEstateFragmentDirections.actionAddOrModifyRealEstateFragmentToAddPhotoDialogFragment(
+                    AddOrModifyRealEstateFragmentDirections.actionToAddPhotoDialogFragment(
                         args.realEstateId, latestTmpUri.toString()
                     )
                 )
@@ -76,7 +76,6 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         )
 
         // Adapter set up
-
         val typeSpinnerAdapter = AddOrModifyRealEstateTypeSpinnerAdapter(
             requireContext(),
             R.layout.add_or_modify_real_estate_spinner_item
@@ -201,7 +200,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
         binding.addOrModifyRealEstateTextInputEditTextMarketSince.setOnClickListener {
             navController.navigate(
-                AddOrModifyRealEstateFragmentDirections.actionAddOrModifyRealEstateFragmentToDatePickerDialogFragment(
+                AddOrModifyRealEstateFragmentDirections.actionToDatePickerDialogFragment(
                     MARKET_SINCE
                 )
             )
@@ -237,7 +236,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
         binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setOnClickListener {
             navController.navigate(
-                AddOrModifyRealEstateFragmentDirections.actionAddOrModifyRealEstateFragmentToDatePickerDialogFragment(
+                AddOrModifyRealEstateFragmentDirections.actionToDatePickerDialogFragment(
                     DATE_OF_SOLD
                 )
             )

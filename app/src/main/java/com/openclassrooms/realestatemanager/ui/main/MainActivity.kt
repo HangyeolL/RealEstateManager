@@ -1,18 +1,23 @@
 package com.openclassrooms.realestatemanager.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.MainActivityBinding
+import com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragment
+import com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragmentDirections
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
@@ -27,17 +32,42 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
         setContentView(binding.root)
 
+        setSupportActionBar(binding.mainToolbar)
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(binding.mainFragmentContainerViewNavHost.id) as NavHostFragment
-
         navController = navHostFragment.navController
-
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.mainDrawerLayout)
 
         navController.addOnDestinationChangedListener(this)
 
+        binding.mainToolbar.setupWithNavController(navController, appBarConfiguration)
         binding.mainNavigationView.setupWithNavController(navController)
 
+    }
+
+    // Inflate toolbar's menu in parent activity
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.real_estate_list_toolbar_menu, menu)
+        return true
+    }
+
+    // Take care of only create and search case in activity
+    // TODO Modify case in landscape mode should be taken care of in Fragment
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.toolbar_menu_create -> {
+                Log.d("HG", "MainActivity handling toolBar menu create")
+                navController.navigate(RealEstateListFragmentDirections.actionToAddOrModifyRealEstateFragment())
+                return true
+            }
+            R.id.toolbar_menu_search-> {
+                Log.d("HG", "MainActivity handling toolBar menu search")
+                return true
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestinationChanged(
@@ -46,12 +76,17 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         arguments: Bundle?
     ) {
         when (destination.id) {
-            R.id.detailFragment -> {
-
-            }
+//            detailFragment -> {
+//                binding.mainToolbar.menu.clear()
+//                binding.mainToolbar.inflateMenu(menu.detail_toolbar_menu)
+//            }
             R.id.addOrModifyRealEstateFragment -> {
-
+                binding.mainToolbar.menu.clear()
             }
+//            realEstateListFragment -> {
+//                binding.mainToolbar.menu.clear()
+//                binding.mainToolbar.inflateMenu(menu.real_estate_list_toolbar_menu)
+//            }
             else -> {
 
             }

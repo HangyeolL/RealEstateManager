@@ -10,10 +10,10 @@
         android:label="List View"
         tools:layout="@layout/real_estate_list_fragment">
         <action
-            android:id="@+id/action_realEstateListFragment_to_addOrModifyRealEstateFragment"
+            android:id="@+id/action_to_addOrModifyRealEstateFragment"
             app:destination="@id/addOrModifyRealEstateFragment" />
         <action
-            android:id="@+id/action_realEstateListFragment_to_detailFragment"
+            android:id="@+id/action_to_detailFragment"
             app:destination="@id/detailFragment" />
         <action
             android:id="@+id/action_realEstateListFragment_to_placeholder"
@@ -25,16 +25,16 @@
         android:label="Add or Modify"
         tools:layout="@layout/add_or_modify_real_estate_fragment">
         <action
-            android:id="@+id/action_addOrModifyRealEstateFragment_to_addPhotoDialogFragment"
+            android:id="@+id/action_to_addPhotoDialogFragment"
             app:destination="@id/addPhotoDialogFragment" />
         <action
-            android:id="@+id/action_addOrModifyRealEstateFragment_to_datePickerDialogFragment"
+            android:id="@+id/action_to_datePickerDialogFragment"
             app:destination="@id/datePickerDialogFragment" />
         <action
-            android:id="@+id/action_addOrModifyRealEstateFragment_to_realEstateListFragment"
+            android:id="@+id/action_to_realEstateListFragment"
             app:destination="@id/realEstateListFragment" />
         <action
-            android:id="@+id/action_addOrModifyRealEstateFragment_to_detailFragment"
+            android:id="@+id/action_to_detailFragment"
             app:destination="@id/detailFragment" />
         <argument
             android:name="realEstateId"
@@ -47,7 +47,7 @@
         android:label="Detail View"
         tools:layout="@layout/detail_fragment">
         <action
-            android:id="@+id/action_detailFragment_to_addOrModifyRealEstateFragment"
+            android:id="@+id/action_to_addOrModifyRealEstateFragment"
             app:destination="@id/addOrModifyRealEstateFragment" />
         <action
             android:id="@+id/action_detailFragment_pop"
@@ -58,7 +58,7 @@
     </fragment>
     <fragment android:id="@+id/mapViewFragment">
         <action
-            android:id="@+id/action_mapViewFragment_to_realEstateListFragment"
+            android:id="@+id/action_to_realEstateListFragment"
             app:popUpTo="@id/realEstateListFragment" />
     </fragment>
     <dialog
@@ -67,7 +67,7 @@
         android:label="Add Photo"
         tools:layout="@layout/add_photo_dialog_fragment">
         <action
-            android:id="@+id/action_addPhotoDialogFragment_to_addOrModifyRealEstateFragment"
+            android:id="@+id/action_to_addOrModifyRealEstateFragment"
             app:popUpTo="@id/addOrModifyRealEstateFragment" />
         <argument
             android:name="realEstateId"

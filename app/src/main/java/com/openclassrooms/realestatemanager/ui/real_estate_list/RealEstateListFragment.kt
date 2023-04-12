@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.real_estate_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -17,10 +18,9 @@ import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment),
-    Toolbar.OnMenuItemClickListener {
+class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment) {
 
-    private val binding by viewBinding {  RealEstateListFragmentBinding.bind(it)}
+    private val binding by viewBinding { RealEstateListFragmentBinding.bind(it) }
 
     private val viewModel by viewModels<RealEstateListViewModel>()
 
@@ -29,6 +29,8 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setHasOptionsMenu(true)
 
         navController = Navigation.findNavController(
             requireActivity(),
@@ -43,12 +45,24 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment),
             RealEstateListOnBackPressedCallback(binding.realEstateListSlidingPaneLayout)
         )
 
-        val toolbar = requireActivity().findViewById<Toolbar>(R.id.Toolbar)
-        
-        binding.realEstateListSlidingPaneLayout.addPanelSlideListener()
+        val toolbar = requireActivity().findViewById<Toolbar>(R.id.main_Toolbar)
 
-//        binding.realEstateListToolbar.setupWithNavController(navController, appBarConfiguration)
-//        binding.realEstateListToolbar.setOnMenuItemClickListener(this)
+        binding.realEstateListSlidingPaneLayout.addPanelSlideListener(object :
+            SlidingPaneLayout.PanelSlideListener {
+            override fun onPanelSlide(panel: View, slideOffset: Float) {}
+
+            override fun onPanelOpened(panel: View) {
+                toolbar.menu.clear()
+                toolbar.inflateMenu(R.menu.detail_toolbar_menu)
+            }
+
+            override fun onPanelClosed(panel: View) {
+                toolbar.menu.clear()
+                toolbar.inflateMenu(R.menu.real_estate_list_toolbar_menu)
+            }
+
+        })
+
 
         val recyclerViewAdapter = RealEstateListAdapter() { itemId ->
             viewModel.onRealEstateListItemClicked(itemId)
@@ -63,17 +77,24 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment),
 
     }
 
-    override fun onMenuItemClick(menuItem: MenuItem): Boolean =
-        when (menuItem.itemId) {
-            R.id.toolbar_menu_create -> {
-                navController.navigate(
-                    RealEstateListFragmentDirections.actionRealEstateListFragmentToAddOrModifyRealEstateFragment()
-                )
-                true
-            }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.toolbar_menu_modify-> {
+                val realEstateId = viewModel.selectedRealEstateId
+                Log.d("HG", "ListFragment handling toolBar menu modify")
+                Log.d("HG", "ListToAddOrModify:currentRealEstateId=${realEstateId}")
 
-            else -> false
+                if (realEstateId != null) {
+                    navController.navigate(
+                        RealEstateListFragmentDirections.actionToAddOrModifyRealEstateFragment(realEstateId)
+                    )
+                }
+
+                return true
+            }
         }
+        return super.onOptionsItemSelected(item)
+    }
 }
 
 /**
@@ -86,6 +107,10 @@ class RealEstateListOnBackPressedCallback(
     // are overlapping) and open (i.e., the detail pane is visible).
     slidingPaneLayout.isSlideable && slidingPaneLayout.isOpen
 ), SlidingPaneLayout.PanelSlideListener {
+
+    init {
+        slidingPaneLayout.addPanelSlideListener(this)
+    }
 
     override fun handleOnBackPressed() {
         // Return to the list pane when the system back button is pressed.
