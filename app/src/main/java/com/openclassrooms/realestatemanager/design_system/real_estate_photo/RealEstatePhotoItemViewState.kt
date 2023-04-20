@@ -4,7 +4,7 @@ sealed class RealEstatePhotoItemViewState(
     val type: RealEstatePhotoType,
 ) {
     data class Content(
-        val photoId: Int,
+        val photoId: Long,
         val photoUrl: String,
         val photoDescription: String?,
     ):RealEstatePhotoItemViewState(RealEstatePhotoType.CONTENT)

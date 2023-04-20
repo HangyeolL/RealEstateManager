@@ -23,29 +23,18 @@ import java.io.File
 @AndroidEntryPoint
 class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estate_fragment) {
 
-//    companion object {
-//        const val KEY_REAL_ESTATE_ID = "KEY_REAL_ESTATE_ID"
-//
-//        fun newInstance(realEstateId: Int?) = AddOrModifyRealEstateFragment().apply {
-//            arguments = Bundle().apply {
-//                realEstateId?.let { putInt(KEY_REAL_ESTATE_ID, realEstateId) }
-//            }
-//        }
-//    }
-
     companion object {
         private const val MARKET_SINCE = 1
         private const val DATE_OF_SOLD = 2
     }
 
     private val binding by viewBinding { AddOrModifyRealEstateFragmentBinding.bind(it) }
-
     private val viewModel by viewModels<AddOrModifyRealEstateViewModel>()
 
     private lateinit var navController: NavController
-
     private val args: AddOrModifyRealEstateFragmentArgs by navArgs()
 
+    // Intent to takePicture suing registerForActivityResult
     private var latestTmpUri: Uri? = null
 
     private val takePictureResult =
@@ -66,6 +55,19 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             }
         }
 
+    private fun getTmpFileUri(): Uri {
+        val tmpFile =
+            File.createTempFile("tmp_image_file", ".png", requireContext().cacheDir).apply {
+                createNewFile()
+                deleteOnExit()
+            }
+
+        return FileProvider.getUriForFile(
+            requireContext(),
+            "${BuildConfig.APPLICATION_ID}.provider",
+            tmpFile
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -91,13 +93,15 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         val autocompleteAdapter = AddOrModifyRealEstateAutocompleteAdapter()
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setAdapter(typeSpinnerAdapter)
-        binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setAdapter(agentSpinnerAdapter)
-        binding.addOrModifyRealEstateRecyclerViewRealEstatePhotoList.adapter = realEstatePhotoListAdapter
+        binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setAdapter(
+            agentSpinnerAdapter
+        )
+        binding.addOrModifyRealEstateRecyclerViewRealEstatePhotoList.adapter =
+            realEstatePhotoListAdapter
         binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setAdapter(autocompleteAdapter)
         binding.addOrModifyRealEstateAutoCompleteTextViewCity.setAdapter(autocompleteAdapter)
 
-        // Observer set up
-
+        // Observer for viewState set up
         viewModel.initialViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
 
             typeSpinnerAdapter.clear()
@@ -135,18 +139,16 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         // Observer : SingleLiveEvent for Toast
-
         viewModel.stringSingleLiveEvent.observe(viewLifecycleOwner) { string ->
             Toast.makeText(requireContext(), string, Toast.LENGTH_SHORT).show()
         }
 
         // Observer : NavController retrieving data from DatePickerDialogFragment
-
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("MarketSince")
             ?.observe(viewLifecycleOwner) { pickedDate ->
                 viewModel.onUserMarketSinceDateSet(pickedDate)
                 binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText(pickedDate)
-        }
+            }
 
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("DateOfSold")
             ?.observe(viewLifecycleOwner) { pickedDate ->
@@ -154,8 +156,19 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
                 binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(pickedDate)
             }
 
-        // Listener set up //
+//         Observer: NavController retrieving data from AddPhotoFragment
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("picUriToString")
+            ?.observe(viewLifecycleOwner) { picUriToString ->
+                viewModel.onPicUriToStringSet(picUriToString)
+            }
 
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("photoDescription")
+            ?.observe(viewLifecycleOwner) { photoDescription ->
+                viewModel.photoDescriptionSet(photoDescription)
+            }
+
+
+        // Listener set up //
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setOnItemClickListener { _, _, position, _ ->
             typeSpinnerAdapter.getItem(position)?.let { typeSpinnerItemViewState ->
                 viewModel.onTypeSpinnerItemClicked(typeSpinnerItemViewState)
@@ -260,18 +273,5 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
     }
 
-    private fun getTmpFileUri(): Uri {
-        val tmpFile =
-            File.createTempFile("tmp_image_file", ".png", requireContext().cacheDir).apply {
-                createNewFile()
-                deleteOnExit()
-            }
-
-        return FileProvider.getUriForFile(
-            requireContext(),
-            "${BuildConfig.APPLICATION_ID}.provider",
-            tmpFile
-        )
-    }
 
 }

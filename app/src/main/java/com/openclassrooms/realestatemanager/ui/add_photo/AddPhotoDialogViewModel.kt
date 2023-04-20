@@ -6,26 +6,26 @@ import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEnti
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class AddPhotoDialogViewModel @Inject constructor(
-    private val realEstateRepository: RealEstateRepository
-) : ViewModel() {
-
-    fun onButtonOkClicked(realEstateId: Int?, picUriToString: String, description: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            //TODO how to link photo and realEstate when the realEstateId is -1(default value?)
-            realEstateRepository.insertRealEstatePhoto(
-                RealEstatePhotoEntity(
-                    realEstateIdOfPhoto = realEstateId,
-                    url = picUriToString,
-                    description = description,
-                )
-            )
-        }
-
-    }
-
-}
+//@HiltViewModel
+//class AddPhotoDialogViewModel @Inject constructor(
+//    private val realEstateRepository: RealEstateRepository
+//) : ViewModel() {
+//
+//    fun onButtonOkClicked(realEstateId: Int, picUriToString: String, description: String) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            realEstateRepository.insertRealEstatePhoto(
+//                RealEstatePhotoEntity(
+//                    realEstateIdOfPhoto = realEstateId,
+//                    url = picUriToString,
+//                    description = description,
+//                )
+//            ) {
+//
+//            }
+//        }
+//    }
+//}

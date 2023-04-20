@@ -64,8 +64,6 @@ class DetailViewModel @Inject constructor(
                     numberOfBathrooms = currentRealEstate.realEstateEntity.numberOfBathrooms,
                     address = currentRealEstate.realEstateEntity.address,
 
-
-
                     isViewVisible = true
                 )
             )

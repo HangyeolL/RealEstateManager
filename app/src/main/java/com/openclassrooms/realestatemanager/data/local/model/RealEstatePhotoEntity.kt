@@ -18,10 +18,10 @@ import androidx.room.PrimaryKey
 data class RealEstatePhotoEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val photoId: Int = 0,
+    val photoId: Long = 0,
 
     @ColumnInfo(index = true)
-    val realEstateIdOfPhoto: Int?,
+    val realEstateIdOfPhoto: Long,
 
     val url : String,
 

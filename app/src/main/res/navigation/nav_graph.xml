@@ -38,7 +38,7 @@
             app:destination="@id/detailFragment" />
         <argument
             android:name="realEstateId"
-            android:defaultValue="-1"
+            android:defaultValue="0"
             app:argType="integer" />
     </fragment>
     <fragment
