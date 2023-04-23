@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.toolbar_menu_create -> {
-                Log.d("HG", "MainActivity handling toolBar menu create")
+                Log.d("HL", "MainActivity handling toolBar menu create")
                 navController.navigate(RealEstateListFragmentDirections.actionToAddOrModifyRealEstateFragment())
                 return true
             }

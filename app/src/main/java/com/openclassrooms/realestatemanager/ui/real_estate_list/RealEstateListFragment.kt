@@ -79,16 +79,16 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.toolbar_menu_modify-> {
+            R.id.toolbar_menu_modify -> {
                 val realEstateId = viewModel.selectedRealEstateId
-                Log.d("HG", "ListFragment handling toolBar menu modify")
-                Log.d("HG", "ListToAddOrModify:currentRealEstateId=${realEstateId}")
+                Log.d("HL", "ListFragment handling toolBar menu modify")
+                Log.d("HL", "ListToAddOrModify:currentRealEstateId=${realEstateId}")
 
-                if (realEstateId != null) {
-                    navController.navigate(
-                        RealEstateListFragmentDirections.actionToAddOrModifyRealEstateFragment(realEstateId)
+                navController.navigate(
+                    RealEstateListFragmentDirections.actionToAddOrModifyRealEstateFragment(
+                        realEstateId
                     )
-                }
+                )
 
                 return true
             }
@@ -102,7 +102,7 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment) {
  */
 class RealEstateListOnBackPressedCallback(
     private val slidingPaneLayout: SlidingPaneLayout,
-): OnBackPressedCallback(
+) : OnBackPressedCallback(
     // Set the default 'enabled' state to true only if it is slidable (i.e., the panes
     // are overlapping) and open (i.e., the detail pane is visible).
     slidingPaneLayout.isSlideable && slidingPaneLayout.isOpen
@@ -126,7 +126,6 @@ class RealEstateListOnBackPressedCallback(
     override fun onPanelClosed(panel: View) {
         isEnabled = false
     }
-
 
 
 }

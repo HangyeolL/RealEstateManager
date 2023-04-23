@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide.init
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
@@ -21,7 +22,7 @@ class RealEstateListViewModel @Inject constructor(
     private val currentRealEstateRepository: CurrentRealEstateRepository,
 ) : ViewModel() {
 
-    var selectedRealEstateId: Int? = null
+    var selectedRealEstateId: Int = currentRealEstateRepository.getCurrentRealEstateId().value
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -30,7 +31,6 @@ class RealEstateListViewModel @Inject constructor(
                 }
         }
     }
-
 
     val viewStateLiveData: LiveData<RealEstateListViewState> =
         liveData(Dispatchers.IO) {

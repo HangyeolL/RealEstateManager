@@ -13,7 +13,7 @@ interface RealEstateDao {
     suspend fun upsertRealEstate(realEstateEntity: RealEstateEntity) : Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity): Long
+    suspend fun insertRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity)
 
     @Query("DELETE FROM realEstates WHERE realEstateId = :realEstateId")
     suspend fun deleteRealEstate(realEstateId: Int)

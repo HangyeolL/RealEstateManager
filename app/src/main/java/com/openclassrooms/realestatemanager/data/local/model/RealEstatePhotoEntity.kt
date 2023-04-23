@@ -21,7 +21,7 @@ data class RealEstatePhotoEntity(
     val photoId: Long = 0,
 
     @ColumnInfo(index = true)
-    val realEstateIdOfPhoto: Long,
+    val realEstateIdOfPhoto: Long?,
 
     val url : String,
 

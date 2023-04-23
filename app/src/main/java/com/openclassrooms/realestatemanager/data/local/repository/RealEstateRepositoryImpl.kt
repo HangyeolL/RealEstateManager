@@ -22,12 +22,9 @@ class RealEstateRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertRealEstatePhoto(
-        realEstatePhotoEntity: RealEstatePhotoEntity,
-        onPhotoInserted: (Long) -> Unit
-    ) {
-        val insertedPhotoId = realEstateDao.insertRealEstatePhoto(realEstatePhotoEntity)
-        onPhotoInserted(insertedPhotoId)
-    }
+        realEstatePhotoEntity: RealEstatePhotoEntity
+    ) = realEstateDao.insertRealEstatePhoto(realEstatePhotoEntity)
+
 
     override suspend fun deleteRealEstate(realEstateId: Int) =
         realEstateDao.deleteRealEstate(realEstateId)
