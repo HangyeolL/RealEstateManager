@@ -34,8 +34,7 @@ class RealEstateListViewModel @Inject constructor(
 
     val viewStateLiveData: LiveData<RealEstateListViewState> =
         liveData(Dispatchers.IO) {
-            realEstateRepository.getRealEstatesWithPhotos()
-                .collectLatest { realEstateWithPhotosList ->
+            realEstateRepository.getRealEstatesWithPhotos().collectLatest { realEstateWithPhotosList ->
 
                     val itemViewStateList = ArrayList<RealEstateListItemViewState>()
 

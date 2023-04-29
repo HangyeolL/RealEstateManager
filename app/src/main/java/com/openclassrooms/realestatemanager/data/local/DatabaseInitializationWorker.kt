@@ -47,7 +47,7 @@ package com.openclassrooms.realestatemanager.data.local
 ////                if (realEstateEntities != null && agentEntities != null) {
 ////
 ////                    realEstateEntities.forEach { realEstateEntity ->
-////                        realEstateRepository.upsertRealEstate(realEstateEntity)
+////                        realEstateRepository.insertRealEstate(realEstateEntity)
 ////                    }
 ////
 //////                    realEstatePhotoList?.forEach() { realEstatePhoto ->

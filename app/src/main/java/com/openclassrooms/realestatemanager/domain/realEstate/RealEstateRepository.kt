@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface RealEstateRepository {
 
-    suspend fun upsertRealEstate(realEstateEntity: RealEstateEntity, onRealEstateInserted: (Long) -> Unit): Long
+    suspend fun insertRealEstate(realEstateEntity: RealEstateEntity, onRealEstateInserted: (Long) -> Unit): Long
+
+    suspend fun updateRealEstate(realEstateEntity: RealEstateEntity)
 
     suspend fun deleteRealEstate(realEstateId: Int)
 
@@ -21,6 +23,8 @@ interface RealEstateRepository {
     fun deleteRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity)
 
     fun getRealEstatesWithPhotos(): Flow<List<RealEstateWithPhotos>>
+
+
 
 }
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/detail_toolbar_menu_modify"
+        android:id="@+id/toolbar_menu_modify"
         android:icon="@drawable/ic_round_modify_24"
         android:title="@string/modify"
         app:showAsAction="ifRoom" />

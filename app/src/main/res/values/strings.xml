@@ -34,5 +34,7 @@
     <string name="square_meter">square meter</string>
     <string name="market_since">Market since</string>
     <string name="guard">Guard</string>
+    <string name="failed_to_save_real_estate">failed to save real estate</string>
+    <string name="succeed_to_save_real_estate">succeed to save real estate</string>
 
 </resources>

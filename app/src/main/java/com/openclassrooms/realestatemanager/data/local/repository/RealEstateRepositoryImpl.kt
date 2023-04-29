@@ -12,14 +12,17 @@ class RealEstateRepositoryImpl @Inject constructor(
     private val realEstateDao: RealEstateDao
 ) : RealEstateRepository {
 
-    override suspend fun upsertRealEstate(
+    override suspend fun insertRealEstate(
         realEstateEntity: RealEstateEntity,
         onRealEstateInserted: (Long) -> Unit
     ): Long {
-        val upsertedRealEstateId = realEstateDao.upsertRealEstate(realEstateEntity)
-        onRealEstateInserted(upsertedRealEstateId)
-        return upsertedRealEstateId
+        val insertedRealEstateId = realEstateDao.insertRealEstate(realEstateEntity)
+        onRealEstateInserted(insertedRealEstateId)
+        return insertedRealEstateId
     }
+
+    override suspend fun updateRealEstate(realEstateEntity: RealEstateEntity) =
+        realEstateDao.updateRealEstate(realEstateEntity)
 
     override suspend fun insertRealEstatePhoto(
         realEstatePhotoEntity: RealEstatePhotoEntity

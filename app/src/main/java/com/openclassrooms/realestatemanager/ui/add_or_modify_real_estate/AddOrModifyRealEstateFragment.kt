@@ -151,6 +151,18 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             Toast.makeText(requireContext(), string, Toast.LENGTH_SHORT).show()
         }
 
+        // Observer : onSaveButtonClicked()
+//        viewModel.saveCompleteLiveData.observe(viewLifecycleOwner) { isSuccess ->
+//            if (isSuccess) {
+//                //TODO this is getting called too fast before database operation is done
+//                // but why it works when it is not debugging mode wtf ?
+//                navController.popBackStack()
+//                Log.d("HL", "AddOrModifyRealFragment popBackStack called")
+//            } else {
+//                // Handle error case here
+//            }
+//        }
+
         // Observer : NavController retrieving data from DatePickerDialogFragment
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("MarketSince")
             ?.observe(viewLifecycleOwner) { pickedDate ->
@@ -274,7 +286,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         binding.addOrModifyRealEstateButtonSave.setOnClickListener {
-            if (viewModel.onSaveButtonClicked()) {
+            viewModel.onSaveButtonClicked() {
                 navController.popBackStack()
             }
         }

@@ -10,7 +10,10 @@ import kotlinx.coroutines.flow.Flow
 interface RealEstateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsertRealEstate(realEstateEntity: RealEstateEntity) : Long
+    suspend fun insertRealEstate(realEstateEntity: RealEstateEntity) : Long
+
+    @Update
+    suspend fun updateRealEstate(realEstateEntity: RealEstateEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity)
