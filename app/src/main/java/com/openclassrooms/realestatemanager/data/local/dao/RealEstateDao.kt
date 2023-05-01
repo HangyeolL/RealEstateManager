@@ -15,18 +15,21 @@ interface RealEstateDao {
     @Update
     suspend fun updateRealEstate(realEstateEntity: RealEstateEntity)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity)
-
     @Query("DELETE FROM realEstates WHERE realEstateId = :realEstateId")
     suspend fun deleteRealEstate(realEstateId: Int)
+
+    @Query("SELECT * FROM realEstates")
+    fun getAllRealEstates() : Flow<List<RealEstateEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity)
 
     @Delete
     fun deleteRealEstatePhoto(realEstatePhotoEntity: RealEstatePhotoEntity)
 
     @Transaction
     @Query("SELECT * FROM realEstates WHERE realEstateId = :realEstateId")
-    fun getRealEstateById(realEstateId: Int) : Flow<RealEstateWithPhotos>
+    fun getRealEstateWithPhotosById(realEstateId: Int) : Flow<RealEstateWithPhotos>
 
     @Transaction
     @Query("SELECT * FROM realEstates")

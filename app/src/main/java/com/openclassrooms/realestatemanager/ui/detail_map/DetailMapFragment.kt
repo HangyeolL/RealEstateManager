@@ -26,6 +26,7 @@ class DetailMapFragment : SupportMapFragment(), OnMapReadyCallback {
         googleMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
 
         viewModel.mapViewStateLiveData.observe(viewLifecycleOwner) {
+            googleMap.clear()
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it.latLng, 14f))
             googleMap.addMarker(
                 MarkerOptions().position(it.latLng)

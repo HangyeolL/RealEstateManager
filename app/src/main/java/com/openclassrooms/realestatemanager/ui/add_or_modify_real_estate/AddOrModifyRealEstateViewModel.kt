@@ -1,14 +1,12 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
 import android.app.Application
-import android.content.IntentSender
 import android.util.Log
 import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity
-import com.openclassrooms.realestatemanager.data.local.model.RealEstateWithPhotos
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
@@ -17,10 +15,7 @@ import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateReposito
 import com.openclassrooms.realestatemanager.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,7 +44,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
             if (realEstateId != DEFAULT_REAL_ESTATE_ID && realEstateId != null) {
                 coroutineScope {
                     val realEstateAsync =
-                        async { realEstateRepository.getRealEstateById(realEstateId).first() }
+                        async { realEstateRepository.getRealEstateWithPhotosById(realEstateId).first() }
                     val allAgentsAsync = async { agentRepository.getAllAgents().first() }
 
                     val typeSpinnerItemViewStateList = listOf(
@@ -402,19 +397,6 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                 try {
                     Log.d("HL", "Before calling update RealEstate")
 
-                    Log.d("HL", "real estate id = $realEstateId")
-                    Log.d("HL", "type = $type")
-                    Log.d("HL", "description = $description")
-                    Log.d("HL", "sqm = $sqm")
-                    Log.d("HL", "city = $city")
-                    Log.d("HL", "price = $price")
-                    Log.d("HL", "numberOfRooms = $numberOfRooms")
-                    Log.d("HL", "numberOfBathRooms = $numberOfBathRooms")
-                    Log.d("HL", "numberOfBedrooms = $numberOfBedRooms")
-                    Log.d("HL", "marketSince = $marketSince")
-                    Log.d("HL", "agentIdInCharge = $agentIdInCharge")
-                    Log.d("HL", "latLng = $latLng")
-
                     val realEstateEntity = RealEstateEntity(
                         realEstateId = realEstateId ?: return@launch,
                         type = type ?: return@launch,
@@ -441,11 +423,26 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                     realEstateRepository.updateRealEstate(
                         realEstateEntity
                     )
-                    Log.d("HL", "After calling update RealEstate")
                     Log.d("HL", "update RealEstate with success")
                 } catch (e: Exception) {
                     Log.d("HL", "update RealEstate Failed : ${e.stackTrace}")
 
+                }
+
+                //TODO realEstateId should be properly inserted in this case not IdOfPhoto !!
+                if (picUriToString != null) {
+                    try {
+                        realEstateRepository.insertRealEstatePhoto(
+                            RealEstatePhotoEntity(
+                                realEstateIdOfPhoto = realEstateIdOfPhoto,
+                                url = picUriToString ?: return@launch,
+                                description = photoDescription,
+                            )
+                        )
+                        Log.d("HL", "insert RealEstatePhoto with success")
+                    } catch (e: Exception) {
+                        Log.d("HL", "insert RealEstatePhoto Failed : ${e.stackTrace}")
+                    }
                 }
 
                 withContext(Dispatchers.Main) {

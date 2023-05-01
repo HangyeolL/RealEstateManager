@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.StateFlow
 interface LocationRepository {
 
     fun startLocationRequest()
+
     fun stopLocationRequest()
+
     fun getLocationStateFlow(): StateFlow<Location?>
 }

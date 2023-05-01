@@ -16,7 +16,7 @@
             android:id="@+id/action_to_detailFragment"
             app:destination="@id/detailFragment" />
         <action
-            android:id="@+id/action_realEstateListFragment_to_placeholder"
+            android:id="@+id/action_realEstateListFragment_to_mapViewFragment"
             app:destination="@id/mapViewFragment" />
     </fragment>
     <fragment
@@ -56,10 +56,16 @@
             android:name="realEstateId"
             app:argType="integer" />
     </fragment>
-    <fragment android:id="@+id/mapViewFragment">
+    <fragment
+        android:id="@+id/mapViewFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.map_view.MapViewFragment"
+        android:label="Map View">
         <action
             android:id="@+id/action_to_realEstateListFragment"
             app:popUpTo="@id/realEstateListFragment" />
+        <action
+            android:id="@+id/action_to_addOrModifyRealEstateFragment"
+            app:destination="@id/addOrModifyRealEstateFragment" />
     </fragment>
     <dialog
         android:id="@+id/addPhotoDialogFragment"

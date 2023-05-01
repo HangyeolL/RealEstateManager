@@ -1,10 +1,10 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.data.local.model.AgentEntity
-import com.openclassrooms.realestatemanager.data.local.model.RealEstateWithPhotos
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val application: Application,
-    private val currentRealEstateRepository: CurrentRealEstateRepository,
+    currentRealEstateRepository: CurrentRealEstateRepository,
     realEstateRepository: RealEstateRepository,
     agentRepository: AgentRepository,
 ) : ViewModel() {
@@ -29,7 +29,7 @@ class DetailViewModel @Inject constructor(
     private val currentRealEstateFlow = currentRealEstateRepository.getCurrentRealEstateId()
         .filterNotNull()
         .flatMapLatest { currentId ->
-            realEstateRepository.getRealEstateById(currentId)
+            realEstateRepository.getRealEstateWithPhotosById(currentId)
         }
 
     private val allAgentsListFlow = agentRepository.getAllAgents()

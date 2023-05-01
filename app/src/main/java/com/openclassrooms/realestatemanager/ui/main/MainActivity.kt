@@ -11,6 +11,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.MainActivityBinding
 import com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragment
@@ -44,6 +45,16 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         binding.mainToolbar.setupWithNavController(navController, appBarConfiguration)
         binding.mainNavigationView.setupWithNavController(navController)
 
+        binding.mainNavigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.main_navigationView_mapView -> {
+                    Log.d("HL", "Navigate from MainActivity to MapViewFragment")
+                    navController.navigate(RealEstateListFragmentDirections.actionRealEstateListFragmentToMapViewFragment())
+                }
+            }
+            true
+        }
+
     }
 
     // Inflate toolbar's menu in parent activity
@@ -61,7 +72,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 navController.navigate(RealEstateListFragmentDirections.actionToAddOrModifyRealEstateFragment())
                 return true
             }
-            R.id.toolbar_menu_search-> {
+            R.id.toolbar_menu_search -> {
                 Log.d("HG", "MainActivity handling toolBar menu search")
                 return true
 
@@ -76,17 +87,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         arguments: Bundle?
     ) {
         when (destination.id) {
-//            detailFragment -> {
-//                binding.mainToolbar.menu.clear()
-//                binding.mainToolbar.inflateMenu(menu.detail_toolbar_menu)
-//            }
-            R.id.addOrModifyRealEstateFragment -> {
+            R.id.mapViewFragment -> {
                 binding.mainToolbar.menu.clear()
             }
-//            realEstateListFragment -> {
-//                binding.mainToolbar.menu.clear()
-//                binding.mainToolbar.inflateMenu(menu.real_estate_list_toolbar_menu)
-//            }
+
             else -> {
 
             }
