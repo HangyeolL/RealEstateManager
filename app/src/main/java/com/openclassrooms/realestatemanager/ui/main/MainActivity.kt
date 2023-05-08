@@ -1,20 +1,22 @@
 package com.openclassrooms.realestatemanager.ui.main
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.MainActivityBinding
-import com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragment
 import com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragmentDirections
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
+    private val viewModel by viewModels<MainViewModel>()
     private val binding by viewBinding { MainActivityBinding.inflate(it) }
 
     private lateinit var navController: NavController
@@ -32,6 +35,33 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
+
+        // TODO Ask Location permission
+        val requestPermissionLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    viewModel.startLocationRequest()
+                }
+            }
+
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                viewModel.startLocationRequest()
+            }
+
+            else -> {
+                requestPermissionLauncher.launch(
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            }
+        }
+
+
 
         setSupportActionBar(binding.mainToolbar)
 
@@ -45,7 +75,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         binding.mainToolbar.setupWithNavController(navController, appBarConfiguration)
         binding.mainNavigationView.setupWithNavController(navController)
 
-        binding.mainNavigationView.setNavigationItemSelectedListener { menuItem ->
+        binding.mainNavigationView.setNavigationItemSelectedListener() { menuItem ->
             when (menuItem.itemId) {
                 R.id.main_navigationView_mapView -> {
                     Log.d("HL", "Navigate from MainActivity to MapViewFragment")
@@ -64,7 +94,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     // Take care of only create and search case in activity
-    // TODO Modify case in landscape mode should be taken care of in Fragment
+// TODO Modify case in landscape mode should be taken care of in Fragment
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.toolbar_menu_create -> {
@@ -95,5 +125,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.stopLocationRequest()
     }
 }

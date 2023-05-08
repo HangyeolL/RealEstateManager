@@ -27,7 +27,7 @@ class RealEstateRepositoryImpl @Inject constructor(
     override suspend fun deleteRealEstate(realEstateId: Int) =
         realEstateDao.deleteRealEstate(realEstateId)
 
-    override suspend fun getAllRealEstates(): Flow<List<RealEstateEntity>> =
+    override fun getAllRealEstates(): Flow<List<RealEstateEntity>> =
         realEstateDao.getAllRealEstates()
 
     override suspend fun insertRealEstatePhoto(

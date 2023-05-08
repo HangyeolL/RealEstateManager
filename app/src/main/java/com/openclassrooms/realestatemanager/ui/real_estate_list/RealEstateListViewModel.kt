@@ -58,7 +58,7 @@ class RealEstateListViewModel @Inject constructor(
         }
 
     fun onRealEstateListItemClicked(itemId: Int) {
-        Log.d("HG", "ListFrag viewModel onRealEstateListItemClicked called")
+        Log.d("HG", "ListFragment viewModel onRealEstateListItemClicked called")
         currentRealEstateRepository.setCurrentRealEstateId(itemId)
     }
 }

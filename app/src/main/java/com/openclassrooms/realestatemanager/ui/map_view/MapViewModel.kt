@@ -11,36 +11,62 @@ import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateReposito
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
-    realEstateRepository: RealEstateRepository,
-    locationRepository: LocationRepository,
+    private val currentRealEstateRepository: CurrentRealEstateRepository,
+    private val realEstateRepository: RealEstateRepository,
+    private val locationRepository: LocationRepository,
 ) : ViewModel() {
 
-    val viewStateLiveData = liveData(Dispatchers.IO) {
-        val realEstatesLatLng = ArrayList<LatLng>()
-        realEstateRepository.getAllRealEstates().collectLatest { realEstateEntityList ->
-            realEstateEntityList.forEach { realEstateEntity ->
-                realEstatesLatLng.add(realEstateEntity.latLng)
-            }
-        }
-
-        var userLatLng: LatLng? = null
-        locationRepository.getLocationStateFlow().filterNotNull().collectLatest { userLocation ->
-            userLatLng = LatLng(
-                userLocation.latitude,
-                userLocation.longitude
-            )
-        }
-
-        emit(
-            MapViewState(
-                realEstatesLatLng,
-                userLatLng
-            )
-        )
+    companion object {
+        private const val DEFAULT_LATITUDE = 48.85648195552058
+        private const val DEFAULT_LONGITUDE = 2.352610864067402
     }
+
+    private val allRealEstatesFlow = realEstateRepository.getAllRealEstates()
+    private val userLocationStateFlow = locationRepository.getLocationStateFlow()
+
+    val viewStateLiveData = liveData(Dispatchers.IO) {
+        combine(
+            allRealEstatesFlow,
+            userLocationStateFlow,
+        ) { allRealEstates, userLocation ->
+//            val mapMarkerViewStateList = ArrayList<MapMarkerViewState>()
+//
+//            allRealEstates.forEach { realEstateEntity ->
+//                mapMarkerViewStateList.add(
+//                    MapMarkerViewState(
+//                        realEstateAddress = realEstateEntity.address,
+//                        realEstateLatLng = realEstateEntity.latLng,
+//                        selectedRealEstateId = realEstateEntity.realEstateId,
+//                    )
+//                )
+//            }
+            emit(
+                MapViewState(
+                    mapMarkerViewStateList = allRealEstates.map { realEstateEntity ->
+                        MapMarkerViewState(
+                            realEstateAddress = realEstateEntity.address,
+                            realEstateLatLng = realEstateEntity.latLng,
+                            selectedRealEstateId = realEstateEntity.realEstateId,
+                        )
+                    },
+                    userLocationLatLng = LatLng(
+                        userLocation?.latitude ?: DEFAULT_LATITUDE,
+                        userLocation?.longitude ?: DEFAULT_LONGITUDE
+                    ),
+                )
+            )
+        }.collectLatest { }
+    }
+
+    fun onMarkerInfoWindowClicked(selectedRealEstateId: Int, onFinished : () -> Unit) {
+        currentRealEstateRepository.setCurrentRealEstateId(selectedRealEstateId)
+        onFinished()
+    }
+
 }

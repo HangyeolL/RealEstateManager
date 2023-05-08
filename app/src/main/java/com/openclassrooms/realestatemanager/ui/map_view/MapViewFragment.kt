@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.map_view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -14,7 +15,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,24 +35,36 @@ class MapViewFragment : SupportMapFragment(), OnMapReadyCallback {
         getMapAsync(this)
     }
 
+    @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         googleMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
+        googleMap.isMyLocationEnabled = true
 
         viewModel.viewStateLiveData.observe(viewLifecycleOwner) { mapViewState ->
             googleMap.clear()
 
-            mapViewState.userLocationLatLng?.let { userLatLng ->
-                CameraUpdateFactory.newLatLngZoom(
-                    userLatLng,
-                    14f
-                )
-            }?.let { cameraUpdate ->
-                googleMap.moveCamera(cameraUpdate)
+//            googleMap.moveCamera(
+//                CameraUpdateFactory.newLatLngZoom(
+//                    mapViewState.userLocationLatLng,
+//                    13f
+//                )
+//            )
+
+            mapViewState.mapMarkerViewStateList.forEach { mapMarkerViewState ->
+                googleMap.addMarker(
+                    MarkerOptions()
+                        .position(mapMarkerViewState.realEstateLatLng)
+                        .title(mapMarkerViewState.realEstateAddress)
+                )?.tag = mapMarkerViewState.selectedRealEstateId
             }
 
-            mapViewState.realEstatesLatLng.forEach { realEstateLatLng ->
-                googleMap.addMarker(
-                    MarkerOptions().position(realEstateLatLng)
+        }
+
+        googleMap.setOnInfoWindowClickListener { marker ->
+            Log.d("HL", "Tag of the clicked marker to Int : ${marker.tag.toString().toInt()}")
+            viewModel.onMarkerInfoWindowClicked(marker.tag.toString().toInt()) {
+                navController.navigate(
+                    MapViewFragmentDirections.actionToDetailFragment()
                 )
             }
         }
@@ -75,7 +87,6 @@ class MapViewFragment : SupportMapFragment(), OnMapReadyCallback {
         }
         return super.onOptionsItemSelected(item)
     }
-
 
 
 }

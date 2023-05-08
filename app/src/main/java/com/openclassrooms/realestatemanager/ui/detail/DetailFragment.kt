@@ -1,9 +1,10 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.INVISIBLE
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -31,15 +32,23 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
 
     private lateinit var navController: NavController
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        Log.d("HL", "DetailFragment onCreateView called")
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("HL", "DetailFragment onViewCreated called")
 
         navController = Navigation.findNavController(
             requireActivity(),
             R.id.main_FragmentContainerView_navHost
         )
-
-
 
         val adapter = RealEstatePhotoListAdapter() {}
         binding.detailRecyclerViewImages.adapter = adapter
@@ -73,9 +82,23 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
     override fun onResume() {
         super.onResume()
 
-        if (activity?.resources?.getBoolean(R.bool.isTablet) == true) {
-            navController.navigateUp()
-        }
+//        if (activity?.resources?.getBoolean(R.bool.isTablet) == true) {
+//            navController.navigateUp()
+//        }
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("HL", "DetailFragment onPause called")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("HL", "DetailFragment onStop called")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("HL", "DetailFragment onDestroy called")
+    }
 }

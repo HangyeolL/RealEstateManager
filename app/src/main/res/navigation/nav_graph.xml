@@ -52,9 +52,6 @@
         <action
             android:id="@+id/action_detailFragment_pop"
             app:destination="@id/realEstateListFragment" />
-        <argument
-            android:name="realEstateId"
-            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/mapViewFragment"
@@ -66,6 +63,9 @@
         <action
             android:id="@+id/action_to_addOrModifyRealEstateFragment"
             app:destination="@id/addOrModifyRealEstateFragment" />
+        <action
+            android:id="@+id/action_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
     <dialog
         android:id="@+id/addPhotoDialogFragment"

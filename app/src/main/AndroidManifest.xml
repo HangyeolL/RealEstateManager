@@ -34,10 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        -->
-<!--        <activity-->
-<!--            android:name=".ui.add_or_modify_real_estate.AddOrModifyRealEstateActivity"-->
-<!--            android:exported="false" />-->
 
         <provider
             android:name="androidx.startup.InitializationProvider"

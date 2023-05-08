@@ -13,7 +13,7 @@ interface RealEstateRepository {
 
     suspend fun deleteRealEstate(realEstateId: Int)
 
-    suspend fun getAllRealEstates() : Flow<List<RealEstateEntity>>
+    fun getAllRealEstates() : Flow<List<RealEstateEntity>>
 
     fun getRealEstateWithPhotosById(realEstateId: Int) : Flow<RealEstateWithPhotos>
 
