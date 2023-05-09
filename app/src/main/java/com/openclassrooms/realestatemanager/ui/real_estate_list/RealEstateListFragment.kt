@@ -58,7 +58,7 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment) {
 
             override fun onPanelClosed(panel: View) {
                 toolbar.menu.clear()
-                toolbar.inflateMenu(R.menu.real_estate_list_toolbar_menu)
+                toolbar.inflateMenu(R.menu.toolbar_menu)
             }
 
         })

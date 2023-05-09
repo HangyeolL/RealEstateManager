@@ -26,6 +26,8 @@ class DetailViewModel @Inject constructor(
     agentRepository: AgentRepository,
 ) : ViewModel() {
 
+    var selectedRealEstateId: Int = currentRealEstateRepository.getCurrentRealEstateId().value
+
     private val currentRealEstateFlow = currentRealEstateRepository.getCurrentRealEstateId()
         .filterNotNull()
         .flatMapLatest { currentId ->

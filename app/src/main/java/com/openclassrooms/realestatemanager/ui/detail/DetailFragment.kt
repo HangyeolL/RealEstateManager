@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.ui.detail
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -16,6 +17,7 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.DetailFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListAdapter
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListPagingIndicationDecoration
+import com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragmentDirections
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,6 +46,8 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("HL", "DetailFragment onViewCreated called")
+
+        setHasOptionsMenu(true)
 
         navController = Navigation.findNavController(
             requireActivity(),
@@ -79,8 +83,28 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.toolbar_menu_modify -> {
+                val realEstateId = viewModel.selectedRealEstateId
+                Log.d("HL", "DetailFragment handling toolBar menu modify")
+                Log.d("HL", "DetailToAddOrModify:currentRealEstateId=${realEstateId}")
+
+                navController.navigate(
+                    DetailFragmentDirections.actionToAddOrModifyRealEstateFragment(
+                        realEstateId
+                    )
+                )
+
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onResume() {
         super.onResume()
+        Log.d("HL", "DetailFragment onPause called")
 
 //        if (activity?.resources?.getBoolean(R.bool.isTablet) == true) {
 //            navController.navigateUp()

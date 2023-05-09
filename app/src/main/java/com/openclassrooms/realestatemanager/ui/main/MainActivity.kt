@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
     // Inflate toolbar's menu in parent activity
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.real_estate_list_toolbar_menu, menu)
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
 

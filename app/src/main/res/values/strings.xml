@@ -22,18 +22,26 @@
     <string name="apartment">Apartment</string>
     <string name="studio">Studio</string>
     <string name="paris">Paris</string>
-    <string name="please_describe_your_photo">Please describe your photo:)</string>
+    <string name="please_describe_your_photo">Please describe your photo :)</string>
     <string name="agent">Agent</string>
-    <string name="type">type</string>
-    <string name="address">address</string>
-    <string name="price">price</string>
-    <string name="city">city</string>
-    <string name="room">room</string>
-    <string name="bedroom">bedroom</string>
-    <string name="bathroom">bathroom</string>
-    <string name="square_meter">square meter</string>
+    <string name="type">Type</string>
+    <string name="address">Address</string>
+    <string name="price">Price</string>
+    <string name="city">City</string>
+    <string name="room">Room</string>
+    <string name="bedroom">Bedroom</string>
+    <string name="bathroom">Bathroom</string>
+    <string name="square_meter">Square meter</string>
     <string name="market_since">Market since</string>
     <string name="guard">Guard</string>
+    <string name="garage">Garage</string>
+    <string name="garden">Garden</string>
+    <string name="elevator">Elevator</string>
+    <string name="photos_available">Photos available</string>
+    <string name="sold_out_recently">Sold out recently</string>
+    <string name="registered_recently">Registered recently</string>
+    <string name="grocery_store_next_by">Grocery store next by</string>
+
     <string name="failed_to_save_real_estate">failed to save real estate</string>
     <string name="succeed_to_save_real_estate">succeed to save real estate</string>
 

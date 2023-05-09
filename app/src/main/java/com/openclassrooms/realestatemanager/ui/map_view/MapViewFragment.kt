@@ -43,12 +43,12 @@ class MapViewFragment : SupportMapFragment(), OnMapReadyCallback {
         viewModel.viewStateLiveData.observe(viewLifecycleOwner) { mapViewState ->
             googleMap.clear()
 
-//            googleMap.moveCamera(
-//                CameraUpdateFactory.newLatLngZoom(
-//                    mapViewState.userLocationLatLng,
-//                    13f
-//                )
-//            )
+            googleMap.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    mapViewState.userLocationLatLng,
+                    13f
+                )
+            )
 
             mapViewState.mapMarkerViewStateList.forEach { mapMarkerViewState ->
                 googleMap.addMarker(
