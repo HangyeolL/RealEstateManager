@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             when (menuItem.itemId) {
                 R.id.main_navigationView_mapView -> {
                     Log.d("HL", "Navigate from MainActivity to MapViewFragment")
-                    navController.navigate(RealEstateListFragmentDirections.actionRealEstateListFragmentToMapViewFragment())
+                    navController.navigate(RealEstateListFragmentDirections.actionToMapViewFragment())
                 }
             }
             true
@@ -104,6 +104,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             }
             R.id.toolbar_menu_search -> {
                 Log.d("HG", "MainActivity handling toolBar menu search")
+                navController.navigate(RealEstateListFragmentDirections.actionToSearchModalBottomSheetFragment())
                 return true
 
             }

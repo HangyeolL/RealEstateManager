@@ -236,7 +236,7 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/search_chip_guard"
+                    android:id="@+id/add_or_modify_real_estate_chip_guard"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
@@ -263,10 +263,10 @@
                     app:chipIcon="@drawable/ic_baseline_garage_24"
                     app:chipIconVisible="true"
                     app:ensureMinTouchTargetSize="false"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/search_chip_guard"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/add_or_modify_real_estate_chip_guard"
                     app:layout_constraintEnd_toStartOf="@+id/add_or_modify_real_estate_chip_garden"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/search_chip_guard" />
+                    app:layout_constraintStart_toEndOf="@+id/add_or_modify_real_estate_chip_guard" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/add_or_modify_real_estate_chip_garden"
@@ -300,9 +300,9 @@
                     app:chipMinTouchTargetSize="50dp"
                     app:ensureMinTouchTargetSize="false"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/search_chip_guard"
+                    app:layout_constraintEnd_toEndOf="@+id/add_or_modify_real_estate_chip_guard"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/search_chip_guard" />
+                    app:layout_constraintTop_toBottomOf="@+id/add_or_modify_real_estate_chip_guard" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/add_or_modify_real_estate_chip_groceryStoreNextBy"

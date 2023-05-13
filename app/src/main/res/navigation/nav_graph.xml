@@ -16,8 +16,11 @@
             android:id="@+id/action_to_detailFragment"
             app:destination="@id/detailFragment" />
         <action
-            android:id="@+id/action_realEstateListFragment_to_mapViewFragment"
+            android:id="@+id/action_to_mapViewFragment"
             app:destination="@id/mapViewFragment" />
+        <action
+            android:id="@+id/action_to_searchModalBottomSheetFragment"
+            app:destination="@id/searchModalBottomSheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/addOrModifyRealEstateFragment"
@@ -95,4 +98,9 @@
             android:defaultValue="1"
             app:argType="integer" />
     </dialog>
+    <dialog
+        android:id="@+id/searchModalBottomSheetFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.search.SearchModalBottomSheetFragment"
+        android:label="SearchModalBottomSheetFragment"
+        tools:layout="@layout/search_modal_bottom_sheets_fragment"/>
 </navigation>

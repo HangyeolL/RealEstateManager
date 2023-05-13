@@ -104,6 +104,8 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setAdapter(autocompleteAdapter)
         binding.addOrModifyRealEstateAutoCompleteTextViewCity.setAdapter(autocompleteAdapter)
 
+        //TODO ViewState Observed data still emit the values after user puts the new value
+
         // Observer for viewState set up
         viewModel.initialViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
 
@@ -145,18 +147,6 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         viewModel.stringSingleLiveEvent.observe(viewLifecycleOwner) { string ->
             Toast.makeText(requireContext(), string, Toast.LENGTH_SHORT).show()
         }
-
-        // Observer : onSaveButtonClicked()
-//        viewModel.saveCompleteLiveData.observe(viewLifecycleOwner) { isSuccess ->
-//            if (isSuccess) {
-//                //TODO this is getting called too fast before database operation is done
-//                // but why it works when it is not debugging mode wtf ?
-//                navController.popBackStack()
-//                Log.d("HL", "AddOrModifyRealFragment popBackStack called")
-//            } else {
-//                // Handle error case here
-//            }
-//        }
 
         // Observer : NavController retrieving data from DatePickerDialogFragment
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("MarketSince")

@@ -11,15 +11,17 @@
         <!-- Trying to change toolBar Icon colors -->
         <item name="android:textColorSecondary">@color/colorPrimary</item>
 
+<!--        Date picker style-->
         <item name="android:datePickerStyle">@style/myDatePickerStyle</item>
 
-
     </style>
+
 
     <style name="ShapeableImageViewRounded">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
 
     <style name="myDatePickerStyle" parent="android:Widget.Material.DatePicker">
         <item name="android:datePickerMode">spinner</item>
