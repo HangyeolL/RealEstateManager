@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity
+import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteTextViewState
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
@@ -173,13 +174,13 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         }
 
 
-    val addressPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAutocompleteItemViewState>> =
+    val addressPredictionsLiveData: LiveData<List<AutocompleteTextViewState>> =
         liveData(Dispatchers.IO) {
             autoCompleteRepository.getAutocompleteEntitiesForAddress()
                 .collect { autocompleteEntities ->
                     emit(
                         autocompleteEntities.map { autocompleteEntity ->
-                            AddOrModifyRealEstateAutocompleteItemViewState(
+                            AutocompleteTextViewState(
                                 text = autocompleteEntity.text
                             )
                         }
@@ -187,13 +188,13 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                 }
         }
 
-    val cityPredictionsLiveData: LiveData<List<AddOrModifyRealEstateAutocompleteItemViewState>> =
+    val cityPredictionsLiveData: LiveData<List<AutocompleteTextViewState>> =
         liveData(Dispatchers.IO) {
             autoCompleteRepository.getAutocompleteEntitiesForCity()
                 .collect { autocompleteEntities ->
                     emit(
                         autocompleteEntities.map { autocompleteEntity ->
-                            AddOrModifyRealEstateAutocompleteItemViewState(
+                            AutocompleteTextViewState(
                                 text = autocompleteEntity.text
                             )
                         }
@@ -238,7 +239,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         }
     }
 
-    fun onAutocompleteAddressItemClicked(selectedItem: AddOrModifyRealEstateAutocompleteItemViewState) {
+    fun onAutocompleteAddressItemClicked(selectedItem: AutocompleteTextViewState) {
         address = selectedItem.text
     }
 
@@ -252,7 +253,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         }
     }
 
-    fun onAutocompleteCityItemClicked(selectedItem: AddOrModifyRealEstateAutocompleteItemViewState) {
+    fun onAutocompleteCityItemClicked(selectedItem: AutocompleteTextViewState) {
         city = selectedItem.text
     }
 

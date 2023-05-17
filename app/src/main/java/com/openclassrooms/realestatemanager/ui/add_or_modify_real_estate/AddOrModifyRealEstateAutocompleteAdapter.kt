@@ -7,14 +7,15 @@ import android.widget.BaseAdapter
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
+import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteTextViewState
 
 class AddOrModifyRealEstateAutocompleteAdapter : BaseAdapter(), Filterable {
 
-    private var items = emptyList<AddOrModifyRealEstateAutocompleteItemViewState>()
+    private var items = emptyList<AutocompleteTextViewState>()
 
     override fun getCount(): Int = items.size
 
-    override fun getItem(position: Int): AddOrModifyRealEstateAutocompleteItemViewState? = items.getOrNull(position)
+    override fun getItem(position: Int): AutocompleteTextViewState? = items.getOrNull(position)
 
     override fun getItemId(position: Int): Long = position.toLong()
 
@@ -32,11 +33,11 @@ class AddOrModifyRealEstateAutocompleteAdapter : BaseAdapter(), Filterable {
         override fun performFiltering(constraint: CharSequence?) = FilterResults()
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {}
         override fun convertResultToString(resultValue: Any): CharSequence {
-            return (resultValue as AddOrModifyRealEstateAutocompleteItemViewState).text
+            return (resultValue as AutocompleteTextViewState).text
         }
     }
 
-    fun setData(items: List<AddOrModifyRealEstateAutocompleteItemViewState>) {
+    fun setData(items: List<AutocompleteTextViewState>) {
         this.items = items
         notifyDataSetChanged()
     }

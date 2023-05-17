@@ -1,22 +1,22 @@
 package com.openclassrooms.realestatemanager.ui.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateFragmentBinding
 import com.openclassrooms.realestatemanager.databinding.SearchModalBottomSheetsFragmentBinding
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateAgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateAutocompleteAdapter
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateTypeSpinnerAdapter
-import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class SearchModalBottomSheetFragment : BottomSheetDialogFragment(R.layout.search_modal_bottom_sheets_fragment) {
+@AndroidEntryPoint
+class SearchModalBottomSheetFragment :
+    BottomSheetDialogFragment(R.layout.search_modal_bottom_sheets_fragment) {
 
     private val binding by viewBinding { SearchModalBottomSheetsFragmentBinding.bind(it) }
     private val viewModel by viewModels<SearchViewModel>()
@@ -41,6 +41,91 @@ class SearchModalBottomSheetFragment : BottomSheetDialogFragment(R.layout.search
         binding.searchAutoCompleteTextViewAsTypeSpinner.setAdapter(typeSpinnerAdapter)
         binding.searchAutoCompleteTextViewAsAgentSpinner.setAdapter(agentSpinnerAdapter)
         binding.searchAutoCompleteTextViewCity.setAdapter(autocompleteAdapter)
+
+        // ViewState LiveData Observer
+        viewModel.viewStateLiveData.observe(viewLifecycleOwner) { viewState ->
+            when (viewState) {
+                is SearchViewState.InitialContent -> {
+                    typeSpinnerAdapter.clear()
+                    typeSpinnerAdapter.addAll(viewState.typeSpinnerItemViewStateList)
+
+                    agentSpinnerAdapter.clear()
+                    agentSpinnerAdapter.addAll(viewState.agentSpinnerItemViewStateList)
+                }
+                is SearchViewState.WithUserInput -> {
+//                    binding.searchTextInputEditTextMinSurface.setText(viewState.minSquareMeter)
+                }
+            }
+        }
+
+        // UI elements listener //
+        binding.searchAutoCompleteTextViewAsTypeSpinner.setOnItemClickListener { _, _, position, _ ->
+            typeSpinnerAdapter.getItem(position)?.let { typeSpinnerItemViewState ->
+                viewModel.onTypeSpinnerItemClicked(typeSpinnerItemViewState)
+            }
+        }
+
+        binding.searchTextInputEditTextMinSurface.addTextChangedListener {
+            viewModel.onEditTextMinSurfaceChanged(it.toString())
+        }
+
+        binding.searchTextInputEditTextMaxSurface.addTextChangedListener {
+            viewModel.onEditTextMaxSurfaceChanged(it.toString())
+        }
+
+        binding.searchTextInputEditTextMinPrice.addTextChangedListener {
+            viewModel.onEditTextMinPriceChanged(it.toString())
+        }
+
+        binding.searchTextInputEditTextMaxPrice.addTextChangedListener {
+            viewModel.onEditTextMaxPriceChanged(it.toString())
+        }
+
+        binding.searchTextInputEditTextNumberOfBedRooms.addTextChangedListener {
+            viewModel.onEditTextNumberOfBedRoomsChanged(it.toString())
+        }
+
+        binding.searchTextInputEditTextNumberOfBathRooms.addTextChangedListener {
+            viewModel.onEditTextNumberOfBathRoomsChanged(it.toString())
+        }
+
+        binding.searchAutoCompleteTextViewCity.addTextChangedListener {
+            viewModel.onAutocompleteCityChanged(it.toString())
+        }
+
+        binding.searchAutoCompleteTextViewAsAgentSpinner.setOnItemClickListener { _, _, position, _ ->
+            agentSpinnerAdapter.getItem(position)?.let { agentSpinnerItemViewState ->
+                viewModel.onAgentSpinnerItemClicked(agentSpinnerItemViewState)
+            }
+        }
+
+        binding.searchChipGarage.setOnClickListener {
+            viewModel.onChipGuardClicked(binding.searchChipGarage.isChecked)
+        }
+
+        binding.searchChipGarden.setOnClickListener {
+            viewModel.onChipGarageClicked(binding.searchChipGarden.isChecked)
+        }
+
+        binding.searchChipElevator.setOnClickListener {
+            viewModel.onChipGardenClicked(binding.searchChipElevator.isChecked)
+        }
+
+        binding.searchChipGroceryStoreNextBy.setOnClickListener {
+            viewModel.onChipElevatorClicked(binding.searchChipGroceryStoreNextBy.isChecked)
+        }
+
+        binding.searchChipSoldOutRecently.setOnClickListener {
+            viewModel.onChipSoldOutRecentlyClicked(binding.searchChipSoldOutRecently.isChecked)
+        }
+
+        binding.searchChipRegisteredRecently.setOnClickListener {
+            viewModel.onChipRegisteredRecentlyClicked(binding.searchChipRegisteredRecently.isChecked)
+        }
+
+        binding.searchChipPhotosAvailable.setOnClickListener {
+            viewModel.onChipPhotosAvailableClicked(binding.searchChipPhotosAvailable.isChecked)
+        }
 
     }
 }

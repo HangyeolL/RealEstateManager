@@ -135,12 +135,12 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         // Observer : Autocomplete dynamic liveData
-        viewModel.addressPredictionsLiveData.observe(viewLifecycleOwner) { viewStates ->
-            autocompleteAdapter.setData(viewStates)
+        viewModel.addressPredictionsLiveData.observe(viewLifecycleOwner) { viewState ->
+            autocompleteAdapter.setData(viewState)
         }
 
-        viewModel.cityPredictionsLiveData.observe(viewLifecycleOwner) { viewStates ->
-            autocompleteAdapter.setData(viewStates)
+        viewModel.cityPredictionsLiveData.observe(viewLifecycleOwner) { viewState ->
+            autocompleteAdapter.setData(viewState)
         }
 
         // Observer : SingleLiveEvent for Toast
@@ -184,9 +184,9 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             viewModel.onAutocompleteAddressChanged(it?.toString())
         }
 
-        binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setOnItemClickListener { adapterView, view, position, l ->
-            autocompleteAdapter.getItem(position)?.let { addressAutocompleteItemViewState ->
-                viewModel.onAutocompleteAddressItemClicked(addressAutocompleteItemViewState)
+        binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setOnItemClickListener { _, _, position, _ ->
+            autocompleteAdapter.getItem(position)?.let { autocompleteTextViewState ->
+                viewModel.onAutocompleteAddressItemClicked(autocompleteTextViewState)
             }
         }
 
@@ -194,9 +194,9 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             viewModel.onEditTextCityChanged(it?.toString())
         }
 
-        binding.addOrModifyRealEstateAutoCompleteTextViewCity.setOnItemClickListener { adapterView, view, position, l ->
-            autocompleteAdapter.getItem(position)?.let { addressAutocompleteItemViewState ->
-                viewModel.onAutocompleteCityItemClicked(addressAutocompleteItemViewState)
+        binding.addOrModifyRealEstateAutoCompleteTextViewCity.setOnItemClickListener { _, _, position, _ ->
+            autocompleteAdapter.getItem(position)?.let { autocompleteTextViewState ->
+                viewModel.onAutocompleteCityItemClicked(autocompleteTextViewState)
             }
         }
 

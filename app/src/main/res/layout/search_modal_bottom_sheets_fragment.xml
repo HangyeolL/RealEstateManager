@@ -46,6 +46,7 @@
         app:suffixText="m2">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_TextInputEditText_minSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number" />
@@ -69,6 +70,7 @@
         app:suffixText="m2">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_TextInputEditText_maxSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number" />
@@ -90,6 +92,7 @@
         app:suffixText="@string/euro_symbol_as_string">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_TextInputEditText_minPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number" />
@@ -113,6 +116,7 @@
         app:suffixText="@string/euro_symbol_as_string">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_TextInputEditText_maxPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number" />
@@ -354,7 +358,7 @@
                 app:layout_constraintStart_toEndOf="@+id/search_chip_soldOutRecently" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/search_chip_withPhotos"
+                android:id="@+id/search_chip_photosAvailable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
