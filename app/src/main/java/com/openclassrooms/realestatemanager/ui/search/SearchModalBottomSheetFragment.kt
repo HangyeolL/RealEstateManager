@@ -52,9 +52,6 @@ class SearchModalBottomSheetFragment :
                     agentSpinnerAdapter.clear()
                     agentSpinnerAdapter.addAll(viewState.agentSpinnerItemViewStateList)
                 }
-                is SearchViewState.WithUserInput -> {
-//                    binding.searchTextInputEditTextMinSurface.setText(viewState.minSquareMeter)
-                }
             }
         }
 
@@ -99,24 +96,28 @@ class SearchModalBottomSheetFragment :
             }
         }
 
+        binding.searchChipGuard.setOnClickListener {
+            viewModel.onChipGuardClicked(binding.searchChipGuard.isChecked)
+        }
+
         binding.searchChipGarage.setOnClickListener {
-            viewModel.onChipGuardClicked(binding.searchChipGarage.isChecked)
+            viewModel.onChipGarageClicked(binding.searchChipGarage.isChecked)
         }
 
         binding.searchChipGarden.setOnClickListener {
-            viewModel.onChipGarageClicked(binding.searchChipGarden.isChecked)
+            viewModel.onChipGardenClicked(binding.searchChipGarden.isChecked)
         }
 
         binding.searchChipElevator.setOnClickListener {
-            viewModel.onChipGardenClicked(binding.searchChipElevator.isChecked)
-        }
-
-        binding.searchChipGroceryStoreNextBy.setOnClickListener {
-            viewModel.onChipElevatorClicked(binding.searchChipGroceryStoreNextBy.isChecked)
+            viewModel.onChipElevatorClicked(binding.searchChipElevator.isChecked)
         }
 
         binding.searchChipSoldOutRecently.setOnClickListener {
             viewModel.onChipSoldOutRecentlyClicked(binding.searchChipSoldOutRecently.isChecked)
+        }
+
+        binding.searchChipGroceryStoreNextBy.setOnClickListener {
+            viewModel.onChipGroceryStoreNextByClicked(binding.searchChipGroceryStoreNextBy.isChecked)
         }
 
         binding.searchChipRegisteredRecently.setOnClickListener {
@@ -125,6 +126,12 @@ class SearchModalBottomSheetFragment :
 
         binding.searchChipPhotosAvailable.setOnClickListener {
             viewModel.onChipPhotosAvailableClicked(binding.searchChipPhotosAvailable.isChecked)
+        }
+
+        binding.searchButtonApply.setOnClickListener {
+            viewModel.onButtonApplyClicked() {
+                dismiss()
+            }
         }
 
     }

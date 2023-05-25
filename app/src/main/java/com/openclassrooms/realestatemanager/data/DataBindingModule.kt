@@ -1,9 +1,6 @@
 package com.openclassrooms.realestatemanager.data
 
-import com.openclassrooms.realestatemanager.data.local.repository.AgentRepositoryImpl
-import com.openclassrooms.realestatemanager.data.local.repository.CurrentRealEstateRepositoryImpl
-import com.openclassrooms.realestatemanager.data.local.repository.LocationRepositoryImpl
-import com.openclassrooms.realestatemanager.data.local.repository.RealEstateRepositoryImpl
+import com.openclassrooms.realestatemanager.data.local.repository.*
 import com.openclassrooms.realestatemanager.data.remote.repository.AutocompleteRepositoryImpl
 import com.openclassrooms.realestatemanager.data.remote.repository.GeocodingRepositoryImpl
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
@@ -12,6 +9,7 @@ import com.openclassrooms.realestatemanager.domain.geocoding.GeocodingRepository
 import com.openclassrooms.realestatemanager.domain.location.LocationRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
+import com.openclassrooms.realestatemanager.domain.search_criteria.SearchCriteriaRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -45,5 +43,9 @@ abstract class DataBindingModule {
     @Binds
     @Singleton
     abstract fun currentRealEstateRepository(impl: CurrentRealEstateRepositoryImpl): CurrentRealEstateRepository
+
+    @Binds
+    @Singleton
+    abstract fun searchCriteriaRepository(impl: SearchCriteriaRepositoryImpl): SearchCriteriaRepository
 
 }

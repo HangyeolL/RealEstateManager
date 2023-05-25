@@ -6,6 +6,8 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteTextViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
+import com.openclassrooms.realestatemanager.domain.search_criteria.SearchCriteriaRepository
+import com.openclassrooms.realestatemanager.domain.search_criteria.model.SearchCriteria
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateAgentSpinnerItemViewState
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateTypeSpinnerItemViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +20,7 @@ class SearchViewModel @Inject constructor(
     application: Application,
     agentRepository: AgentRepository,
     private val autoCompleteRepository: AutocompleteRepository,
+    private val searchCriteriaRepository: SearchCriteriaRepository,
 ) : ViewModel() {
 
     val viewStateLiveData: LiveData<SearchViewState> = liveData(Dispatchers.IO) {
@@ -56,6 +59,20 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    val cityPredictionsLiveData: LiveData<List<AutocompleteTextViewState>> =
+        liveData(Dispatchers.IO) {
+            autoCompleteRepository.getAutocompleteEntitiesForCity()
+                .collect { autocompleteEntities ->
+                    emit(
+                        autocompleteEntities.map { autocompleteEntity ->
+                            AutocompleteTextViewState(
+                                text = autocompleteEntity.text
+                            )
+                        }
+                    )
+                }
+        }
+
     private var type: String? = null
     private var minSurface: Int? = null
     private var maxSurface: Int? = null
@@ -64,14 +81,14 @@ class SearchViewModel @Inject constructor(
     private var numberOfBedRooms: Int? = null
     private var numberOfBathRooms: Int? = null
     private var city: String? = null
-    private var garage: Boolean? = null
-    private var guard: Boolean? = null
-    private var garden: Boolean? = null
-    private var elevator: Boolean? = null
-    private var groceryStoreNearby: Boolean? = null
-    private var soldOutRecently: Boolean? = null
-    private var registeredRecently: Boolean? = null
-    private var photoAvailable: Boolean? = null
+    private var garage: Boolean = false
+    private var guard: Boolean = false
+    private var garden: Boolean = false
+    private var elevator: Boolean = false
+    private var groceryStoreNearby: Boolean = false
+    private var soldOutRecently: Boolean = false
+    private var registeredRecently: Boolean = false
+    private var photoAvailable: Boolean = false
     private var agentIdInCharge: Int? = null
 
     fun onTypeSpinnerItemClicked(selectedItem: AddOrModifyRealEstateTypeSpinnerItemViewState) {
@@ -146,56 +163,27 @@ class SearchViewModel @Inject constructor(
         photoAvailable = checked
     }
 
+    fun onButtonApplyClicked(onFinished: () -> Unit) {
+        val userSearchCriteria = SearchCriteria(
+            numberOfBathrooms = numberOfBathRooms,
+            numberOfBedrooms = numberOfBedRooms,
+            minSquareMeter = minSurface,
+            maxSquareMeter = maxSurface,
+            minPrice = minPrice,
+            maxPrice = maxPrice,
+            garage = garage,
+            garden = garden,
+            guard = guard,
+            elevator = elevator,
+            groceryStoreNearby = groceryStoreNearby,
+            soldOutRecently = soldOutRecently,
+            registeredRecently = registeredRecently,
+            photoAvailable = photoAvailable,
 
-//    val viewStateLiveData: LiveData<SearchViewState> =
-//        liveData(Dispatchers.IO) {
-//            val typeSpinnerItemViewStateList = listOf(
-//                AddOrModifyRealEstateTypeSpinnerItemViewState(
-//                    R.drawable.ic_baseline_house_24,
-//                    application.getString(R.string.house)
-//                ),
-//                AddOrModifyRealEstateTypeSpinnerItemViewState(
-//                    R.drawable.ic_baseline_apartment_24,
-//                    application.getString(R.string.apartment)
-//                ),
-//                AddOrModifyRealEstateTypeSpinnerItemViewState(
-//                    R.drawable.ic_baseline_bed_24,
-//                    application.getString(R.string.studio)
-//                )
-//            )
-//            val allAgentsAsync =
-//                withContext(Dispatchers.IO) {
-//                    agentRepository.getAllAgents().first()
-//                }
-//
-//            val agentSpinnerItemViewStateList = allAgentsAsync.map { agentEntity ->
-//                AddOrModifyRealEstateAgentSpinnerItemViewState(
-//                    agentIdInCharge = agentEntity.agentId,
-//                    agentNameInCharge = agentEntity.name,
-//                    agentPhoto = agentEntity.photoUrl
-//                )
-//            }
-//
-//            emit(
-//                SearchViewState.InitialContent(
-//                        typeSpinnerItemViewStateList = typeSpinnerItemViewStateList,
-//                        agentSpinnerItemViewStateList = agentSpinnerItemViewStateList,
-//                    )
-//                )
-//        }
+        )
+        searchCriteriaRepository.setSearchCriteria(userSearchCriteria)
+        onFinished()
+    }
 
 
-    val cityPredictionsLiveData: LiveData<List<AutocompleteTextViewState>> =
-        liveData(Dispatchers.IO) {
-            autoCompleteRepository.getAutocompleteEntitiesForCity()
-                .collect { autocompleteEntities ->
-                    emit(
-                        autocompleteEntities.map { autocompleteEntity ->
-                            AutocompleteTextViewState(
-                                text = autocompleteEntity.text
-                            )
-                        }
-                    )
-                }
-        }
 }

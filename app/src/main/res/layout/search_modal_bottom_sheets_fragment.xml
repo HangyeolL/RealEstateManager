@@ -379,7 +379,7 @@
     </com.google.android.material.chip.ChipGroup>
 
     <Button
-        android:id="@+id/search_button_save"
+        android:id="@+id/search_button_apply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
