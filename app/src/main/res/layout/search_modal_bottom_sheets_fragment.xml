@@ -364,6 +364,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
+                android:checkable="true"
                 android:text="@string/photos_available"
                 app:chipIcon="@drawable/ic_baseline_photo_24"
                 app:chipIconVisible="true"
@@ -385,7 +386,20 @@
         android:layout_marginTop="16dp"
         android:text="apply"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/search_button_reset"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_chipGroup" />
+
+    <Button
+        android:id="@+id/search_button_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="reset"
+        app:layout_constraintBottom_toBottomOf="@+id/search_button_apply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/search_button_apply"
+        app:layout_constraintTop_toTopOf="@+id/search_button_apply" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

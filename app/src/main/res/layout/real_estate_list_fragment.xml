@@ -8,7 +8,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/real_estate_list_RecyclerView"
-        android:layout_width="550dp"
+        android:layout_width="350dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -18,7 +18,7 @@
         android:id="@+id/real_estate_list_detail_FragmentContainerView"
         android:name="com.openclassrooms.realestatemanager.ui.detail.DetailFragment"
         android:layout_weight="1"
-        android:layout_width="300dp"
+        android:layout_width="500dp"
         android:layout_height="match_parent"
         tools:layout="@layout/detail_fragment"/>
 

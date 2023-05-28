@@ -134,5 +134,11 @@ class SearchModalBottomSheetFragment :
             }
         }
 
+        binding.searchButtonReset.setOnClickListener {
+            viewModel.onButtonResetClicked() {
+                dismiss()
+            }
+        }
+
     }
 }

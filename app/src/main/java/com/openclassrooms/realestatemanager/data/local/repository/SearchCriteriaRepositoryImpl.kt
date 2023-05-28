@@ -21,4 +21,8 @@ class SearchCriteriaRepositoryImpl @Inject constructor(
         searchCriteriaMutableStateFlow.value = searchCriteria
         Log.d("HG", "SearchCriteriaRepository setting SearchCriteria to ${searchCriteriaStateFlow.value}")
     }
+
+    override fun resetSearchCriteria() {
+        searchCriteriaMutableStateFlow.value = null
+    }
 }

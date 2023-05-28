@@ -81,14 +81,14 @@ class SearchViewModel @Inject constructor(
     private var numberOfBedRooms: Int? = null
     private var numberOfBathRooms: Int? = null
     private var city: String? = null
-    private var garage: Boolean = false
-    private var guard: Boolean = false
-    private var garden: Boolean = false
-    private var elevator: Boolean = false
-    private var groceryStoreNearby: Boolean = false
-    private var soldOutRecently: Boolean = false
-    private var registeredRecently: Boolean = false
-    private var photoAvailable: Boolean = false
+    private var garage: Boolean? = null
+    private var guard: Boolean? = null
+    private var garden: Boolean? = null
+    private var elevator: Boolean? = null
+    private var groceryStoreNearby: Boolean? = null
+    private var soldOutRecently: Boolean? = null
+    private var registeredRecently: Boolean? = null
+    private var photoAvailable: Boolean? = null
     private var agentIdInCharge: Int? = null
 
     fun onTypeSpinnerItemClicked(selectedItem: AddOrModifyRealEstateTypeSpinnerItemViewState) {
@@ -165,6 +165,8 @@ class SearchViewModel @Inject constructor(
 
     fun onButtonApplyClicked(onFinished: () -> Unit) {
         val userSearchCriteria = SearchCriteria(
+            type = type,
+            agentIdInCharge = agentIdInCharge,
             numberOfBathrooms = numberOfBathRooms,
             numberOfBedrooms = numberOfBedRooms,
             minSquareMeter = minSurface,
@@ -179,9 +181,13 @@ class SearchViewModel @Inject constructor(
             soldOutRecently = soldOutRecently,
             registeredRecently = registeredRecently,
             photoAvailable = photoAvailable,
-
         )
         searchCriteriaRepository.setSearchCriteria(userSearchCriteria)
+        onFinished()
+    }
+
+    fun onButtonResetClicked(onFinished: () -> Unit) {
+        searchCriteriaRepository.resetSearchCriteria()
         onFinished()
     }
 

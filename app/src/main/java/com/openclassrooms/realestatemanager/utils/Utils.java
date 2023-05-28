@@ -7,10 +7,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by Philippe on 21/02/2018.
- */
-
 public class Utils {
 
     /**
@@ -19,7 +15,7 @@ public class Utils {
      * @param dollars
      * @return
      */
-    public static int convertDollarToEuro(int dollars){
+    public static int convertDollarToEuro(int dollars) {
         return (int) Math.round(dollars * 0.812);
     }
 
@@ -39,7 +35,7 @@ public class Utils {
      * @param context
      * @return
      */
-    public static Boolean isInternetAvailable(Context context){
+    public static Boolean isInternetAvailable(Context context) {
         WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         return wifi.isWifiEnabled();
     }

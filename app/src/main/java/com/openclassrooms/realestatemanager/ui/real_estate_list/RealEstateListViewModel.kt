@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.ui.real_estate_list
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -9,10 +11,13 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
 import com.openclassrooms.realestatemanager.domain.search_criteria.SearchCriteriaRepository
+import com.openclassrooms.realestatemanager.utils.MyUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,6 +29,9 @@ class RealEstateListViewModel @Inject constructor(
 
     var selectedRealEstateId: Int = currentRealEstateRepository.getCurrentRealEstateId().value
 
+    private val realEstatesWithPhotosFlow = realEstateRepository.getRealEstatesWithPhotos()
+    private val searchCriteriaStateFlow = searchCriteriaRepository.getSearchCriteria()
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             currentRealEstateRepository.getCurrentRealEstateId()
@@ -33,23 +41,109 @@ class RealEstateListViewModel @Inject constructor(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     val viewStateLiveData: LiveData<RealEstateListViewState> =
         liveData(Dispatchers.IO) {
-            realEstateRepository.getRealEstatesWithPhotos()
-                .collectLatest { realEstateWithPhotosList ->
-                    val filteredItemViewList = realEstateWithPhotosList.filter { realEstateWithPhotos ->
+            combine(
+                searchCriteriaStateFlow,
+                realEstatesWithPhotosFlow,
+            ) { searchCriteria, realEstatesWithPhotos ->
+
+                val filteredItemViewList =
+                    realEstatesWithPhotos.filter { realEstateWithPhotos ->
                         // Apply filtering based on search criteria
-                        val searchCriteria = searchCriteriaRepository.getSearchCriteria().value
                         searchCriteria?.let { userSearchCriteria ->
+                            val realEstateEntity = realEstateWithPhotos.realEstateEntity
                             var isMatch = true
                             // Apply filter conditions one by one
-                            if (userSearchCriteria.elevator != realEstateWithPhotos.realEstateEntity.elevator) {
+                            if (searchCriteria.type != null &&
+                                searchCriteria.type != realEstateEntity.type
+                            ) {
                                 isMatch = false
                             }
-                            if (userSearchCriteria.garden != realEstateWithPhotos.realEstateEntity.garden) {
+                            if (searchCriteria.photoAvailable == false &&
+                                realEstateWithPhotos.realEstatePhotoLists.isEmpty()
+                            ) {
                                 isMatch = false
                             }
-                            if (userSearchCriteria.garage != realEstateWithPhotos.realEstateEntity.garage) {
+                            if (searchCriteria.photoAvailable == true &&
+                                realEstateWithPhotos.realEstatePhotoLists.isNotEmpty()
+                            ) {
+                                isMatch = true
+                            }
+                            if (searchCriteria.groceryStoreNearby != null &&
+                                searchCriteria.groceryStoreNearby != realEstateEntity.groceryStoreNearby
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.guard != null &&
+                                searchCriteria.guard != realEstateEntity.guard
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.garden != null &&
+                                searchCriteria.garden != realEstateEntity.garden
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.garage != null &&
+                                searchCriteria.garage != realEstateEntity.garage
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.elevator != null &&
+                                searchCriteria.elevator != realEstateEntity.elevator
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.registeredRecently == true &&
+                                MyUtils.compareDateAndGetTheDifference(realEstateEntity.marketSince) <= 90
+                            ) {
+                                isMatch = true
+                            }
+                            if (searchCriteria.registeredRecently == false &&
+                                MyUtils.compareDateAndGetTheDifference(realEstateEntity.marketSince) > 90
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.soldOutRecently == true &&
+                                MyUtils.compareDateAndGetTheDifference(realEstateEntity.dateOfSold) <= 90
+                            ) {
+                                isMatch = true
+                            }
+                            if (searchCriteria.soldOutRecently == false &&
+                                MyUtils.compareDateAndGetTheDifference(realEstateEntity.dateOfSold) <= 90
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.minSquareMeter != null &&
+                                realEstateEntity.squareMeter < searchCriteria.minSquareMeter
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.maxSquareMeter != null &&
+                                realEstateEntity.squareMeter > searchCriteria.maxSquareMeter
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.minPrice != null &&
+                                realEstateEntity.price < searchCriteria.minPrice
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.maxPrice != null &&
+                                realEstateEntity.price > searchCriteria.maxPrice
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.numberOfBathrooms != null &&
+                                realEstateEntity.numberOfBathrooms != searchCriteria.numberOfBathrooms
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.numberOfBedrooms != null &&
+                                realEstateEntity.numberOfBedrooms != searchCriteria.numberOfBedrooms
+                            ) {
                                 isMatch = false
                             }
                             // Add more filter conditions as needed
@@ -68,26 +162,9 @@ class RealEstateListViewModel @Inject constructor(
                         )
                     }
 
-                    emit(RealEstateListViewState(filteredItemViewList))
+                emit(RealEstateListViewState(filteredItemViewList))
 
-//                    val itemViewStateList = ArrayList<RealEstateListItemViewState>()
-//
-//                    realEstateWithPhotosList.forEach() { realEstateWithPhotos ->
-//                        itemViewStateList.add(
-//                            RealEstateListItemViewState(
-//                                realEstateWithPhotos.realEstateEntity.realEstateId,
-//                                if (realEstateWithPhotos.realEstatePhotoLists.isNotEmpty())
-//                                    realEstateWithPhotos.realEstatePhotoLists[0].url
-//                                else R.drawable.image_not_available.toString(),
-//                                realEstateWithPhotos.realEstateEntity.type,
-//                                realEstateWithPhotos.realEstateEntity.city,
-//                                realEstateWithPhotos.realEstateEntity.price,
-//                            )
-//                        )
-//                    }
-
-//                    emit(RealEstateListViewState(itemViewStateList))
-                }
+            }.collectLatest { }
 
         }
 

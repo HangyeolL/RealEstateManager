@@ -8,4 +8,6 @@ interface SearchCriteriaRepository {
     fun getSearchCriteria(): StateFlow<SearchCriteria?>
 
     fun setSearchCriteria(searchCriteria: SearchCriteria)
+
+    fun resetSearchCriteria()
 }
