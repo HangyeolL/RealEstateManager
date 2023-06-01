@@ -16,6 +16,7 @@ import androidx.navigation.fragment.navArgs
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateFragmentBinding
+import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteAdapter
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListAdapter
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -93,7 +94,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             latestTmpUri = getTmpFileUri()
             takePictureResult.launch(latestTmpUri)
         }
-        val autocompleteAdapter = AddOrModifyRealEstateAutocompleteAdapter()
+        val cityAutocompleteAdapter = AutocompleteAdapter()
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setAdapter(typeSpinnerAdapter)
         binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setAdapter(
@@ -101,8 +102,8 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         )
         binding.addOrModifyRealEstateRecyclerViewRealEstatePhotoList.adapter =
             realEstatePhotoListAdapter
-        binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setAdapter(autocompleteAdapter)
-        binding.addOrModifyRealEstateAutoCompleteTextViewCity.setAdapter(autocompleteAdapter)
+        binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setAdapter(cityAutocompleteAdapter)
+        binding.addOrModifyRealEstateAutoCompleteTextViewCity.setAdapter(cityAutocompleteAdapter)
 
         //TODO ViewState Observed data still emit the values after user puts the new value
 
@@ -136,11 +137,11 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
         // Observer : Autocomplete dynamic liveData
         viewModel.addressPredictionsLiveData.observe(viewLifecycleOwner) { viewState ->
-            autocompleteAdapter.setData(viewState)
+            cityAutocompleteAdapter.setData(viewState)
         }
 
         viewModel.cityPredictionsLiveData.observe(viewLifecycleOwner) { viewState ->
-            autocompleteAdapter.setData(viewState)
+            cityAutocompleteAdapter.setData(viewState)
         }
 
         // Observer : SingleLiveEvent for Toast
@@ -185,7 +186,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setOnItemClickListener { _, _, position, _ ->
-            autocompleteAdapter.getItem(position)?.let { autocompleteTextViewState ->
+            cityAutocompleteAdapter.getItem(position)?.let { autocompleteTextViewState ->
                 viewModel.onAutocompleteAddressItemClicked(autocompleteTextViewState)
             }
         }
@@ -195,7 +196,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         binding.addOrModifyRealEstateAutoCompleteTextViewCity.setOnItemClickListener { _, _, position, _ ->
-            autocompleteAdapter.getItem(position)?.let { autocompleteTextViewState ->
+            cityAutocompleteAdapter.getItem(position)?.let { autocompleteTextViewState ->
                 viewModel.onAutocompleteCityItemClicked(autocompleteTextViewState)
             }
         }

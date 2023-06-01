@@ -9,7 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.SearchModalBottomSheetsFragmentBinding
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateAgentSpinnerAdapter
-import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateAutocompleteAdapter
+import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteAdapter
 import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateTypeSpinnerAdapter
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +36,7 @@ class SearchModalBottomSheetFragment :
             R.layout.add_or_modify_real_estate_spinner_item
         )
 
-        val autocompleteAdapter = AddOrModifyRealEstateAutocompleteAdapter()
+        val autocompleteAdapter = AutocompleteAdapter()
 
         binding.searchAutoCompleteTextViewAsTypeSpinner.setAdapter(typeSpinnerAdapter)
         binding.searchAutoCompleteTextViewAsAgentSpinner.setAdapter(agentSpinnerAdapter)
@@ -53,6 +53,11 @@ class SearchModalBottomSheetFragment :
                     agentSpinnerAdapter.addAll(viewState.agentSpinnerItemViewStateList)
                 }
             }
+        }
+
+        // City DynamicLiveData
+        viewModel.cityPredictionsLiveData.observe(viewLifecycleOwner) { autocompleteViewStateList ->
+            autocompleteAdapter.setData(autocompleteViewStateList)
         }
 
         // UI elements listener //

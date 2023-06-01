@@ -17,7 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -61,15 +60,10 @@ class RealEstateListViewModel @Inject constructor(
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.photoAvailable == false &&
+                            if (searchCriteria.photoAvailable != null &&
                                 realEstateWithPhotos.realEstatePhotoLists.isEmpty()
                             ) {
                                 isMatch = false
-                            }
-                            if (searchCriteria.photoAvailable == true &&
-                                realEstateWithPhotos.realEstatePhotoLists.isNotEmpty()
-                            ) {
-                                isMatch = true
                             }
                             if (searchCriteria.groceryStoreNearby != null &&
                                 searchCriteria.groceryStoreNearby != realEstateEntity.groceryStoreNearby
@@ -96,23 +90,13 @@ class RealEstateListViewModel @Inject constructor(
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.registeredRecently == true &&
-                                MyUtils.compareDateAndGetTheDifference(realEstateEntity.marketSince) <= 90
-                            ) {
-                                isMatch = true
-                            }
-                            if (searchCriteria.registeredRecently == false &&
+                            if (searchCriteria.registeredRecently != null &&
                                 MyUtils.compareDateAndGetTheDifference(realEstateEntity.marketSince) > 90
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.soldOutRecently == true &&
-                                MyUtils.compareDateAndGetTheDifference(realEstateEntity.dateOfSold) <= 90
-                            ) {
-                                isMatch = true
-                            }
-                            if (searchCriteria.soldOutRecently == false &&
-                                MyUtils.compareDateAndGetTheDifference(realEstateEntity.dateOfSold) <= 90
+                            if (searchCriteria.soldOutRecently != null &&
+                                MyUtils.compareDateAndGetTheDifference(realEstateEntity.dateOfSold) > 90
                             ) {
                                 isMatch = false
                             }
@@ -143,6 +127,16 @@ class RealEstateListViewModel @Inject constructor(
                             }
                             if (searchCriteria.numberOfBedrooms != null &&
                                 realEstateEntity.numberOfBedrooms != searchCriteria.numberOfBedrooms
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.agentIdInCharge != null &&
+                                realEstateEntity.agentIdInCharge != searchCriteria.agentIdInCharge
+                            ) {
+                                isMatch = false
+                            }
+                            if (searchCriteria.city != null &&
+                                realEstateEntity.city != searchCriteria.city
                             ) {
                                 isMatch = false
                             }

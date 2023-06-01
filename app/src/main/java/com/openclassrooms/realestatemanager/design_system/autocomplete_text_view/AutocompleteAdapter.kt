@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
+package com.openclassrooms.realestatemanager.design_system.autocomplete_text_view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +7,8 @@ import android.widget.BaseAdapter
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
-import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteTextViewState
 
-class AddOrModifyRealEstateAutocompleteAdapter : BaseAdapter(), Filterable {
+class AutocompleteAdapter : BaseAdapter(), Filterable {
 
     private var items = emptyList<AutocompleteTextViewState>()
 

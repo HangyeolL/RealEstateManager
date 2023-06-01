@@ -166,6 +166,7 @@ class SearchViewModel @Inject constructor(
     fun onButtonApplyClicked(onFinished: () -> Unit) {
         val userSearchCriteria = SearchCriteria(
             type = type,
+            city = city,
             agentIdInCharge = agentIdInCharge,
             numberOfBathrooms = numberOfBathRooms,
             numberOfBedrooms = numberOfBedRooms,

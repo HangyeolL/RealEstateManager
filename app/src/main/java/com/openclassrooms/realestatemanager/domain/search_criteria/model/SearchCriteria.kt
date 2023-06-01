@@ -2,8 +2,9 @@ package com.openclassrooms.realestatemanager.domain.search_criteria.model
 
 data class SearchCriteria(
     val type : String?,
-    val agentIdInCharge : Int?,
+    val city : String?,
 
+    val agentIdInCharge : Int?,
     val numberOfBathrooms: Int?,
     val numberOfBedrooms: Int?,
     val minSquareMeter: Int?,

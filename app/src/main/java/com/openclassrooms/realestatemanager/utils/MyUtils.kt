@@ -1,8 +1,8 @@
 package com.openclassrooms.realestatemanager.utils
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
-import okhttp3.internal.format
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -15,6 +15,7 @@ class MyUtils {
             return if (dateInString != null) {
                 val formattedDate = LocalDate.parse(dateInString, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                 if (formattedDate.isBefore(LocalDate.now())) {
+                    Log.d("HL", "${ChronoUnit.DAYS.between(formattedDate, LocalDate.now()).toInt()}")
                     ChronoUnit.DAYS.between(formattedDate, LocalDate.now()).toInt()
                 } else {
                     91
