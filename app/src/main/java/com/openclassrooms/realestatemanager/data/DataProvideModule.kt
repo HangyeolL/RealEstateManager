@@ -6,6 +6,9 @@ import androidx.work.WorkManager
 import com.google.android.gms.common.api.GoogleApi
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.openclassrooms.realestatemanager.data.local.AppDatabase
@@ -67,5 +70,9 @@ object DataProvideModule {
     @Provides
     @Singleton
     fun provideMyGoogleApi(): MyGoogleApi = MyGoogleApiHolder.getInstance().create(MyGoogleApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
 
 }

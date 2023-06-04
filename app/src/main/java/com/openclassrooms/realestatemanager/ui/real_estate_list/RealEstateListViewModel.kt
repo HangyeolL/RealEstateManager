@@ -153,6 +153,7 @@ class RealEstateListViewModel @Inject constructor(
                             filteredRealEstateWithPhotos.realEstateEntity.type,
                             filteredRealEstateWithPhotos.realEstateEntity.city,
                             filteredRealEstateWithPhotos.realEstateEntity.price,
+                            filteredRealEstateWithPhotos.realEstateEntity.isSoldOut
                         )
                     }
 

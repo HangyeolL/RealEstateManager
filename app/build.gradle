@@ -2,8 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'com.google.gms.google-services'
+
 //To hide Google Map API key
 apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+
+//Navigation
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
@@ -35,6 +39,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     // SlidingPaneLayout
     implementation "androidx.slidingpanelayout:slidingpanelayout:1.2.0"
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:32.1.0')
+    implementation "com.google.firebase:firebase-firestore-ktx"
 
     // Kotlin
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"

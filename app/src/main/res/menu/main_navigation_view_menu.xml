@@ -8,4 +8,9 @@
         android:icon="@drawable/ic_baseline_map_24"
         android:title="@string/map_view" />
 
+    <item
+        android:id="@+id/main_navigationView_synchronization"
+        android:icon="@drawable/ic_baseline_sync_24"
+        android:title="@string/data_synchronization" />
+
 </menu>

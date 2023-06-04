@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.main
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
@@ -23,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
+class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<MainViewModel>()
     private val binding by viewBinding { MainActivityBinding.inflate(it) }
@@ -70,7 +72,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.mainDrawerLayout)
 
-        navController.addOnDestinationChangedListener(this)
+//        navController.addOnDestinationChangedListener(this)
 
         binding.mainToolbar.setupWithNavController(navController, appBarConfiguration)
         binding.mainNavigationView.setupWithNavController(navController)
@@ -80,6 +82,21 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 R.id.main_navigationView_mapView -> {
                     Log.d("HL", "Navigate from MainActivity to MapViewFragment")
                     navController.navigate(RealEstateListFragmentDirections.actionToMapViewFragment())
+                }
+                R.id.main_navigationView_synchronization -> {
+                    Log.d("HL", "navigationView data synchronization clicked")
+
+                    val alertDialogBuilder = AlertDialog.Builder(this)
+                    alertDialogBuilder.setTitle(R.string.data_synchronization)
+                        .setMessage("Would you like to synchronize data with firebase?")
+                        .setPositiveButton("YES") { dialog, id ->
+                            viewModel.onUserOkClickedForDataSynchronization()
+                        }
+                        .setNegativeButton("NO") { dialog, id ->
+                            dismissDialog(id)
+                        }
+                        .create()
+                        .show()
                 }
             }
             true
@@ -94,7 +111,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     // Take care of only create and search case in activity
-// TODO Modify case in landscape mode should be taken care of in Fragment
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.toolbar_menu_create -> {
@@ -112,21 +128,21 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onDestinationChanged(
-        controller: NavController,
-        destination: NavDestination,
-        arguments: Bundle?
-    ) {
-        when (destination.id) {
-            R.id.mapViewFragment -> {
-                binding.mainToolbar.menu.clear()
-            }
-
-            else -> {
-
-            }
-        }
-    }
+//    override fun onDestinationChanged(
+//        controller: NavController,
+//        destination: NavDestination,
+//        arguments: Bundle?
+//    ) {
+//        when (destination.id) {
+//            R.id.mapViewFragment -> {
+//                binding.mainToolbar.menu.clear()
+//            }
+//
+//            else -> {
+//
+//            }
+//        }
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

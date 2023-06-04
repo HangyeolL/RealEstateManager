@@ -10,6 +10,7 @@
     <string name="surface">Surface</string>
     <string name="sqm">sqm</string>
     <string name="map_view">MAP VIEW</string>
+    <string name="data_synchronization">DATA SYNCHRONIZATION</string>
     <string name="modify">modify</string>
     <string name="search">search</string>
     <string name="create">create</string>

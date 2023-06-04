@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.real_estate_list
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -21,7 +22,6 @@ class RealEstateListAdapter(
         holder.bind(getItem(position), itemIdListener)
     }
 
-
     class ViewHolder(
         private val itemBinding: RealEstateListItemBinding
     ) : RecyclerView.ViewHolder(itemBinding.root) {
@@ -32,6 +32,12 @@ class RealEstateListAdapter(
             itemBinding.realEstateListItemTextViewPrice.text = viewState.price.toString()
             Glide.with(itemView.context).load(viewState.imageUrl)
                 .into(itemBinding.realEstateListItemImageView)
+
+            if (viewState.isSoldOut) {
+                itemBinding.realEstateListItemImageViewSoldOutTag.visibility = View.VISIBLE
+            } else {
+                itemBinding.realEstateListItemImageViewSoldOutTag.visibility = View.GONE
+            }
 
             itemBinding.realEstateListItemCardView.setOnClickListener {
                 itemIdListener.invoke(viewState.id)

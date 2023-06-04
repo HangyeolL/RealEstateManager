@@ -8,4 +8,5 @@ data class RealEstateListItemViewState(
     val type: String,
     val city: String,
     val price: Int,
+    val isSoldOut: Boolean,
 )

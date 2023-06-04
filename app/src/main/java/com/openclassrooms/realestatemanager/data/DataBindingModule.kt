@@ -2,9 +2,11 @@ package com.openclassrooms.realestatemanager.data
 
 import com.openclassrooms.realestatemanager.data.local.repository.*
 import com.openclassrooms.realestatemanager.data.remote.repository.AutocompleteRepositoryImpl
+import com.openclassrooms.realestatemanager.data.remote.repository.FirebaseRepositoryImpl
 import com.openclassrooms.realestatemanager.data.remote.repository.GeocodingRepositoryImpl
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
+import com.openclassrooms.realestatemanager.domain.firebase.FirebaseRepository
 import com.openclassrooms.realestatemanager.domain.geocoding.GeocodingRepository
 import com.openclassrooms.realestatemanager.domain.location.LocationRepository
 import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
@@ -47,5 +49,9 @@ abstract class DataBindingModule {
     @Binds
     @Singleton
     abstract fun searchCriteriaRepository(impl: SearchCriteriaRepositoryImpl): SearchCriteriaRepository
+
+    @Binds
+    @Singleton
+    abstract fun firebaseRepository(imp: FirebaseRepositoryImpl) : FirebaseRepository
 
 }
