@@ -2,7 +2,7 @@ package com.openclassrooms.realestatemanager.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.work.*
-import com.openclassrooms.realestatemanager.data.DataSynchronizationWorker
+import com.openclassrooms.realestatemanager.data.FirebaseSynchronizationWorker
 import com.openclassrooms.realestatemanager.domain.location.LocationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -18,7 +18,7 @@ class MainViewModel @Inject constructor(
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-        val syncRequest = OneTimeWorkRequestBuilder<DataSynchronizationWorker>()
+        val syncRequest = OneTimeWorkRequestBuilder<FirebaseSynchronizationWorker>()
             .setConstraints(constraints)
             .build()
 

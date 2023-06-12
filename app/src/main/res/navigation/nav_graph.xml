@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_to_searchModalBottomSheetFragment"
             app:destination="@id/searchModalBottomSheetFragment" />
+        <action
+            android:id="@+id/action_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addOrModifyRealEstateFragment"
@@ -103,4 +106,8 @@
         android:name="com.openclassrooms.realestatemanager.ui.search.SearchModalBottomSheetFragment"
         android:label="SearchModalBottomSheetFragment"
         tools:layout="@layout/search_modal_bottom_sheets_fragment"/>
+    <dialog
+        android:id="@+id/settingsFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

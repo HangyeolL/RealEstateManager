@@ -17,6 +17,7 @@
     <string name="navigation_drawer_open">navigation drawer is open</string>
     <string name="navigation_drawer_close">navigation drawer is closed</string>
     <string name="euro_symbol_as_string">\u20ac</string>
+    <string name="dollar_symbol_as_string">$</string>
     <string name="none">None</string>
     <string name="please_fill_out_all_the_forms">Please fill out all the forms</string>
     <string name="house">House</string>
@@ -45,5 +46,6 @@
 
     <string name="failed_to_save_real_estate">failed to save real estate</string>
     <string name="succeed_to_save_real_estate">succeed to save real estate</string>
+    <string name="settings">settings</string>
 
 </resources>

@@ -55,20 +55,32 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="4dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="#FF659D"
-            app:layout_constraintEnd_toStartOf="@+id/real_estate_list_item_ImageView_soldOutTag"
+            app:layout_constraintEnd_toStartOf="@+id/real_estate_list_item_TextView_currencySymbol"
             app:layout_constraintStart_toEndOf="@+id/real_estate_list_item_ImageView"
             app:layout_constraintTop_toBottomOf="@+id/real_estate_list_item_TextView_city"
-            tools:text="259000 euro" />
+            tools:text="259000" />
+
+        <TextView
+            android:id="@+id/real_estate_list_item_TextView_currencySymbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="#FF659D"
+            app:layout_constraintBottom_toBottomOf="@+id/real_estate_list_item_TextView_price"
+            app:layout_constraintEnd_toStartOf="@id/real_estate_list_item_ImageView_soldOutTag"
+            app:layout_constraintTop_toTopOf="@+id/real_estate_list_item_TextView_price"
+            android:text="@string/dollar_symbol_as_string" />
 
         <ImageView
             android:id="@+id/real_estate_list_item_ImageView_soldOutTag"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

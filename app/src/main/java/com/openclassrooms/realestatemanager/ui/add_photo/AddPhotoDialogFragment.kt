@@ -52,11 +52,6 @@ class AddPhotoDialogFragment : DialogFragment(R.layout.add_photo_dialog_fragment
         }
 
         binding.addPhotoDialogButtonOk.setOnClickListener {
-//            viewModel.onAddPhotoButtonOkClicked(
-//                realEstateId,
-//                picUriToString,
-//                binding.addPhotoDialogTextInputEditTextDescription.text.toString()
-//            )
 
             navController.previousBackStackEntry?.savedStateHandle?.set(
                 "picUriToString",

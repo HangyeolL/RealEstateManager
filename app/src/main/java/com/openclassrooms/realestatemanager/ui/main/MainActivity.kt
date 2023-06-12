@@ -84,19 +84,23 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(RealEstateListFragmentDirections.actionToMapViewFragment())
                 }
                 R.id.main_navigationView_synchronization -> {
-                    Log.d("HL", "navigationView data synchronization clicked")
+                    Log.d("HL", "Main - navigationView data synchronization clicked")
 
                     val alertDialogBuilder = AlertDialog.Builder(this)
                     alertDialogBuilder.setTitle(R.string.data_synchronization)
                         .setMessage("Would you like to synchronize data with firebase?")
-                        .setPositiveButton("YES") { dialog, id ->
+                        .setPositiveButton("YES") { _, _ ->
                             viewModel.onUserOkClickedForDataSynchronization()
                         }
-                        .setNegativeButton("NO") { dialog, id ->
+                        .setNegativeButton("NO") { _, id ->
                             dismissDialog(id)
                         }
                         .create()
                         .show()
+                }
+                R.id.main_navigationView_settings -> {
+                    Log.d("HL", "Main - navigationView settings clicked")
+                    navController.navigate(RealEstateListFragmentDirections.actionToSettingsFragment())
                 }
             }
             true

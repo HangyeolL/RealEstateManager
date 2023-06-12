@@ -36,7 +36,7 @@ class RealEstateListAdapter(
             if (viewState.isSoldOut) {
                 itemBinding.realEstateListItemImageViewSoldOutTag.visibility = View.VISIBLE
             } else {
-                itemBinding.realEstateListItemImageViewSoldOutTag.visibility = View.GONE
+                itemBinding.realEstateListItemImageViewSoldOutTag.visibility = View.INVISIBLE
             }
 
             itemBinding.realEstateListItemCardView.setOnClickListener {
