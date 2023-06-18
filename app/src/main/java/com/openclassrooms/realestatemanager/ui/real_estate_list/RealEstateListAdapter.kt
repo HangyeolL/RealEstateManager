@@ -30,6 +30,8 @@ class RealEstateListAdapter(
             itemBinding.realEstateListItemTextViewType.text = viewState.type
             itemBinding.realEstateListItemTextViewCity.text = viewState.city
             itemBinding.realEstateListItemTextViewPrice.text = viewState.price.toString()
+            itemBinding.realEstateListItemTextViewCurrencySymbol.text = viewState.currencySymbol
+
             Glide.with(itemView.context).load(viewState.imageUrl)
                 .into(itemBinding.realEstateListItemImageView)
 

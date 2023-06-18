@@ -17,33 +17,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioButton
-        android:id="@+id/settings_radioButton_dollar"
-        android:background="@drawable/border"
+    <RadioGroup
+        android:id="@+id/settings_radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        android:text="@string/dollar_symbol_as_string"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toStartOf="@+id/settings_radioButton_euro"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_textView_currency" />
-
-    <RadioButton
-        android:id="@+id/settings_radioButton_euro"
-        android:background="@drawable/border"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        android:text="@string/euro_symbol_as_string"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="@+id/settings_radioButton_dollar"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/settings_radioButton_dollar"
-        app:layout_constraintTop_toTopOf="@+id/settings_radioButton_dollar" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_textView_currency">
+
+        <RadioButton
+            android:id="@+id/settings_radioButton_euro"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/border"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:layout_marginEnd="64dp"
+            android:text="@string/euro_symbol_as_string"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <RadioButton
+            android:id="@+id/settings_radioButton_dollar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/border"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:text="@string/dollar_symbol_as_string"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    </RadioGroup>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

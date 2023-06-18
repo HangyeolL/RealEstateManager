@@ -9,8 +9,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.domain.firebase.FirebaseRepository
-import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
-import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers

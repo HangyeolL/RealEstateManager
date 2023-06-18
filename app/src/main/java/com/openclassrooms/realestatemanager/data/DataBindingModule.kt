@@ -6,11 +6,12 @@ import com.openclassrooms.realestatemanager.data.remote.repository.FirebaseRepos
 import com.openclassrooms.realestatemanager.data.remote.repository.GeocodingRepositoryImpl
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
+import com.openclassrooms.realestatemanager.domain.datastore.DataStoreRepository
 import com.openclassrooms.realestatemanager.domain.firebase.FirebaseRepository
 import com.openclassrooms.realestatemanager.domain.geocoding.GeocodingRepository
 import com.openclassrooms.realestatemanager.domain.location.LocationRepository
-import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
-import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import com.openclassrooms.realestatemanager.domain.search_criteria.SearchCriteriaRepository
 import dagger.Binds
 import dagger.Module
@@ -44,14 +45,18 @@ abstract class DataBindingModule {
 
     @Binds
     @Singleton
-    abstract fun currentRealEstateRepository(impl: CurrentRealEstateRepositoryImpl): CurrentRealEstateRepository
+    abstract fun bindCurrentRealEstateRepository(impl: CurrentRealEstateRepositoryImpl): CurrentRealEstateRepository
 
     @Binds
     @Singleton
-    abstract fun searchCriteriaRepository(impl: SearchCriteriaRepositoryImpl): SearchCriteriaRepository
+    abstract fun bindSearchCriteriaRepository(impl: SearchCriteriaRepositoryImpl): SearchCriteriaRepository
 
     @Binds
     @Singleton
-    abstract fun firebaseRepository(imp: FirebaseRepositoryImpl) : FirebaseRepository
+    abstract fun bindFirebaseRepository(imp: FirebaseRepositoryImpl) : FirebaseRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindDataStoreRepository(imp: DataStoreRepositoryImpl) : DataStoreRepository
 
 }

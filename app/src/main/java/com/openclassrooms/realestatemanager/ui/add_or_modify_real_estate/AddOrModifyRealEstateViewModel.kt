@@ -12,7 +12,7 @@ import com.openclassrooms.realestatemanager.design_system.real_estate_photo.Real
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
 import com.openclassrooms.realestatemanager.domain.geocoding.GeocodingRepository
-import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import com.openclassrooms.realestatemanager.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*

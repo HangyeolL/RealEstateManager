@@ -4,7 +4,7 @@ import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateWithPhotos
-import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

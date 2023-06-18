@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.domain.realEstate
+package com.openclassrooms.realestatemanager.domain.realestate
 
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity

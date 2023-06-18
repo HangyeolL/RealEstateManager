@@ -1,7 +1,7 @@
 package com.openclassrooms.realestatemanager.data.local.repository
 
 import android.util.Log
-import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

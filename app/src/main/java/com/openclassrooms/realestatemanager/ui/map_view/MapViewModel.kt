@@ -1,18 +1,15 @@
 package com.openclassrooms.realestatemanager.ui.map_view
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.domain.location.LocationRepository
-import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
-import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
 import javax.inject.Inject
 
 @HiltViewModel

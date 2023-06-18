@@ -1,9 +1,12 @@
 package com.openclassrooms.realestatemanager.data
 
 import android.app.Application
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import androidx.work.WorkManager
-import com.google.android.gms.common.api.GoogleApi
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,7 +32,8 @@ object DataProvideModule {
 
     @Provides
     @Singleton
-    fun provideWorkManager(application: Application): WorkManager = WorkManager.getInstance(application)
+    fun provideWorkManager(application: Application): WorkManager =
+        WorkManager.getInstance(application)
 
     @Provides
     @Singleton
@@ -60,7 +64,8 @@ object DataProvideModule {
 
     @Provides
     @Singleton
-    fun provideRealEstateDao(appDatabase: AppDatabase): RealEstateDao = appDatabase.getRealEstateDao()
+    fun provideRealEstateDao(appDatabase: AppDatabase): RealEstateDao =
+        appDatabase.getRealEstateDao()
 
     @Provides
     @Singleton
@@ -69,10 +74,18 @@ object DataProvideModule {
 
     @Provides
     @Singleton
-    fun provideMyGoogleApi(): MyGoogleApi = MyGoogleApiHolder.getInstance().create(MyGoogleApi::class.java)
+    fun provideMyGoogleApi(): MyGoogleApi =
+        MyGoogleApiHolder.getInstance().create(MyGoogleApi::class.java)
 
     @Provides
     @Singleton
     fun provideFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
+
+    @Provides
+    @Singleton
+    fun provideDataStore(application: Application): DataStore<Preferences> =
+        PreferenceDataStoreFactory.create(
+            produceFile = { application.preferencesDataStoreFile("settings") }
+        )
 
 }

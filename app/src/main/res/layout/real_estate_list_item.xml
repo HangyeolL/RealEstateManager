@@ -74,7 +74,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/real_estate_list_item_TextView_price"
             app:layout_constraintEnd_toStartOf="@id/real_estate_list_item_ImageView_soldOutTag"
             app:layout_constraintTop_toTopOf="@+id/real_estate_list_item_TextView_price"
-            android:text="@string/dollar_symbol_as_string" />
+            android:text="@string/euro_symbol_as_string" />
 
         <ImageView
             android:id="@+id/real_estate_list_item_ImageView_soldOutTag"

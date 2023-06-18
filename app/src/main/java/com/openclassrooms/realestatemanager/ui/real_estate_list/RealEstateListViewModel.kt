@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.real_estate_list
 
+import android.app.Application
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -8,10 +9,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.domain.realEstate.CurrentRealEstateRepository
-import com.openclassrooms.realestatemanager.domain.realEstate.RealEstateRepository
+import com.openclassrooms.realestatemanager.domain.datastore.DataStoreRepository
+import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import com.openclassrooms.realestatemanager.domain.search_criteria.SearchCriteriaRepository
 import com.openclassrooms.realestatemanager.utils.MyUtils
+import com.openclassrooms.realestatemanager.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -21,15 +24,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RealEstateListViewModel @Inject constructor(
-    private val realEstateRepository: RealEstateRepository,
+    private val context: Application,
+    realEstateRepository: RealEstateRepository,
     private val currentRealEstateRepository: CurrentRealEstateRepository,
-    private val searchCriteriaRepository: SearchCriteriaRepository,
+    searchCriteriaRepository: SearchCriteriaRepository,
+    dataStoreRepository : DataStoreRepository,
 ) : ViewModel() {
 
     var selectedRealEstateId: Int = currentRealEstateRepository.getCurrentRealEstateId().value
 
     private val realEstatesWithPhotosFlow = realEstateRepository.getRealEstatesWithPhotos()
     private val searchCriteriaStateFlow = searchCriteriaRepository.getSearchCriteria()
+    private val dollarBooleanFlow = dataStoreRepository.readDollarBoolean()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -46,7 +52,8 @@ class RealEstateListViewModel @Inject constructor(
             combine(
                 searchCriteriaStateFlow,
                 realEstatesWithPhotosFlow,
-            ) { searchCriteria, realEstatesWithPhotos ->
+                dollarBooleanFlow,
+            ) { searchCriteria, realEstatesWithPhotos, dollarBoolean,  ->
 
                 val filteredItemViewList =
                     realEstatesWithPhotos.filter { realEstateWithPhotos ->
@@ -149,11 +156,19 @@ class RealEstateListViewModel @Inject constructor(
                             filteredRealEstateWithPhotos.realEstateEntity.realEstateId,
                             if (filteredRealEstateWithPhotos.realEstatePhotoLists.isNotEmpty())
                                 filteredRealEstateWithPhotos.realEstatePhotoLists[0].url
-                            else R.drawable.image_not_available.toString(),
+                            else
+                                R.drawable.image_not_available.toString(),
                             filteredRealEstateWithPhotos.realEstateEntity.type,
                             filteredRealEstateWithPhotos.realEstateEntity.city,
-                            filteredRealEstateWithPhotos.realEstateEntity.price,
-                            filteredRealEstateWithPhotos.realEstateEntity.isSoldOut
+                            if (dollarBoolean)
+                                Utils.convertEuroToDollar(filteredRealEstateWithPhotos.realEstateEntity.price)
+                            else
+                                filteredRealEstateWithPhotos.realEstateEntity.price,
+                            if (dollarBoolean)
+                                context.getString(R.string.dollar_symbol_as_string)
+                            else
+                                context.getString(R.string.euro_symbol_as_string),
+                            filteredRealEstateWithPhotos.realEstateEntity.isSoldOut,
                         )
                     }
 

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.domain.realEstate
+package com.openclassrooms.realestatemanager.domain.realestate
 
 import kotlinx.coroutines.flow.StateFlow
 
