@@ -100,4 +100,12 @@ dependencies {
 
     // Mockk
     testImplementation 'io.mockk:mockk:1.12.0'
+
+    // Coroutine Test
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1'
+
+    // Helps testing livedata : InstantTaskExecutorRule for example
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+
+
 }

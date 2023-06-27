@@ -344,6 +344,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                 try {
                     realEstateRepository.insertRealEstate(
                         RealEstateEntity(
+
                             type = type ?: return@launch,
                             descriptionBody = description ?: return@launch,
                             squareMeter = sqm ?: return@launch,

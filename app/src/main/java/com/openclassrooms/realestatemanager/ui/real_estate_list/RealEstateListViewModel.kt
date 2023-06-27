@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.domain.CoroutineDispatcherProvider
 import com.openclassrooms.realestatemanager.domain.datastore.DataStoreRepository
 import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
@@ -16,6 +17,7 @@ import com.openclassrooms.realestatemanager.domain.search_criteria.SearchCriteri
 import com.openclassrooms.realestatemanager.utils.MyUtils
 import com.openclassrooms.realestatemanager.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -24,6 +26,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RealEstateListViewModel @Inject constructor(
+    coroutineDispatcherProvider: CoroutineDispatcherProvider,
     private val context: Application,
     realEstateRepository: RealEstateRepository,
     private val currentRealEstateRepository: CurrentRealEstateRepository,
@@ -38,7 +41,7 @@ class RealEstateListViewModel @Inject constructor(
     private val dollarBooleanFlow = dataStoreRepository.readDollarBoolean()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(coroutineDispatcherProvider.io) {
             currentRealEstateRepository.getCurrentRealEstateId()
                 .collectLatest { currentRealEstateId ->
                     selectedRealEstateId = currentRealEstateId
@@ -52,7 +55,7 @@ class RealEstateListViewModel @Inject constructor(
             combine(
                 searchCriteriaStateFlow,
                 realEstatesWithPhotosFlow,
-                dollarBooleanFlow,
+                dollarBooleanFlow
             ) { searchCriteria, realEstatesWithPhotos, dollarBoolean,  ->
 
                 val filteredItemViewList =
@@ -62,88 +65,88 @@ class RealEstateListViewModel @Inject constructor(
                             val realEstateEntity = realEstateWithPhotos.realEstateEntity
                             var isMatch = true
                             // Apply filter conditions one by one
-                            if (searchCriteria.type != null &&
-                                searchCriteria.type != realEstateEntity.type
+                            if (userSearchCriteria.type != null &&
+                                userSearchCriteria.type != realEstateEntity.type
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.photoAvailable != null &&
+                            if (userSearchCriteria.photoAvailable != null &&
                                 realEstateWithPhotos.realEstatePhotoLists.isEmpty()
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.groceryStoreNearby != null &&
-                                searchCriteria.groceryStoreNearby != realEstateEntity.groceryStoreNearby
+                            if (userSearchCriteria.groceryStoreNearby != null &&
+                                userSearchCriteria.groceryStoreNearby != realEstateEntity.groceryStoreNearby
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.guard != null &&
-                                searchCriteria.guard != realEstateEntity.guard
+                            if (userSearchCriteria.guard != null &&
+                                userSearchCriteria.guard != realEstateEntity.guard
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.garden != null &&
-                                searchCriteria.garden != realEstateEntity.garden
+                            if (userSearchCriteria.garden != null &&
+                                userSearchCriteria.garden != realEstateEntity.garden
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.garage != null &&
-                                searchCriteria.garage != realEstateEntity.garage
+                            if (userSearchCriteria.garage != null &&
+                                userSearchCriteria.garage != realEstateEntity.garage
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.elevator != null &&
-                                searchCriteria.elevator != realEstateEntity.elevator
+                            if (userSearchCriteria.elevator != null &&
+                                userSearchCriteria.elevator != realEstateEntity.elevator
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.registeredRecently != null &&
+                            if (userSearchCriteria.registeredRecently != null &&
                                 MyUtils.compareDateAndGetTheDifference(realEstateEntity.marketSince) > 90
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.soldOutRecently != null &&
+                            if (userSearchCriteria.soldOutRecently != null &&
                                 MyUtils.compareDateAndGetTheDifference(realEstateEntity.dateOfSold) > 90
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.minSquareMeter != null &&
-                                realEstateEntity.squareMeter < searchCriteria.minSquareMeter
+                            if (userSearchCriteria.minSquareMeter != null &&
+                                realEstateEntity.squareMeter < userSearchCriteria.minSquareMeter
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.maxSquareMeter != null &&
-                                realEstateEntity.squareMeter > searchCriteria.maxSquareMeter
+                            if (userSearchCriteria.maxSquareMeter != null &&
+                                realEstateEntity.squareMeter > userSearchCriteria.maxSquareMeter
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.minPrice != null &&
-                                realEstateEntity.price < searchCriteria.minPrice
+                            if (userSearchCriteria.minPrice != null &&
+                                realEstateEntity.price < userSearchCriteria.minPrice
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.maxPrice != null &&
-                                realEstateEntity.price > searchCriteria.maxPrice
+                            if (userSearchCriteria.maxPrice != null &&
+                                realEstateEntity.price > userSearchCriteria.maxPrice
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.numberOfBathrooms != null &&
-                                realEstateEntity.numberOfBathrooms != searchCriteria.numberOfBathrooms
+                            if (userSearchCriteria.numberOfBathrooms != null &&
+                                realEstateEntity.numberOfBathrooms != userSearchCriteria.numberOfBathrooms
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.numberOfBedrooms != null &&
-                                realEstateEntity.numberOfBedrooms != searchCriteria.numberOfBedrooms
+                            if (userSearchCriteria.numberOfBedrooms != null &&
+                                realEstateEntity.numberOfBedrooms != userSearchCriteria.numberOfBedrooms
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.agentIdInCharge != null &&
-                                realEstateEntity.agentIdInCharge != searchCriteria.agentIdInCharge
+                            if (userSearchCriteria.agentIdInCharge != null &&
+                                realEstateEntity.agentIdInCharge != userSearchCriteria.agentIdInCharge
                             ) {
                                 isMatch = false
                             }
-                            if (searchCriteria.city != null &&
-                                realEstateEntity.city != searchCriteria.city
+                            if (userSearchCriteria.city != null &&
+                                realEstateEntity.city != userSearchCriteria.city
                             ) {
                                 isMatch = false
                             }
