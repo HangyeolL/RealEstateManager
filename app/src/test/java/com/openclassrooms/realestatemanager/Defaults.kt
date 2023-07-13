@@ -5,6 +5,7 @@ import com.openclassrooms.realestatemanager.data.local.model.AgentEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateWithPhotos
+import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.search_criteria.model.SearchCriteria
 
 fun getDefaultRealEstateEntity(realEstateId: Int) = RealEstateEntity(
@@ -34,7 +35,7 @@ fun getDefaultAgentEntity(agentId: Int) = AgentEntity(
     agentId = agentId,
     name = "AGENT:$agentId",
     email = "AGENT:$agentId@email.com",
-    photoUrl = "PhotoUrl $agentId"
+    photoUrl = "AGENT:$agentId photoUrl"
 )
 
 fun getDefaultRealEstatePhoto(photoId: Int, realEstateId: Int) = RealEstatePhotoEntity(
@@ -44,8 +45,8 @@ fun getDefaultRealEstatePhoto(photoId: Int, realEstateId: Int) = RealEstatePhoto
     description = null,
 )
 
-fun getDefaultRealEstatePhotoList(realEstateId: Int, realEstatePhotoCount: Int = 3) =
-    List(realEstatePhotoCount) { index ->
+fun getDefaultRealEstatePhotoList(realEstateId: Int, sizeCount: Int = 3) =
+    List(sizeCount) { index ->
         getDefaultRealEstatePhoto(
             photoId = index,
             realEstateId = realEstateId
@@ -57,9 +58,16 @@ fun getDefaultRealEstateWithPhotos(realEstateId: Int) = RealEstateWithPhotos(
     getDefaultRealEstatePhotoList(realEstateId)
 )
 
-fun getDefaultRealEstatesWithPhotosList(size: Int = 5) = List(size) { index ->
-    getDefaultRealEstateWithPhotos(index + 1)
+fun getDefaultRealEstateListWithPhotos(size: Int = 5) = List(size) { index ->
+    getDefaultRealEstateWithPhotos(index)
 }
+
+fun getDefaultAgentList(sizeCount: Int  = 5) =
+    List(sizeCount) { index ->
+        getDefaultAgentEntity(
+            agentId = index,
+        )
+    }
 
 fun getDefaultSearchCriteria() = SearchCriteria(
     type = null,
@@ -81,3 +89,14 @@ fun getDefaultSearchCriteria() = SearchCriteria(
     photoAvailable = null
 )
 
+fun getDefaultRealEstatePhotoItemViewState(photoId: Int) =
+    RealEstatePhotoItemViewState.Content(
+        photoId = photoId.toLong(),
+        photoUrl = "url",
+        photoDescription = null
+    )
+
+fun getDefaultRealEstatePhotoItemViewStateList(sizeCount: Int = 3) =
+    List(sizeCount) { index ->
+        getDefaultRealEstatePhotoItemViewState(index)
+    }

@@ -17,7 +17,6 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.DetailFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListAdapter
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListPagingIndicationDecoration
-import com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragmentDirections
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -79,7 +78,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                 .centerCrop()
                 .into(binding.detailShapeableImageViewAgent)
 
-            adapter.submitList(detailViewState.itemViewStateList)
+            adapter.submitList(detailViewState.realEstatePhotoItemViewStateList)
         }
     }
 

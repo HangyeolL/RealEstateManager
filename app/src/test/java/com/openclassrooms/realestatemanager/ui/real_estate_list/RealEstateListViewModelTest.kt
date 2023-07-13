@@ -7,10 +7,7 @@ import com.openclassrooms.realestatemanager.domain.datastore.DataStoreRepository
 import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import com.openclassrooms.realestatemanager.domain.search_criteria.SearchCriteriaRepository
-import io.mockk.coJustRun
-import io.mockk.every
-import io.mockk.mockk
-import kotlinx.coroutines.delay
+import io.mockk.*
 import kotlinx.coroutines.flow.*
 import org.junit.Assert.*
 import org.junit.Before
@@ -39,17 +36,17 @@ class RealEstateListViewModelTest {
 
     @Before
     fun setUp() {
+        var selectedRealEstateId: Int
+
         every { context.getString(R.string.euro_symbol_as_string) } returns "Euro symbol"
         every { realEstateRepository.getRealEstatesWithPhotos() } returns flowOf(
-            getDefaultRealEstatesWithPhotosList()
+            getDefaultRealEstateListWithPhotos()
         )
         every { searchCriteriaRepository.getSearchCriteria() } returns searchCriteriaMutableStateFlow
         every { dataStoreRepository.readDollarBoolean() } returns dollarBooleanFlow
 
         every { currentRealEstateRepository.getCurrentRealEstateId() } returns currentRealEstateIdMutableStateFlow
         every { currentRealEstateRepository.getCurrentRealEstateId().value } returns currentRealEstateIdMutableStateFlow.value
-
-        coJustRun { currentRealEstateRepository.getCurrentRealEstateId().collect {} }
 
         realEstateListViewModel = RealEstateListViewModel(
             coroutineDispatcherProvider = testCoroutineRule.getTestCoroutineDispatcherProvider(),
@@ -81,11 +78,11 @@ class RealEstateListViewModelTest {
     )
 
     private fun getDefaultItemViewStateList() = listOf(
+        getDefaultItemViewState(0, 1),
         getDefaultItemViewState(1, 1),
-        getDefaultItemViewState(2, 1),
-        getDefaultItemViewState(3, 2),
+        getDefaultItemViewState(2, 2),
+        getDefaultItemViewState(3, 3),
         getDefaultItemViewState(4, 3),
-        getDefaultItemViewState(5, 3),
     )
 
     private fun getDefaultItemViewState(realEstateId: Int, photoId: Int) =

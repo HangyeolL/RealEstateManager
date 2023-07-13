@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
+import com.openclassrooms.realestatemanager.domain.CoroutineDispatcherProvider
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
 import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
@@ -20,6 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
+    coroutineDispatcherProvider: CoroutineDispatcherProvider,
     private val application: Application,
     currentRealEstateRepository: CurrentRealEstateRepository,
     realEstateRepository: RealEstateRepository,
@@ -36,14 +38,14 @@ class DetailViewModel @Inject constructor(
 
     private val allAgentsListFlow = agentRepository.getAllAgents()
 
-    val detailViewStateLiveData: LiveData<DetailViewState> = liveData(Dispatchers.IO) {
+    val detailViewStateLiveData: LiveData<DetailViewState> = liveData(coroutineDispatcherProvider.io) {
         combine(
             currentRealEstateFlow,
             allAgentsListFlow,
         ) { currentRealEstate, allAgentsList ->
             emit(
                 DetailViewState(
-                    itemViewStateList = currentRealEstate.realEstatePhotoLists.map {
+                    realEstatePhotoItemViewStateList = currentRealEstate.realEstatePhotoLists.map {
                         RealEstatePhotoItemViewState.Content(
                             it.photoId,
                             it.url,
@@ -72,7 +74,7 @@ class DetailViewModel @Inject constructor(
         }.collectLatest {}
     }
 
-    val mapViewStateLiveData: LiveData<DetailMapViewState> = liveData(Dispatchers.IO) {
+    val mapViewStateLiveData: LiveData<DetailMapViewState> = liveData(coroutineDispatcherProvider.io) {
         currentRealEstateFlow.collectLatest { currentRealEstate ->
             emit(
                 DetailMapViewState(
