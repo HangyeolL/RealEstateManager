@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
+package com.openclassrooms.realestatemanager.design_system.real_estate_type
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,10 +10,10 @@ import androidx.annotation.NonNull
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateSpinnerItemBinding
 
-class AddOrModifyRealEstateAgentSpinnerAdapter(
+class RealEstateTypeSpinnerAdapter(
     context: Context,
     resource: Int
-) : ArrayAdapter<AddOrModifyRealEstateAgentSpinnerItemViewState>(context, resource) {
+) : ArrayAdapter<RealEstateTypeSpinnerItemViewState>(context, resource) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return getCustomView(position, parent)
@@ -29,7 +29,7 @@ class AddOrModifyRealEstateAgentSpinnerAdapter(
 
         }
         override fun convertResultToString(resultValue: Any): CharSequence {
-            return (resultValue as AddOrModifyRealEstateAgentSpinnerItemViewState).agentNameInCharge
+            return (resultValue as RealEstateTypeSpinnerItemViewState).type
         }
     }
 
@@ -41,10 +41,10 @@ class AddOrModifyRealEstateAgentSpinnerAdapter(
         )
         val itemViewState = getItem(position)
 
-        Glide.with(context).load(itemViewState?.agentPhoto)
+        Glide.with(context).load(itemViewState?.icon)
             .into(itemBinding.addOrModifyRealEstateSpinnerItemImageView)
 
-        itemBinding.addOrModifyRealEstateSpinnerItemTextView.text = itemViewState?.agentNameInCharge
+        itemBinding.addOrModifyRealEstateSpinnerItemTextView.text = itemViewState?.type
 
         return itemBinding.root
     }

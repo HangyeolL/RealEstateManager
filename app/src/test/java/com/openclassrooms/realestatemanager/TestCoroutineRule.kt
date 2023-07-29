@@ -17,7 +17,7 @@ import org.junit.runner.Description
 class TestCoroutineRule : TestRule {
 
     val testCoroutineDispatcher = StandardTestDispatcher()
-    private val testCoroutineScope = TestScope(testCoroutineDispatcher)
+    val testCoroutineScope = TestScope(testCoroutineDispatcher)
 
     override fun apply(base: Statement, description: Description): Statement =
         object : Statement() {

@@ -12,7 +12,6 @@ import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateR
 import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import com.openclassrooms.realestatemanager.ui.detail_map.DetailMapViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull

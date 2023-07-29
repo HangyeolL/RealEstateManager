@@ -20,6 +20,7 @@ buildscript {
 
         // Navigation safe args
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
+
     }
 }
 
@@ -28,8 +29,4 @@ allprojects {
         google()
         mavenCentral()
     }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }

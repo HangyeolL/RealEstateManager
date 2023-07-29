@@ -1,14 +1,14 @@
 package com.openclassrooms.realestatemanager.ui.search
 
-import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateAgentSpinnerItemViewState
-import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateTypeSpinnerItemViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_agent.RealEstateAgentSpinnerItemViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealEstateTypeSpinnerItemViewState
 
 sealed class SearchViewState(
     val type: SearchViewStateType,
 ) {
     data class InitialContent(
-        val typeSpinnerItemViewStateList: List<AddOrModifyRealEstateTypeSpinnerItemViewState>,
-        val agentSpinnerItemViewStateList: List<AddOrModifyRealEstateAgentSpinnerItemViewState>,
+        val typeSpinnerItemViewStateList: List<RealEstateTypeSpinnerItemViewState>,
+        val agentSpinnerItemViewStateList: List<RealEstateAgentSpinnerItemViewState>,
     ) : SearchViewState(SearchViewStateType.INITIAL)
 
 //    data class WithUserInput(

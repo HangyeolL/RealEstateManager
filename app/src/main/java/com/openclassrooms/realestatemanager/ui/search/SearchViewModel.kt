@@ -4,12 +4,13 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteTextViewState
+import com.openclassrooms.realestatemanager.domain.CoroutineDispatcherProvider
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
 import com.openclassrooms.realestatemanager.domain.search_criteria.SearchCriteriaRepository
 import com.openclassrooms.realestatemanager.domain.search_criteria.model.SearchCriteria
-import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateAgentSpinnerItemViewState
-import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateTypeSpinnerItemViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_agent.RealEstateAgentSpinnerItemViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealEstateTypeSpinnerItemViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
@@ -17,24 +18,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
+    private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
     application: Application,
     agentRepository: AgentRepository,
-    private val autoCompleteRepository: AutocompleteRepository,
+    private val autocompleteRepository: AutocompleteRepository,
     private val searchCriteriaRepository: SearchCriteriaRepository,
 ) : ViewModel() {
 
-    val viewStateLiveData: LiveData<SearchViewState> = liveData(Dispatchers.IO) {
+    val viewStateLiveData: LiveData<SearchViewState> = liveData(coroutineDispatcherProvider.io) {
         coroutineScope {
             val typeSpinnerItemViewStateList = listOf(
-                AddOrModifyRealEstateTypeSpinnerItemViewState(
+                RealEstateTypeSpinnerItemViewState(
                     R.drawable.ic_baseline_house_24,
                     application.getString(R.string.house)
                 ),
-                AddOrModifyRealEstateTypeSpinnerItemViewState(
+                RealEstateTypeSpinnerItemViewState(
                     R.drawable.ic_baseline_apartment_24,
                     application.getString(R.string.apartment)
                 ),
-                AddOrModifyRealEstateTypeSpinnerItemViewState(
+                RealEstateTypeSpinnerItemViewState(
                     R.drawable.ic_baseline_bed_24,
                     application.getString(R.string.studio)
                 )
@@ -43,7 +45,7 @@ class SearchViewModel @Inject constructor(
             val agentSpinnerItemViewStateList = async {
                 agentRepository.getAllAgents().first()
             }.await().map { agentEntity ->
-                AddOrModifyRealEstateAgentSpinnerItemViewState(
+                RealEstateAgentSpinnerItemViewState(
                     agentIdInCharge = agentEntity.agentId,
                     agentNameInCharge = agentEntity.name,
                     agentPhoto = agentEntity.photoUrl
@@ -60,8 +62,8 @@ class SearchViewModel @Inject constructor(
     }
 
     val cityPredictionsLiveData: LiveData<List<AutocompleteTextViewState>> =
-        liveData(Dispatchers.IO) {
-            autoCompleteRepository.getAutocompleteEntitiesForCity()
+        liveData(coroutineDispatcherProvider.io) {
+            autocompleteRepository.getAutocompleteEntitiesForCity()
                 .collect { autocompleteEntities ->
                     emit(
                         autocompleteEntities.map { autocompleteEntity ->
@@ -91,7 +93,7 @@ class SearchViewModel @Inject constructor(
     private var photoAvailable: Boolean? = null
     private var agentIdInCharge: Int? = null
 
-    fun onTypeSpinnerItemClicked(selectedItem: AddOrModifyRealEstateTypeSpinnerItemViewState) {
+    fun onTypeSpinnerItemClicked(selectedItem: RealEstateTypeSpinnerItemViewState) {
         type = selectedItem.type
     }
 
@@ -122,12 +124,12 @@ class SearchViewModel @Inject constructor(
     fun onAutocompleteCityChanged(userInput: String) {
         city = userInput
 
-        viewModelScope.launch(Dispatchers.IO) {
-            autoCompleteRepository.requestMyAutocompleteResponseOfCity(userInput)
+        viewModelScope.launch(coroutineDispatcherProvider.io) {
+            autocompleteRepository.requestMyAutocompleteResponseOfCity(userInput)
         }
     }
 
-    fun onAgentSpinnerItemClicked(selectedItem: AddOrModifyRealEstateAgentSpinnerItemViewState) {
+    fun onAgentSpinnerItemClicked(selectedItem: RealEstateAgentSpinnerItemViewState) {
         agentIdInCharge = selectedItem.agentIdInCharge
     }
 

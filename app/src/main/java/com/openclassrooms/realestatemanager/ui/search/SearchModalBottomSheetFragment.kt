@@ -8,9 +8,9 @@ import androidx.navigation.NavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.SearchModalBottomSheetsFragmentBinding
-import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateAgentSpinnerAdapter
+import com.openclassrooms.realestatemanager.design_system.real_estate_agent.RealEstateAgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteAdapter
-import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateTypeSpinnerAdapter
+import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealEstateTypeSpinnerAdapter
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,11 +27,11 @@ class SearchModalBottomSheetFragment :
         super.onViewCreated(view, savedInstanceState)
 
         // Adapter set up
-        val typeSpinnerAdapter = AddOrModifyRealEstateTypeSpinnerAdapter(
+        val typeSpinnerAdapter = RealEstateTypeSpinnerAdapter(
             requireContext(),
             R.layout.add_or_modify_real_estate_spinner_item
         )
-        val agentSpinnerAdapter = AddOrModifyRealEstateAgentSpinnerAdapter(
+        val agentSpinnerAdapter = RealEstateAgentSpinnerAdapter(
             requireContext(),
             R.layout.add_or_modify_real_estate_spinner_item
         )

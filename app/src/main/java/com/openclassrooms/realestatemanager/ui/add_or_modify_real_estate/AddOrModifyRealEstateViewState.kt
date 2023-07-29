@@ -1,10 +1,12 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
+import com.openclassrooms.realestatemanager.design_system.real_estate_agent.RealEstateAgentSpinnerItemViewState
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealEstateTypeSpinnerItemViewState
 
 data class AddOrModifyRealEstateViewState(
-    val typeSpinnerItemViewStateList: List<AddOrModifyRealEstateTypeSpinnerItemViewState>,
-    val agentSpinnerItemViewStateList: List<AddOrModifyRealEstateAgentSpinnerItemViewState>,
+    val typeSpinnerItemViewStateList: List<RealEstateTypeSpinnerItemViewState>,
+    val agentSpinnerItemViewStateList: List<RealEstateAgentSpinnerItemViewState>,
     val realEstatePhotoListItemViewStateList: List<RealEstatePhotoItemViewState>,
     val address: String,
     val city: String,

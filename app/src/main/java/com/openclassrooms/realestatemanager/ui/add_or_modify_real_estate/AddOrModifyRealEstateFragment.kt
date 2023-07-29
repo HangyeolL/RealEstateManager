@@ -17,7 +17,9 @@ import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.AddOrModifyRealEstateFragmentBinding
 import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteAdapter
+import com.openclassrooms.realestatemanager.design_system.real_estate_agent.RealEstateAgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoListAdapter
+import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealEstateTypeSpinnerAdapter
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -82,11 +84,11 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         )
 
         // Adapter set up
-        val typeSpinnerAdapter = AddOrModifyRealEstateTypeSpinnerAdapter(
+        val typeSpinnerAdapter = RealEstateTypeSpinnerAdapter(
             requireContext(),
             R.layout.add_or_modify_real_estate_spinner_item
         )
-        val agentSpinnerAdapter = AddOrModifyRealEstateAgentSpinnerAdapter(
+        val agentSpinnerAdapter = RealEstateAgentSpinnerAdapter(
             requireContext(),
             R.layout.add_or_modify_real_estate_spinner_item
         )

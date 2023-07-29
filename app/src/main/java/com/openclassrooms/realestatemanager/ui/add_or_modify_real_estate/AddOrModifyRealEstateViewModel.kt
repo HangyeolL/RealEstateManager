@@ -8,7 +8,9 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity
 import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteTextViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_agent.RealEstateAgentSpinnerItemViewState
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealEstateTypeSpinnerItemViewState
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
 import com.openclassrooms.realestatemanager.domain.geocoding.GeocodingRepository
@@ -49,15 +51,15 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                     val allAgentsAsync = async { agentRepository.getAllAgents().first() }
 
                     val typeSpinnerItemViewStateList = listOf(
-                        AddOrModifyRealEstateTypeSpinnerItemViewState(
+                        RealEstateTypeSpinnerItemViewState(
                             R.drawable.ic_baseline_house_24,
                             application.getString(R.string.house)
                         ),
-                        AddOrModifyRealEstateTypeSpinnerItemViewState(
+                        RealEstateTypeSpinnerItemViewState(
                             R.drawable.ic_baseline_apartment_24,
                             application.getString(R.string.apartment)
                         ),
-                        AddOrModifyRealEstateTypeSpinnerItemViewState(
+                        RealEstateTypeSpinnerItemViewState(
                             R.drawable.ic_baseline_bed_24,
                             application.getString(R.string.studio)
                         )
@@ -66,7 +68,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                     val allAgents = allAgentsAsync.await()
 
                     val agentSpinnerItemViewStateList = allAgents.map { agentEntity ->
-                        AddOrModifyRealEstateAgentSpinnerItemViewState(
+                        RealEstateAgentSpinnerItemViewState(
                             agentIdInCharge = agentEntity.agentId,
                             agentNameInCharge = agentEntity.name,
                             agentPhoto = agentEntity.photoUrl
@@ -113,15 +115,15 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                     val allAgentsAsync = async { agentRepository.getAllAgents().first() }
 
                     val typeSpinnerItemViewStateList = listOf(
-                        AddOrModifyRealEstateTypeSpinnerItemViewState(
+                        RealEstateTypeSpinnerItemViewState(
                             R.drawable.ic_baseline_house_24,
                             application.getString(R.string.house)
                         ),
-                        AddOrModifyRealEstateTypeSpinnerItemViewState(
+                        RealEstateTypeSpinnerItemViewState(
                             R.drawable.ic_baseline_apartment_24,
                             application.getString(R.string.apartment)
                         ),
-                        AddOrModifyRealEstateTypeSpinnerItemViewState(
+                        RealEstateTypeSpinnerItemViewState(
                             R.drawable.ic_baseline_bed_24,
                             application.getString(R.string.studio)
                         )
@@ -130,7 +132,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                     val allAgents = allAgentsAsync.await()
 
                     val agentSpinnerItemViewStateList = allAgents.map { agentEntity ->
-                        AddOrModifyRealEstateAgentSpinnerItemViewState(
+                        RealEstateAgentSpinnerItemViewState(
                             agentIdInCharge = agentEntity.agentId,
                             agentNameInCharge = agentEntity.name,
                             agentPhoto = agentEntity.photoUrl
@@ -222,7 +224,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     private var description: String? = null
     private var agentIdInCharge: Int? = null
 
-    fun onTypeSpinnerItemClicked(selectedItem: AddOrModifyRealEstateTypeSpinnerItemViewState) {
+    fun onTypeSpinnerItemClicked(selectedItem: RealEstateTypeSpinnerItemViewState) {
         type = selectedItem.type
     }
 
@@ -317,7 +319,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         description = userInput
     }
 
-    fun onAgentSpinnerItemClicked(selectedItem: AddOrModifyRealEstateAgentSpinnerItemViewState) {
+    fun onAgentSpinnerItemClicked(selectedItem: RealEstateAgentSpinnerItemViewState) {
         agentIdInCharge = selectedItem.agentIdInCharge
     }
 

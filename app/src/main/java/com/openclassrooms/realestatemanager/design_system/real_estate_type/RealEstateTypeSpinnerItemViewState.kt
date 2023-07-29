@@ -1,9 +1,9 @@
-package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
+package com.openclassrooms.realestatemanager.design_system.real_estate_type
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
-data class AddOrModifyRealEstateTypeSpinnerItemViewState(
+data class RealEstateTypeSpinnerItemViewState(
 
     @DrawableRes
     val icon: Int,

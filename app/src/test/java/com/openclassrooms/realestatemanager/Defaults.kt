@@ -5,20 +5,24 @@ import com.openclassrooms.realestatemanager.data.local.model.AgentEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateWithPhotos
+import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteTextViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_agent.RealEstateAgentSpinnerItemViewState
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealEstateTypeSpinnerItemViewState
+import com.openclassrooms.realestatemanager.domain.autocomplete.model.AutocompleteEntity
 import com.openclassrooms.realestatemanager.domain.search_criteria.model.SearchCriteria
 
 fun getDefaultRealEstateEntity(realEstateId: Int) = RealEstateEntity(
     realEstateId = realEstateId,
-    type = "House",
-    descriptionBody = "",
+    type = "type$realEstateId",
+    descriptionBody = "description$realEstateId",
     squareMeter = realEstateId * 10,
-    city = "Fontainebleau",
+    city = "city$realEstateId",
     price = realEstateId * 1000,
     numberOfBedrooms = realEstateId + 1,
     numberOfBathrooms = realEstateId + 1,
     numberOfRooms = realEstateId + 2,
-    address = "Somewhere $realEstateId",
+    address = "address$realEstateId",
     garage = false,
     guard = false,
     garden = false,
@@ -33,15 +37,15 @@ fun getDefaultRealEstateEntity(realEstateId: Int) = RealEstateEntity(
 
 fun getDefaultAgentEntity(agentId: Int) = AgentEntity(
     agentId = agentId,
-    name = "AGENT:$agentId",
-    email = "AGENT:$agentId@email.com",
-    photoUrl = "AGENT:$agentId photoUrl"
+    name = "agentName$agentId",
+    email = "agentName$agentId@email.com",
+    photoUrl = "agentPhoto$agentId"
 )
 
 fun getDefaultRealEstatePhoto(photoId: Int, realEstateId: Int) = RealEstatePhotoEntity(
     photoId = photoId.toLong(),
     realEstateIdOfPhoto = realEstateId.toLong(),
-    url = "url",
+    url = "url$photoId",
     description = null,
 )
 
@@ -62,7 +66,7 @@ fun getDefaultRealEstateListWithPhotos(size: Int = 5) = List(size) { index ->
     getDefaultRealEstateWithPhotos(index)
 }
 
-fun getDefaultAgentList(sizeCount: Int  = 5) =
+fun getDefaultAgentList(sizeCount: Int = 5) =
     List(sizeCount) { index ->
         getDefaultAgentEntity(
             agentId = index,
@@ -92,7 +96,7 @@ fun getDefaultSearchCriteria() = SearchCriteria(
 fun getDefaultRealEstatePhotoItemViewState(photoId: Int) =
     RealEstatePhotoItemViewState.Content(
         photoId = photoId.toLong(),
-        photoUrl = "url",
+        photoUrl = "url$photoId",
         photoDescription = null
     )
 
@@ -100,3 +104,54 @@ fun getDefaultRealEstatePhotoItemViewStateList(sizeCount: Int = 3) =
     List(sizeCount) { index ->
         getDefaultRealEstatePhotoItemViewState(index)
     }
+
+fun getDefaultAutocompleteEntity(placeId: String) = AutocompleteEntity(
+    placeId = placeId,
+    text = "text of $placeId",
+)
+
+fun getDefaultAutocompleteEntityList(sizeCount: Int = 5) =
+    List(sizeCount) { index ->
+        getDefaultAutocompleteEntity("placeId$index")
+    }
+
+fun getDefaultAutocompleteTextViewState(placeId: String) = AutocompleteTextViewState(
+    text = "text of $placeId"
+)
+
+fun getDefaultAutocompleteTextViewStateList(sizeCount: Int = 5) =
+    List(sizeCount) { index ->
+        getDefaultAutocompleteTextViewState("placeId$index")
+    }
+
+fun getDefaultRealEstateTypeSpinnerItemViewStateList() =
+    listOf(
+        RealEstateTypeSpinnerItemViewState(
+            icon = R.drawable.ic_baseline_house_24,
+            type = "House"
+        ),
+        RealEstateTypeSpinnerItemViewState(
+            icon = R.drawable.ic_baseline_apartment_24,
+            type = "Apartment"
+        ),
+        RealEstateTypeSpinnerItemViewState(
+            icon = R.drawable.ic_baseline_bed_24,
+            type = "Studio"
+        )
+    )
+
+fun getDefaultAgentSpinnerItemViewState(agentId: Int) =
+    RealEstateAgentSpinnerItemViewState(
+        agentIdInCharge = agentId,
+        agentNameInCharge = "agentName$agentId",
+        agentPhoto = "agentPhoto$agentId"
+    )
+
+fun getDefaultAgentSpinnerItemViewStateList(sizeCount: Int = 5) =
+    List(sizeCount) { index ->
+        getDefaultAgentSpinnerItemViewState(index)
+    }
+
+
+
+
