@@ -111,30 +111,44 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
         // Observer for viewState set up
         viewModel.initialViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
+            when (viewState) {
+                is AddOrModifyRealEstateViewState.Modification -> {
+                    typeSpinnerAdapter.clear()
+                    typeSpinnerAdapter.addAll(viewState.typeSpinnerItemViewStateList)
 
-            typeSpinnerAdapter.clear()
-            typeSpinnerAdapter.addAll(viewState.typeSpinnerItemViewStateList)
+                    agentSpinnerAdapter.clear()
+                    agentSpinnerAdapter.addAll(viewState.agentSpinnerItemViewStateList)
 
-            agentSpinnerAdapter.clear()
-            agentSpinnerAdapter.addAll(viewState.agentSpinnerItemViewStateList)
+                    realEstatePhotoListAdapter.submitList(viewState.realEstatePhotoListItemViewStateList)
 
-            realEstatePhotoListAdapter.submitList(viewState.realEstatePhotoListItemViewStateList)
+                    binding.addOrModifyRealEstateTextInputEditTextNumberOfRooms.setText(viewState.numberOfRooms)
+                    binding.addOrModifyRealEstateTextInputEditTextNumberOfBedRooms.setText(viewState.numberOfBedrooms)
+                    binding.addOrModifyRealEstateTextInputEditTextNumberOfBathRooms.setText(viewState.numberOfBathrooms)
+                    binding.addOrModifyRealEstateTextInputEditTextPrice.setText(viewState.price)
+                    binding.addOrModifyRealEstateTextInputEditTextSqm.setText(viewState.squareMeter)
 
-            binding.addOrModifyRealEstateTextInputEditTextNumberOfRooms.setText(viewState.numberOfRooms)
-            binding.addOrModifyRealEstateTextInputEditTextNumberOfBedRooms.setText(viewState.numberOfBedrooms)
-            binding.addOrModifyRealEstateTextInputEditTextNumberOfBathRooms.setText(viewState.numberOfBathrooms)
-            binding.addOrModifyRealEstateTextInputEditTextPrice.setText(viewState.price)
-            binding.addOrModifyRealEstateTextInputEditTextSqm.setText(viewState.squareMeter)
+                    binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setText(viewState.address)
+                    binding.addOrModifyRealEstateAutoCompleteTextViewCity.setText(viewState.city)
 
-            binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setText(viewState.address)
-            binding.addOrModifyRealEstateAutoCompleteTextViewCity.setText(viewState.city)
+                    binding.addOrModifyRealEstateTextInputEditTextDescriptionBody.setText(viewState.description)
 
-            binding.addOrModifyRealEstateTextInputEditTextDescriptionBody.setText(viewState.description)
+                    binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText(viewState.marketSince)
+                    viewModel.onDefaultMarketSinceValueSet(binding.addOrModifyRealEstateTextInputEditTextMarketSince.text.toString())
 
-            binding.addOrModifyRealEstateTextInputEditTextMarketSince.setText(viewState.marketSince)
-            viewModel.onDefaultMarketSinceValueSet(binding.addOrModifyRealEstateTextInputEditTextMarketSince.text.toString())
+                    binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(viewState.dateOfSold)
+                }
+                is AddOrModifyRealEstateViewState.Creation -> {
+                    typeSpinnerAdapter.clear()
+                    typeSpinnerAdapter.addAll(viewState.typeSpinnerItemViewStateList)
 
-            binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(viewState.dateOfSold)
+                    agentSpinnerAdapter.clear()
+                    agentSpinnerAdapter.addAll(viewState.agentSpinnerItemViewStateList)
+
+                    realEstatePhotoListAdapter.submitList(viewState.realEstatePhotoListItemViewStateList)
+
+                    viewModel.onDefaultMarketSinceValueSet(binding.addOrModifyRealEstateTextInputEditTextMarketSince.text.toString())
+                }
+            }
         }
 
         // Observer : Autocomplete dynamic liveData

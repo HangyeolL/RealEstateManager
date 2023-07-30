@@ -11,6 +11,7 @@ import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view
 import com.openclassrooms.realestatemanager.design_system.real_estate_agent.RealEstateAgentSpinnerItemViewState
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealEstateTypeSpinnerItemViewState
+import com.openclassrooms.realestatemanager.domain.CoroutineDispatcherProvider
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
 import com.openclassrooms.realestatemanager.domain.geocoding.GeocodingRepository
@@ -23,6 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddOrModifyRealEstateViewModel @Inject constructor(
+    private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
     private val application: Application,
     savedStateHandle: SavedStateHandle,
     private val agentRepository: AgentRepository,
@@ -33,22 +35,23 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
     companion object {
         private const val DEFAULT_REAL_ESTATE_ID = 0
+        private const val REAL_ESTATE_ID_KEY = "realEstateId"
     }
 
-    val realEstateId: Int? = savedStateHandle.get<Int>("realEstateId")
+    val realEstateId: Int? = savedStateHandle.get<Int>(REAL_ESTATE_ID_KEY)
 
     val stringSingleLiveEvent: SingleLiveEvent<String> = SingleLiveEvent()
 
     val initialViewStateLiveData: LiveData<AddOrModifyRealEstateViewState> =
-        liveData(Dispatchers.IO) {
+        liveData(coroutineDispatcherProvider.io) {
             Log.d("HG", "AddOrModifyReceived:$realEstateId")
 
             //TODO why realEstateAsync doesn't get the photoList with new elements added ?
             if (realEstateId != DEFAULT_REAL_ESTATE_ID && realEstateId != null) {
                 coroutineScope {
-                    val realEstateAsync =
-                        async { realEstateRepository.getRealEstateWithPhotosById(realEstateId).first() }
-                    val allAgentsAsync = async { agentRepository.getAllAgents().first() }
+                    val realEstate =
+                        async { realEstateRepository.getRealEstateWithPhotosById(realEstateId).first() }.await()
+                    val allAgents = async { agentRepository.getAllAgents().first() }.await()
 
                     val typeSpinnerItemViewStateList = listOf(
                         RealEstateTypeSpinnerItemViewState(
@@ -65,8 +68,6 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         )
                     )
 
-                    val allAgents = allAgentsAsync.await()
-
                     val agentSpinnerItemViewStateList = allAgents.map { agentEntity ->
                         RealEstateAgentSpinnerItemViewState(
                             agentIdInCharge = agentEntity.agentId,
@@ -74,8 +75,6 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                             agentPhoto = agentEntity.photoUrl
                         )
                     }
-
-                    val realEstate = realEstateAsync.await()
 
                     val photoListItemViewStateList =
                         realEstate.realEstatePhotoLists.map { photoEntity ->
@@ -87,7 +86,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         }.plus(RealEstatePhotoItemViewState.AddRealEstatePhoto)
 
                     emit(
-                        AddOrModifyRealEstateViewState(
+                        AddOrModifyRealEstateViewState.Modification(
                             typeSpinnerItemViewStateList = typeSpinnerItemViewStateList,
                             agentSpinnerItemViewStateList = agentSpinnerItemViewStateList,
                             realEstatePhotoListItemViewStateList = photoListItemViewStateList,
@@ -145,26 +144,10 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                         )
 
                     emit(
-                        AddOrModifyRealEstateViewState(
+                        AddOrModifyRealEstateViewState.Creation(
                             typeSpinnerItemViewStateList = typeSpinnerItemViewStateList,
                             agentSpinnerItemViewStateList = agentSpinnerItemViewStateList,
                             realEstatePhotoListItemViewStateList = photoListItemViewStateList,
-                            address = "",
-                            city = "",
-                            numberOfRooms = "",
-                            numberOfBathrooms = "",
-                            numberOfBedrooms = "",
-                            squareMeter = "",
-                            marketSince = "",
-                            price = "",
-                            garage = false,
-                            guard = false,
-                            garden = false,
-                            elevator = false,
-                            groceryStoreNearby = false,
-                            isSoldOut = false,
-                            dateOfSold = null,
-                            description = "",
                         )
                     )
 
@@ -177,7 +160,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
 
     val addressPredictionsLiveData: LiveData<List<AutocompleteTextViewState>> =
-        liveData(Dispatchers.IO) {
+        liveData(coroutineDispatcherProvider.io) {
             autoCompleteRepository.getAutocompleteEntitiesForAddress()
                 .collect { autocompleteEntities ->
                     emit(
@@ -191,7 +174,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         }
 
     val cityPredictionsLiveData: LiveData<List<AutocompleteTextViewState>> =
-        liveData(Dispatchers.IO) {
+        liveData(coroutineDispatcherProvider.io) {
             autoCompleteRepository.getAutocompleteEntitiesForCity()
                 .collect { autocompleteEntities ->
                     emit(
@@ -232,7 +215,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         if (userInput != null) {
             address = userInput
 
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(coroutineDispatcherProvider.io) {
                 autoCompleteRepository.requestMyAutocompleteResponseOfAddress(userInput)
 
                 latLng = geocodingRepository.requestMyGeocodingResponse(userInput)?.latLng
@@ -249,7 +232,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
         if (userInput != null) {
             city = userInput
 
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(coroutineDispatcherProvider.io) {
                 autoCompleteRepository.requestMyAutocompleteResponseOfCity(userInput)
             }
         }
@@ -342,7 +325,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
     fun onSaveButtonClicked(onFinished: () -> Unit) {
         if (realEstateId == DEFAULT_REAL_ESTATE_ID) {
             // CASE : Insert new entity
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(coroutineDispatcherProvider.io) {
                 try {
                     realEstateRepository.insertRealEstate(
                         RealEstateEntity(
@@ -391,13 +374,13 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                     }
                 }
 
-                withContext(Dispatchers.Main) {
+                withContext(coroutineDispatcherProvider.main) {
                     onFinished()
                 }
             }
         } else {
             // CASE : Modify an existing entity
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(coroutineDispatcherProvider.io) {
                 try {
                     Log.d("HL", "Before calling update RealEstate")
 
@@ -449,7 +432,7 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
                     }
                 }
 
-                withContext(Dispatchers.Main) {
+                withContext(coroutineDispatcherProvider.main) {
                     onFinished()
                 }
             }

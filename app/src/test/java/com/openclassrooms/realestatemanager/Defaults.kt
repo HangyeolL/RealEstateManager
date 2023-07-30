@@ -105,6 +105,11 @@ fun getDefaultRealEstatePhotoItemViewStateList(sizeCount: Int = 3) =
         getDefaultRealEstatePhotoItemViewState(index)
     }
 
+fun getDefaultRealEstatePhotoItemViewStateListAsAddPhoto() =
+    listOf(
+        RealEstatePhotoItemViewState.AddRealEstatePhoto
+    )
+
 fun getDefaultAutocompleteEntity(placeId: String) = AutocompleteEntity(
     placeId = placeId,
     text = "text of $placeId",

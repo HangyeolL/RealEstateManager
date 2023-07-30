@@ -9,6 +9,7 @@ import com.openclassrooms.realestatemanager.domain.realestate.RealEstateReposito
 import com.openclassrooms.realestatemanager.ui.detail_map.DetailMapViewState
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.spyk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
@@ -64,19 +65,21 @@ class DetailViewModelTest {
         }
     }
 
-//    @Test
-//    fun `edge case - currentRealEstateId is 2`() = testCoroutineRule.runTest {
-//        // Given
-//        currentRealEstateIdMutableStateFlow = MutableStateFlow(2)
-//        val expectedViewState = getDefaultDetailViewState(currentRealEstateIdMutableStateFlow.value)
-//
-//        // When
-//        detailViewModel.detailViewStateLiveData.observeForTesting(this) {
-//
-//            // Then
-//            Assert.assertEquals(expectedViewState, it.value)
-//        }
-//    }
+    @Test
+    fun `edge case - currentRealEstateId is 2`() = testCoroutineRule.runTest {
+        // Given
+        val currentRealEstateIdSpy = spyk(currentRealEstateIdMutableStateFlow)
+        currentRealEstateIdSpy.value = 2
+
+        val expectedViewState = getDefaultDetailViewState(currentRealEstateIdMutableStateFlow.value)
+
+        // When
+        detailViewModel.detailViewStateLiveData.observeForTesting(this) {
+
+            // Then
+            Assert.assertEquals(expectedViewState, it.value)
+        }
+    }
 
     @Test
     fun `nominal case - detailMapViewState`() = testCoroutineRule.runTest {

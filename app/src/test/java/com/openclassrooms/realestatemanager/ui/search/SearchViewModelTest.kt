@@ -6,17 +6,12 @@ import com.openclassrooms.realestatemanager.*
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.model.AutocompleteEntity
-import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
-import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import com.openclassrooms.realestatemanager.domain.search_criteria.SearchCriteriaRepository
-import com.openclassrooms.realestatemanager.ui.detail.DetailViewModel
 import io.mockk.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Assert
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -36,7 +31,8 @@ class SearchViewModelTest {
 
     private lateinit var searchViewModel: SearchViewModel
 
-    private var autocompleteEntityListMutableSharedFlow: MutableSharedFlow<List<AutocompleteEntity>> = MutableSharedFlow(replay = 1)
+    private var autocompleteEntityListMutableSharedFlow: MutableSharedFlow<List<AutocompleteEntity>> =
+        MutableSharedFlow(replay = 1)
 
     @Before
     fun setUp() {
@@ -51,6 +47,8 @@ class SearchViewModelTest {
                 autocompleteEntityListMutableSharedFlow
 
         coJustRun { autocompleteRepository.requestMyAutocompleteResponseOfCity(any()) }
+        justRun { searchCriteriaRepository.resetSearchCriteria() }
+        justRun { searchCriteriaRepository.setSearchCriteria(any()) }
 
         searchViewModel = SearchViewModel(
             coroutineDispatcherProvider = testCoroutineRule.getTestCoroutineDispatcherProvider(),
@@ -62,9 +60,9 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun `nominal case - searchViewState`() = testCoroutineRule.runTest {
+    fun `nominal case - search view state live data`() = testCoroutineRule.runTest {
         // Given
-        val expectedViewState = getDefaultViewState()
+        val expectedViewState = getDefaultSearchViewState()
 
         // When
         searchViewModel.viewStateLiveData.observeForTesting(this) {
@@ -75,7 +73,7 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun `nominal case - AutocompleteTextViewState`() = testCoroutineRule.runTest {
+    fun `nominal case - city predictions live data`() = testCoroutineRule.runTest {
         // Given
         val expectedViewState = getDefaultAutocompleteTextViewStateList()
 
@@ -88,36 +86,49 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun `check if the autocompleteRepository method is called on autocomplete text view city changed`() = testCoroutineRule.runTest {
-      // Given
-      searchViewModel.onAutocompleteCityChanged("userInput")
+    fun `check if the autocompleteRepository method is called on autocomplete text view city changed`() =
+        testCoroutineRule.runTest {
+            // Given
+            searchViewModel.onAutocompleteCityChanged("userInput")
 
-      coVerify {
-          autocompleteRepository.requestMyAutocompleteResponseOfCity(any())
-      }
+            delay(100)
 
-    }
+            coVerify {
+                autocompleteRepository.requestMyAutocompleteResponseOfCity(any())
+            }
+
+        }
+
+    @Test
+    fun `check if the searchCriteriaRepository method is called on button apply clicked`() =
+        testCoroutineRule.runTest {
+            // Given
+            searchViewModel.onButtonApplyClicked {}
+
+            coVerify {
+                searchCriteriaRepository.setSearchCriteria(any())
+            }
+
+        }
+
+    @Test
+    fun `check if the searchCriteriaRepository method is called on button reset clicked`() =
+        testCoroutineRule.runTest {
+            // Given
+            searchViewModel.onButtonResetClicked {}
+
+            coVerify {
+                searchCriteriaRepository.resetSearchCriteria()
+            }
+
+        }
 
     // Region OUT //
 
-    private fun getDefaultViewState() = SearchViewState.InitialContent(
+    private fun getDefaultSearchViewState() = SearchViewState.InitialContent(
         getDefaultRealEstateTypeSpinnerItemViewStateList(),
         getDefaultAgentSpinnerItemViewStateList()
     )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
