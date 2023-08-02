@@ -88,7 +88,7 @@ class RealEstateListViewModelTest {
     private fun getDefaultItemViewState(realEstateId: Int, photoId: Int) =
         RealEstateListItemViewState(
             id = getDefaultRealEstateEntity(realEstateId).realEstateId,
-            imageUrl = getDefaultRealEstatePhoto(photoId, realEstateId).url,
+            imageUrl = getDefaultRealEstatePhotoEntity(photoId, realEstateId).url,
             type = getDefaultRealEstateEntity(realEstateId).type,
             city = getDefaultRealEstateEntity(realEstateId).city,
             price = getDefaultRealEstateEntity(realEstateId).price,

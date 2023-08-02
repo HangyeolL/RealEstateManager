@@ -10,7 +10,9 @@ import com.openclassrooms.realestatemanager.design_system.real_estate_agent.Real
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealEstateTypeSpinnerItemViewState
 import com.openclassrooms.realestatemanager.domain.autocomplete.model.AutocompleteEntity
+import com.openclassrooms.realestatemanager.domain.geocoding.model.GeocodingEntity
 import com.openclassrooms.realestatemanager.domain.search_criteria.model.SearchCriteria
+import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateViewModelTest
 
 fun getDefaultRealEstateEntity(realEstateId: Int) = RealEstateEntity(
     realEstateId = realEstateId,
@@ -21,7 +23,7 @@ fun getDefaultRealEstateEntity(realEstateId: Int) = RealEstateEntity(
     price = realEstateId * 1000,
     numberOfBedrooms = realEstateId + 1,
     numberOfBathrooms = realEstateId + 1,
-    numberOfRooms = realEstateId + 2,
+    numberOfRooms = (realEstateId + 1) * 2,
     address = "address$realEstateId",
     garage = false,
     guard = false,
@@ -42,16 +44,16 @@ fun getDefaultAgentEntity(agentId: Int) = AgentEntity(
     photoUrl = "agentPhoto$agentId"
 )
 
-fun getDefaultRealEstatePhoto(photoId: Int, realEstateId: Int) = RealEstatePhotoEntity(
+fun getDefaultRealEstatePhotoEntity(photoId: Int, realEstateId: Int) = RealEstatePhotoEntity(
     photoId = photoId.toLong(),
     realEstateIdOfPhoto = realEstateId.toLong(),
     url = "url$photoId",
-    description = null,
+    description = "photoDescription$photoId of realEstate$realEstateId",
 )
 
 fun getDefaultRealEstatePhotoList(realEstateId: Int, sizeCount: Int = 3) =
     List(sizeCount) { index ->
-        getDefaultRealEstatePhoto(
+        getDefaultRealEstatePhotoEntity(
             photoId = index,
             realEstateId = realEstateId
         )
@@ -120,14 +122,23 @@ fun getDefaultAutocompleteEntityList(sizeCount: Int = 5) =
         getDefaultAutocompleteEntity("placeId$index")
     }
 
-fun getDefaultAutocompleteTextViewState(placeId: String) = AutocompleteTextViewState(
-    text = "text of $placeId"
+fun getDefaultAutocompleteTextViewStateOfCity(placeId: Int) = AutocompleteTextViewState(
+    text = "city$placeId"
+)
+fun getDefaultAutocompleteTextViewStateOfAddress(placeId: Int) = AutocompleteTextViewState(
+    text = "address$placeId"
 )
 
 fun getDefaultAutocompleteTextViewStateList(sizeCount: Int = 5) =
     List(sizeCount) { index ->
-        getDefaultAutocompleteTextViewState("placeId$index")
+        getDefaultAutocompleteTextViewStateOfCity(index)
     }
+
+fun getDefaultRealEstateTypeSpinnerItemViewState(icon: Int, type: String) =
+    RealEstateTypeSpinnerItemViewState(
+        icon = icon,
+        type = type
+    )
 
 fun getDefaultRealEstateTypeSpinnerItemViewStateList() =
     listOf(
@@ -157,6 +168,7 @@ fun getDefaultAgentSpinnerItemViewStateList(sizeCount: Int = 5) =
         getDefaultAgentSpinnerItemViewState(index)
     }
 
+fun getDefaultGeocodingEntity() = GeocodingEntity(LatLng(1.11, 1.11))
 
 
 

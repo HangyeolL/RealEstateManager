@@ -15,8 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MapViewModel @Inject constructor(
     private val currentRealEstateRepository: CurrentRealEstateRepository,
-    private val realEstateRepository: RealEstateRepository,
-    private val locationRepository: LocationRepository,
+    realEstateRepository: RealEstateRepository,
+    locationRepository: LocationRepository,
 ) : ViewModel() {
 
     companion object {
@@ -32,17 +32,6 @@ class MapViewModel @Inject constructor(
             allRealEstatesFlow,
             userLocationStateFlow,
         ) { allRealEstates, userLocation ->
-//            val mapMarkerViewStateList = ArrayList<MapMarkerViewState>()
-//
-//            allRealEstates.forEach { realEstateEntity ->
-//                mapMarkerViewStateList.add(
-//                    MapMarkerViewState(
-//                        realEstateAddress = realEstateEntity.address,
-//                        realEstateLatLng = realEstateEntity.latLng,
-//                        selectedRealEstateId = realEstateEntity.realEstateId,
-//                    )
-//                )
-//            }
             emit(
                 MapViewState(
                     mapMarkerViewStateList = allRealEstates.map { realEstateEntity ->

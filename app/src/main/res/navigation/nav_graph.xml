@@ -72,6 +72,9 @@
         <action
             android:id="@+id/action_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_to_searchModalBottomSheetFragment"
+            app:destination="@id/searchModalBottomSheetFragment" />
     </fragment>
     <dialog
         android:id="@+id/addPhotoDialogFragment"
