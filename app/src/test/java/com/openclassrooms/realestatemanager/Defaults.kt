@@ -37,6 +37,13 @@ fun getDefaultRealEstateEntity(realEstateId: Int) = RealEstateEntity(
     latLng = LatLng(realEstateId.toDouble(), realEstateId.toDouble())
 )
 
+fun getDefaultRealEstateEntityList(sizeCount: Int) =
+    List(sizeCount) { index ->
+        getDefaultRealEstateEntity(
+            realEstateId = index
+        )
+    }
+
 fun getDefaultAgentEntity(agentId: Int) = AgentEntity(
     agentId = agentId,
     name = "agentName$agentId",
@@ -59,14 +66,16 @@ fun getDefaultRealEstatePhotoList(realEstateId: Int, sizeCount: Int = 3) =
         )
     }
 
-fun getDefaultRealEstateWithPhotos(realEstateId: Int) = RealEstateWithPhotos(
-    getDefaultRealEstateEntity(realEstateId),
-    getDefaultRealEstatePhotoList(realEstateId)
-)
+fun getDefaultRealEstateWithPhotos(realEstateId: Int) =
+    RealEstateWithPhotos(
+        getDefaultRealEstateEntity(realEstateId),
+        getDefaultRealEstatePhotoList(realEstateId)
+    )
 
-fun getDefaultRealEstateListWithPhotos(size: Int = 5) = List(size) { index ->
-    getDefaultRealEstateWithPhotos(index)
-}
+fun getDefaultRealEstateListWithPhotos(size: Int = 5) =
+    List(size) { index ->
+        getDefaultRealEstateWithPhotos(index)
+    }
 
 fun getDefaultAgentList(sizeCount: Int = 5) =
     List(sizeCount) { index ->
@@ -125,6 +134,7 @@ fun getDefaultAutocompleteEntityList(sizeCount: Int = 5) =
 fun getDefaultAutocompleteTextViewStateOfCity(placeId: Int) = AutocompleteTextViewState(
     text = "city$placeId"
 )
+
 fun getDefaultAutocompleteTextViewStateOfAddress(placeId: Int) = AutocompleteTextViewState(
     text = "address$placeId"
 )

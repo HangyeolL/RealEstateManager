@@ -46,6 +46,6 @@
 
     <string name="failed_to_save_real_estate">failed to save real estate</string>
     <string name="succeed_to_save_real_estate">succeed to save real estate</string>
-    <string name="settings">settings</string>
+    <string name="settings">SETTINGS</string>
 
 </resources>

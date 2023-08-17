@@ -41,14 +41,6 @@ class MapViewFragment : SupportMapFragment(), OnMapReadyCallback {
         googleMap.isMyLocationEnabled = true
 
         viewModel.viewStateLiveData.observe(viewLifecycleOwner) { mapViewState ->
-            googleMap.clear()
-
-            googleMap.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    mapViewState.userLocationLatLng,
-                    13f
-                )
-            )
 
             mapViewState.mapMarkerViewStateList.forEach { mapMarkerViewState ->
                 googleMap.addMarker(
@@ -69,6 +61,14 @@ class MapViewFragment : SupportMapFragment(), OnMapReadyCallback {
             }
         }
 
+        viewModel.userLocationViewStateLiveData.observe(viewLifecycleOwner) { userLocationViewState ->
+            googleMap.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    userLocationViewState.userLocation,
+                    13f
+                )
+            )
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
