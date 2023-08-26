@@ -12,7 +12,6 @@ import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealE
 import com.openclassrooms.realestatemanager.domain.autocomplete.model.AutocompleteEntity
 import com.openclassrooms.realestatemanager.domain.geocoding.model.GeocodingEntity
 import com.openclassrooms.realestatemanager.domain.search_criteria.model.SearchCriteria
-import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateViewModelTest
 
 fun getDefaultRealEstateEntity(realEstateId: Int) = RealEstateEntity(
     realEstateId = realEstateId,
@@ -51,17 +50,16 @@ fun getDefaultAgentEntity(agentId: Int) = AgentEntity(
     photoUrl = "agentPhoto$agentId"
 )
 
-fun getDefaultRealEstatePhotoEntity(photoId: Int, realEstateId: Int) = RealEstatePhotoEntity(
-    photoId = photoId.toLong(),
+fun getDefaultRealEstatePhotoEntity(realEstateId: Int) = RealEstatePhotoEntity(
+    photoId = 0,
     realEstateIdOfPhoto = realEstateId.toLong(),
-    url = "url$photoId",
-    description = "photoDescription$photoId of realEstate$realEstateId",
+    url = "url",
+    description = "photoDescription of realEstate$realEstateId",
 )
 
 fun getDefaultRealEstatePhotoList(realEstateId: Int, sizeCount: Int = 3) =
-    List(sizeCount) { index ->
+    List(sizeCount) {
         getDefaultRealEstatePhotoEntity(
-            photoId = index,
             realEstateId = realEstateId
         )
     }
@@ -104,16 +102,16 @@ fun getDefaultSearchCriteria() = SearchCriteria(
     photoAvailable = null
 )
 
-fun getDefaultRealEstatePhotoItemViewState(photoId: Int) =
+fun getDefaultRealEstatePhotoItemViewState(realEstateId: Int) =
     RealEstatePhotoItemViewState.Content(
-        photoId = photoId.toLong(),
-        photoUrl = "url$photoId",
-        photoDescription = null
+        photoId = 0,
+        photoUrl = "url",
+        photoDescription = "photoDescription of realEstate$realEstateId"
     )
 
-fun getDefaultRealEstatePhotoItemViewStateList(sizeCount: Int = 3) =
-    List(sizeCount) { index ->
-        getDefaultRealEstatePhotoItemViewState(index)
+fun getDefaultRealEstatePhotoItemViewStateList(realEstateId: Int, sizeCount: Int = 3) =
+    List(sizeCount) {
+        getDefaultRealEstatePhotoItemViewState(realEstateId)
     }
 
 fun getDefaultRealEstatePhotoItemViewStateListAsAddPhoto() =
@@ -131,17 +129,13 @@ fun getDefaultAutocompleteEntityList(sizeCount: Int = 5) =
         getDefaultAutocompleteEntity("placeId$index")
     }
 
-fun getDefaultAutocompleteTextViewStateOfCity(placeId: Int) = AutocompleteTextViewState(
-    text = "city$placeId"
-)
-
-fun getDefaultAutocompleteTextViewStateOfAddress(placeId: Int) = AutocompleteTextViewState(
-    text = "address$placeId"
+fun getDefaultAutocompleteTextViewState(placeId: Int) = AutocompleteTextViewState(
+    text = "text of placeId$placeId"
 )
 
 fun getDefaultAutocompleteTextViewStateList(sizeCount: Int = 5) =
     List(sizeCount) { index ->
-        getDefaultAutocompleteTextViewStateOfCity(index)
+        getDefaultAutocompleteTextViewState(index)
     }
 
 fun getDefaultRealEstateTypeSpinnerItemViewState(icon: Int, type: String) =

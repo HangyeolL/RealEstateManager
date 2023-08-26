@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,6 +19,7 @@ public class Utils {
     /**
      * Conversion d'un prix d'un bien immobilier (Dollars vers Euros)
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
+     *
      * @param dollars
      * @return
      */
@@ -26,27 +28,45 @@ public class Utils {
     }
 
     public static int convertEuroToDollar(int euros) {
-        return (int) (euros *  1.23);
+        return (int) Math.round(euros * 1.23);
     }
 
     /**
      * Conversion de la date d'aujourd'hui en un format plus approprié
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
+     *
      * @return
      */
-    public static String getTodayDate(){
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return dateFormat.format(new Date());
+    public static String changeDateFormatToDaysFirstFromYearsFirst(String inputDate) {
+        try {
+            // Create a SimpleDateFormat object to parse the input date
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            // Parse the input date string to a Date object
+            Date date = inputFormat.parse(inputDate);
+
+            // Create a SimpleDateFormat object for the desired output format
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+            // Format the Date object to the desired output format
+            return outputFormat.format(date);
+
+        } catch (ParseException e) {
+            // Handle parsing exceptions here
+            e.printStackTrace();
+            return null; // or throw an exception if needed
+        }
     }
 
     /**
      * Vérification de la connexion réseau
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
+     *
      * @param context
      * @return
      */
     public static Boolean isInternetAvailable(Context context) {
-        WifiManager wifiManager = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         return wifiManager.isWifiEnabled();
     }
 

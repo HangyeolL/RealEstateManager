@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.ui.settings
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.openclassrooms.realestatemanager.domain.CoroutineDispatcherProvider
 import com.openclassrooms.realestatemanager.domain.datastore.DataStoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -12,24 +13,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
+    private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
     private val dataStoreRepository: DataStoreRepository,
 ) : ViewModel() {
 
     fun onRadioButtonDollarClicked(onFinished: () -> Unit) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(coroutineDispatcherProvider.io) {
             dataStoreRepository.writeDollarBooleanToTrue()
 
-            withContext(Dispatchers.Main) {
+            withContext(coroutineDispatcherProvider.main) {
                 onFinished()
             }
         }
     }
 
     fun onRadioButtonEuroClicked(onFinished: () -> Unit) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(coroutineDispatcherProvider.io) {
             dataStoreRepository.writeDollarBooleanToFalse()
 
-            withContext(Dispatchers.Main) {
+            withContext(coroutineDispatcherProvider.main) {
                 onFinished()
             }
         }

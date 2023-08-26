@@ -98,7 +98,7 @@ class DetailViewModelTest {
     // Region OUT //
 
     private fun getDefaultDetailViewState(currentRealEstateId: Int) = DetailViewState(
-        getDefaultRealEstatePhotoItemViewStateList(),
+        getDefaultRealEstatePhotoItemViewStateList(currentRealEstateId),
         descriptionBody = getDefaultRealEstateEntity(currentRealEstateId).descriptionBody,
         squareMeter = getDefaultRealEstateEntity(currentRealEstateId).squareMeter,
         numberOfRooms = getDefaultRealEstateEntity(currentRealEstateId).numberOfRooms,

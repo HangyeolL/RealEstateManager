@@ -288,7 +288,7 @@ class AddOrModifyRealEstateViewModelTest {
             AddOrModifyRealEstateViewState.Modification(
                 typeSpinnerItemViewStateList = getDefaultRealEstateTypeSpinnerItemViewStateList(),
                 agentSpinnerItemViewStateList = getDefaultAgentSpinnerItemViewStateList(),
-                realEstatePhotoListItemViewStateList = getDefaultRealEstatePhotoItemViewStateList()
+                realEstatePhotoListItemViewStateList = getDefaultRealEstatePhotoItemViewStateList(realEstateId)
                     .plus(getDefaultRealEstatePhotoItemViewStateListAsAddPhoto()),
                 address = getDefaultRealEstateEntity(realEstateId).address,
                 city = getDefaultRealEstateEntity(realEstateId).city,
