@@ -65,10 +65,10 @@ public class Utils {
      * @param context
      * @return
      */
-    public static Boolean isInternetAvailable(Context context) {
-        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        return wifiManager.isWifiEnabled();
-    }
+//    public static Boolean isInternetAvailable(Context context) {
+//        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//        return wifiManager.isWifiEnabled();
+//    }
 
     @SuppressLint("MissingPermission")
     public static boolean isWifiAvailable(Context context) {
@@ -78,6 +78,7 @@ public class Utils {
             Network network = connectivityManager.getActiveNetwork();
             NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(network);
 
+            // return true if those conditions are met else false
             return networkCapabilities != null && networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI);
         } else {
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
