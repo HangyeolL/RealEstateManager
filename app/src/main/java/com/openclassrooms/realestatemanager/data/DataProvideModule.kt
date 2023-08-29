@@ -34,20 +34,11 @@ object DataProvideModule {
 
     @Provides
     @Singleton
-    fun provideWorkManager(application: Application): WorkManager =
-        WorkManager.getInstance(application)
+    fun provideWorkManager(application: Application): WorkManager = WorkManager.getInstance(application)
 
     @Provides
     @Singleton
     fun provideGson(): Gson = GsonBuilder().create()
-
-//    @Provides
-//    @Singleton
-//    fun provideAppDatabase(
-//        application: Application,
-//        workManager: WorkManager,
-//        gson: Gson
-//    ): AppDatabase = AppDatabase.create(application, workManager, gson)
 
     @Provides
     @Singleton

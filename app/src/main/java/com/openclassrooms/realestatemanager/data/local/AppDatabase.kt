@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.data.local
 
 import androidx.room.*
-import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.data.local.dao.AgentDao
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.data.local.model.AgentEntity
