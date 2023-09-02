@@ -5,15 +5,10 @@ import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
-import androidx.room.RoomMasterTable.TABLE_NAME
-import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
-import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
-import javax.inject.Inject
+import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
+import dagger.hilt.android.EntryPointAccessors
 
-
-class RealEstateContentProvider @Inject constructor(
-    private val realEstateRepository: RealEstateRepository
-) : ContentProvider() {
+class RealEstateContentProvider : ContentProvider() {
 
     companion object {
         const val AUTHORITY = "com.openclassrooms.realestatemanager.provider"
@@ -23,13 +18,18 @@ class RealEstateContentProvider @Inject constructor(
 
         const val CODE_REAL_ESTATE_LIST = 1
 
-        private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
+        private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
             addURI(AUTHORITY, PATH_REAL_ESTATE_LIST, CODE_REAL_ESTATE_LIST)
         }
     }
 
+    private lateinit var realEstateDao: RealEstateDao
+
     override fun onCreate(): Boolean {
-        TODO("Not yet implemented")
+        val appContext = context?.applicationContext ?: throw IllegalStateException()
+        val hiltEntryPoint = EntryPointAccessors.fromApplication(appContext, ContentProviderEntryPoint::class.java)
+        realEstateDao = hiltEntryPoint.getRealEstateDao()
+        return true
     }
 
     override fun query(
@@ -38,25 +38,22 @@ class RealEstateContentProvider @Inject constructor(
         selection: String?,
         selectionArgs: Array<out String>?,
         sortOrder: String?
-    ): Cursor? {
-        TODO("Not yet implemented")
+    ): Cursor? = when(uriMatcher.match(uri)) {
+        CODE_REAL_ESTATE_LIST -> realEstateDao.getAllRealEstatesAsCursor()
+        else -> {
+            throw IllegalArgumentException("Unknown URI: $uri")
+        }
+    }.apply {
+        setNotificationUri(context?.contentResolver, uri)
     }
 
-    override fun getType(p0: Uri): String? {
-        TODO("Not yet implemented")
-    }
+    override fun getType(p0: Uri): String? = null
 
-    override fun insert(p0: Uri, p1: ContentValues?): Uri? {
-        TODO("Not yet implemented")
-    }
+    override fun insert(p0: Uri, p1: ContentValues?): Uri? = null
 
-    override fun delete(p0: Uri, p1: String?, p2: Array<out String>?): Int {
-        TODO("Not yet implemented")
-    }
+    override fun delete(p0: Uri, p1: String?, p2: Array<out String>?): Int = 0
 
-    override fun update(p0: Uri, p1: ContentValues?, p2: String?, p3: Array<out String>?): Int {
-        TODO("Not yet implemented")
-    }
+    override fun update(p0: Uri, p1: ContentValues?, p2: String?, p3: Array<out String>?): Int = 0
 
 
 }
