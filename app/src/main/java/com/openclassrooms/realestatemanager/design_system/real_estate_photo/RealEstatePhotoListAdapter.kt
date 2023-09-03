@@ -13,7 +13,7 @@ import com.openclassrooms.realestatemanager.design_system.real_estate_photo.Real
 class RealEstatePhotoListAdapter(
     private val addPhotoOnClick: () -> Unit
 ) :
-    ListAdapter<RealEstatePhotoItemViewState, ViewHolder>(PhotoCarouselDiffCallback) {
+    ListAdapter<RealEstatePhotoItemViewState, ViewHolder>(RealEstatePhotoDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         when (RealEstatePhotoType.values()[viewType]) {
@@ -64,7 +64,7 @@ class RealEstatePhotoListAdapter(
         }
     }
 
-    object PhotoCarouselDiffCallback : DiffUtil.ItemCallback<RealEstatePhotoItemViewState>() {
+    object RealEstatePhotoDiffCallback : DiffUtil.ItemCallback<RealEstatePhotoItemViewState>() {
         override fun areItemsTheSame(
             oldItem: RealEstatePhotoItemViewState,
             newItem: RealEstatePhotoItemViewState

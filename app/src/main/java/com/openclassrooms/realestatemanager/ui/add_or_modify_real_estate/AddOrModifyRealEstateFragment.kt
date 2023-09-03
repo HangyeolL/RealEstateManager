@@ -1,7 +1,10 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
@@ -41,6 +44,22 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
     // Intent to takePicture suing registerForActivityResult
     private var latestTmpUri: Uri? = null
 
+    private val intentAppChooserLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val selectedIntent = result.data
+                if (selectedIntent?.action == MediaStore.ACTION_IMAGE_CAPTURE) {
+                    // User chose the camera, launch the camera activity
+                    latestTmpUri = getTmpFileUri()
+                    takePictureResult.launch(latestTmpUri)
+                } else if (selectedIntent?.action == Intent.ACTION_GET_CONTENT) {
+                    // User chose the gallery, launch the gallery activity
+                    latestTmpUri = getTmpFileUri()
+                    selectImageFromGalleryResult.launch(null)
+                }
+            }
+        }
+
     private val takePictureResult =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
             if (isSuccess) {
@@ -73,6 +92,23 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         )
     }
 
+    // Function to show an intent chooser between camera and gallery
+    private fun showImageSourceChooser() {
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
+
+        // Restrict to only image types
+        galleryIntent.type = "image/*"
+
+        val chooserIntent = Intent.createChooser(galleryIntent, "Choose image source")
+        chooserIntent.putExtra(
+            Intent.EXTRA_INITIAL_INTENTS,
+            arrayOf(cameraIntent)
+        )
+
+        intentAppChooserLauncher.launch(chooserIntent)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -92,9 +128,9 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             requireContext(),
             R.layout.add_or_modify_real_estate_spinner_item
         )
-        val realEstatePhotoListAdapter = RealEstatePhotoListAdapter() {
+        val realEstatePhotoListAdapter = RealEstatePhotoListAdapter {
             latestTmpUri = getTmpFileUri()
-            takePictureResult.launch(latestTmpUri)
+            showImageSourceChooser()
         }
         val cityAutocompleteAdapter = AutocompleteAdapter()
 
@@ -108,6 +144,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         binding.addOrModifyRealEstateAutoCompleteTextViewCity.setAdapter(cityAutocompleteAdapter)
 
         //TODO ViewState Observed data still emit the values after user puts the new value
+        // Test Modification case + sort out common methods
 
         // Observer for viewState set up
         viewModel.initialViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
@@ -288,16 +325,19 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         binding.addOrModifyRealEstateButtonSave.setOnClickListener {
-            viewModel.onSaveButtonClicked() {
+            viewModel.onSaveButtonClicked {
                 navController.popBackStack()
             }
         }
 
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.clear()
 
     }
+
+
 }
