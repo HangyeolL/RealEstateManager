@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.openclassrooms.realestatemanager.*
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
-import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateIdRepository
 import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import com.openclassrooms.realestatemanager.ui.detail_map.DetailMapViewState
 import io.mockk.every
@@ -12,8 +12,6 @@ import io.mockk.mockk
 import io.mockk.spyk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -28,7 +26,7 @@ class DetailViewModelTest {
     val testCoroutineRule = TestCoroutineRule()
 
     private val context: Application = mockk()
-    private val currentRealEstateRepository: CurrentRealEstateRepository = mockk()
+    private val currentRealEstateIdRepository: CurrentRealEstateIdRepository = mockk()
     private val realEstateRepository: RealEstateRepository = mockk()
     private val agentRepository: AgentRepository = mockk()
 
@@ -38,7 +36,7 @@ class DetailViewModelTest {
 
     @Before
     fun setUp() {
-        every { currentRealEstateRepository.getCurrentRealEstateId() } returns currentRealEstateIdMutableStateFlow
+        every { currentRealEstateIdRepository.getCurrentRealEstateId() } returns currentRealEstateIdMutableStateFlow
         every { realEstateRepository.getRealEstateWithPhotosById(any()) } returns
                 flowOf(getDefaultRealEstateWithPhotos(currentRealEstateIdMutableStateFlow.value))
         every { agentRepository.getAllAgents() } returns flowOf(getDefaultAgentList())
@@ -46,7 +44,7 @@ class DetailViewModelTest {
         detailViewModel = DetailViewModel(
             coroutineDispatcherProvider = testCoroutineRule.getTestCoroutineDispatcherProvider(),
             application = context,
-            currentRealEstateRepository = currentRealEstateRepository,
+            currentRealEstateIdRepository = currentRealEstateIdRepository,
             realEstateRepository = realEstateRepository,
             agentRepository = agentRepository,
         )

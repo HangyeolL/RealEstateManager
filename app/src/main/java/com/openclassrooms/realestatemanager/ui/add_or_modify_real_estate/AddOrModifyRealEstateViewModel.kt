@@ -415,19 +415,18 @@ class AddOrModifyRealEstateViewModel @Inject constructor(
 
                 }
 
-                //TODO realEstateId should be properly inserted in this case not IdOfPhoto !!
                 if (picUriToString != null) {
                     try {
                         realEstateRepository.insertRealEstatePhoto(
                             RealEstatePhotoEntity(
-                                realEstateIdOfPhoto = realEstateIdOfPhoto,
+                                realEstateIdOfPhoto = realEstateId?.toLong() ?: return@launch,
                                 url = picUriToString ?: return@launch,
                                 description = photoDescription,
                             )
                         )
                         Log.d("HL", "insert RealEstatePhoto with success")
                     } catch (e: Exception) {
-                        Log.d("HL", "insert RealEstatePhoto Failed : ${e.stackTrace}")
+                        Log.d("HL", "insert RealEstatePhoto Failed : ${e.printStackTrace()}")
                     }
                 }
 

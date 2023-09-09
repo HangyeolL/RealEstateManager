@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
+import android.R.attr.data
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -27,6 +28,7 @@ import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
+
 @AndroidEntryPoint
 class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estate_fragment) {
 
@@ -41,21 +43,26 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
     private lateinit var navController: NavController
     private val args: AddOrModifyRealEstateFragmentArgs by navArgs()
 
-    // Intent to takePicture suing registerForActivityResult
     private var latestTmpUri: Uri? = null
 
     private val intentAppChooserLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val selectedIntent = result.data
-                if (selectedIntent?.action == MediaStore.ACTION_IMAGE_CAPTURE) {
-                    // User chose the camera, launch the camera activity
-                    latestTmpUri = getTmpFileUri()
-                    takePictureResult.launch(latestTmpUri)
-                } else if (selectedIntent?.action == Intent.ACTION_GET_CONTENT) {
-                    // User chose the gallery, launch the gallery activity
-                    latestTmpUri = getTmpFileUri()
-                    selectImageFromGalleryResult.launch(null)
+
+                if (selectedIntent?.data != null) {
+                    // The user selected an image from the gallery
+                    navController.navigate(
+                        AddOrModifyRealEstateFragmentDirections.actionToAddPhotoDialogFragment(
+                            args.realEstateId, selectedIntent.data.toString()
+                        )
+                    )
+                } else if (selectedIntent?.extras != null) {
+                    navController.navigate(
+                        AddOrModifyRealEstateFragmentDirections.actionToAddPhotoDialogFragment(
+                            args.realEstateId, selectedIntent.data.toString()
+                        )
+                    )
                 }
             }
         }
@@ -74,7 +81,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
     private val selectImageFromGalleryResult =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
-
+                viewModel.onPicUriToStringSet(uri.toString())
             }
         }
 
@@ -97,6 +104,11 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
 
+        cameraIntent.action = MediaStore.ACTION_IMAGE_CAPTURE
+        galleryIntent.action = Intent.ACTION_GET_CONTENT
+
+        // Decide where the capture image should be saved
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTmpFileUri())
         // Restrict to only image types
         galleryIntent.type = "image/*"
 
@@ -160,7 +172,9 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
                     binding.addOrModifyRealEstateTextInputEditTextNumberOfRooms.setText(viewState.numberOfRooms)
                     binding.addOrModifyRealEstateTextInputEditTextNumberOfBedRooms.setText(viewState.numberOfBedrooms)
-                    binding.addOrModifyRealEstateTextInputEditTextNumberOfBathRooms.setText(viewState.numberOfBathrooms)
+                    binding.addOrModifyRealEstateTextInputEditTextNumberOfBathRooms.setText(
+                        viewState.numberOfBathrooms
+                    )
                     binding.addOrModifyRealEstateTextInputEditTextPrice.setText(viewState.price)
                     binding.addOrModifyRealEstateTextInputEditTextSqm.setText(viewState.squareMeter)
 

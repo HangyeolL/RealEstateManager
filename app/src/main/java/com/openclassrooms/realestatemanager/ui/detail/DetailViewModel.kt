@@ -8,7 +8,7 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.design_system.real_estate_photo.RealEstatePhotoItemViewState
 import com.openclassrooms.realestatemanager.domain.CoroutineDispatcherProvider
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
-import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateIdRepository
 import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import com.openclassrooms.realestatemanager.ui.detail_map.DetailMapViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,14 +22,14 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     private val application: Application,
-    currentRealEstateRepository: CurrentRealEstateRepository,
+    currentRealEstateIdRepository: CurrentRealEstateIdRepository,
     realEstateRepository: RealEstateRepository,
     agentRepository: AgentRepository,
 ) : ViewModel() {
 
-    var selectedRealEstateId: Int = currentRealEstateRepository.getCurrentRealEstateId().value
+    var selectedRealEstateId: Int = currentRealEstateIdRepository.getCurrentRealEstateId().value
 
-    private val currentRealEstateFlow = currentRealEstateRepository.getCurrentRealEstateId()
+    private val currentRealEstateFlow = currentRealEstateIdRepository.getCurrentRealEstateId()
         .filterNotNull()
         .flatMapLatest { currentId ->
             realEstateRepository.getRealEstateWithPhotosById(currentId)

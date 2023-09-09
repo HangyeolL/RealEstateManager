@@ -2,7 +2,7 @@ package com.openclassrooms.realestatemanager.domain.realestate
 
 import kotlinx.coroutines.flow.StateFlow
 
-interface CurrentRealEstateRepository {
+interface CurrentRealEstateIdRepository {
 
     fun getCurrentRealEstateId(): StateFlow<Int>
 

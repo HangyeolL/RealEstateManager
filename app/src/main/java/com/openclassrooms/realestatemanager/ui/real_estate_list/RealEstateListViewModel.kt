@@ -11,13 +11,12 @@ import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.domain.CoroutineDispatcherProvider
 import com.openclassrooms.realestatemanager.domain.datastore.DataStoreRepository
-import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateIdRepository
 import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import com.openclassrooms.realestatemanager.domain.search_criteria.SearchCriteriaRepository
 import com.openclassrooms.realestatemanager.utils.MyUtils
 import com.openclassrooms.realestatemanager.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -29,12 +28,12 @@ class RealEstateListViewModel @Inject constructor(
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     private val context: Application,
     realEstateRepository: RealEstateRepository,
-    private val currentRealEstateRepository: CurrentRealEstateRepository,
+    private val currentRealEstateIdRepository: CurrentRealEstateIdRepository,
     searchCriteriaRepository: SearchCriteriaRepository,
     dataStoreRepository : DataStoreRepository,
 ) : ViewModel() {
 
-    var selectedRealEstateId: Int = currentRealEstateRepository.getCurrentRealEstateId().value
+    var selectedRealEstateId: Int = currentRealEstateIdRepository.getCurrentRealEstateId().value
 
     private val realEstatesWithPhotosFlow = realEstateRepository.getRealEstatesWithPhotos()
     private val searchCriteriaStateFlow = searchCriteriaRepository.getSearchCriteria()
@@ -42,7 +41,7 @@ class RealEstateListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(coroutineDispatcherProvider.io) {
-            currentRealEstateRepository.getCurrentRealEstateId()
+            currentRealEstateIdRepository.getCurrentRealEstateId()
                 .collectLatest { currentRealEstateId ->
                     selectedRealEstateId = currentRealEstateId
                 }
@@ -183,6 +182,6 @@ class RealEstateListViewModel @Inject constructor(
 
     fun onRealEstateListItemClicked(itemId: Int) {
         Log.d("HG", "ListFragment viewModel onRealEstateListItemClicked called")
-        currentRealEstateRepository.setCurrentRealEstateId(itemId)
+        currentRealEstateIdRepository.setCurrentRealEstateId(itemId)
     }
 }

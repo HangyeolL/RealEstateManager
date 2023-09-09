@@ -3,7 +3,7 @@ package com.openclassrooms.realestatemanager.ui.map_view
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.openclassrooms.realestatemanager.TestCoroutineRule
 import com.openclassrooms.realestatemanager.domain.location.LocationRepository
-import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateIdRepository
 import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import com.openclassrooms.realestatemanager.getDefaultRealEstateEntity
 import com.openclassrooms.realestatemanager.getDefaultRealEstateEntityList
@@ -32,7 +32,7 @@ class MapViewModelTest {
         private const val DEFAULT_LONGITUDE = 2.352610864067402
     }
 
-    private val currentRealEstateRepository: CurrentRealEstateRepository = mockk()
+    private val currentRealEstateIdRepository: CurrentRealEstateIdRepository = mockk()
     private val realEstateRepository: RealEstateRepository = mockk()
     private val locationRepository: LocationRepository = mockk()
 
@@ -43,11 +43,11 @@ class MapViewModelTest {
 
         every { realEstateRepository.getAllRealEstates() } returns flowOf(getDefaultRealEstateEntityList(5))
         every { locationRepository.getLocationStateFlow() } returns MutableStateFlow(null)
-        justRun { currentRealEstateRepository.setCurrentRealEstateId(any()) }
+        justRun { currentRealEstateIdRepository.setCurrentRealEstateId(any()) }
 
         mapViewModel = MapViewModel(
             coroutineDispatcherProvider = testCoroutineRule.getTestCoroutineDispatcherProvider(),
-            currentRealEstateRepository = currentRealEstateRepository,
+            currentRealEstateRepository = currentRealEstateIdRepository,
             realEstateRepository = realEstateRepository,
             locationRepository = locationRepository
         )
@@ -73,7 +73,7 @@ class MapViewModelTest {
 
             // Then
             verify {
-                currentRealEstateRepository.setCurrentRealEstateId(1)
+                currentRealEstateIdRepository.setCurrentRealEstateId(1)
             }
         }
 

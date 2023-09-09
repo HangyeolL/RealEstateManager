@@ -1,16 +1,13 @@
 package com.openclassrooms.realestatemanager.ui.map_view
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.google.android.gms.maps.model.LatLng
 import com.openclassrooms.realestatemanager.domain.CoroutineDispatcherProvider
 import com.openclassrooms.realestatemanager.domain.location.LocationRepository
-import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateIdRepository
 import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collectLatest
@@ -20,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MapViewModel @Inject constructor(
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
-    private val currentRealEstateRepository: CurrentRealEstateRepository,
+    private val currentRealEstateIdRepository: CurrentRealEstateIdRepository,
     realEstateRepository: RealEstateRepository,
     locationRepository: LocationRepository,
 ) : ViewModel() {
@@ -75,7 +72,7 @@ class MapViewModel @Inject constructor(
     }
 
     fun onMarkerInfoWindowClicked(selectedRealEstateId: Int, onFinished: () -> Unit) {
-        currentRealEstateRepository.setCurrentRealEstateId(selectedRealEstateId)
+        currentRealEstateIdRepository.setCurrentRealEstateId(selectedRealEstateId)
         onFinished()
     }
 

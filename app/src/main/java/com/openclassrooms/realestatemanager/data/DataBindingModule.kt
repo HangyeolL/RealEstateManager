@@ -10,7 +10,7 @@ import com.openclassrooms.realestatemanager.domain.datastore.DataStoreRepository
 import com.openclassrooms.realestatemanager.domain.firebase.FirebaseRepository
 import com.openclassrooms.realestatemanager.domain.geocoding.GeocodingRepository
 import com.openclassrooms.realestatemanager.domain.location.LocationRepository
-import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateRepository
+import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateIdRepository
 import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import com.openclassrooms.realestatemanager.domain.search_criteria.SearchCriteriaRepository
 import dagger.Binds
@@ -45,7 +45,7 @@ abstract class DataBindingModule {
 
     @Binds
     @Singleton
-    abstract fun bindCurrentRealEstateRepository(impl: CurrentRealEstateRepositoryImpl): CurrentRealEstateRepository
+    abstract fun bindCurrentRealEstateRepository(impl: CurrentRealEstateIdRepositoryImpl): CurrentRealEstateIdRepository
 
     @Binds
     @Singleton
