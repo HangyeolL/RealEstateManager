@@ -104,10 +104,6 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
     override fun onResume() {
         super.onResume()
         Log.d("HL", "DetailFragment onPause called")
-
-//        if (activity?.resources?.getBoolean(R.bool.isTablet) == true) {
-//            navController.navigateUp()
-//        }
     }
 
     override fun onPause() {

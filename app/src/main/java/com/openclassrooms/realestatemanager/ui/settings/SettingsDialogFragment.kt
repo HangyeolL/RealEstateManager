@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.SettingsFragmentBinding
 import com.openclassrooms.realestatemanager.utils.viewBinding
@@ -18,8 +17,6 @@ class SettingsDialogFragment : DialogFragment(R.layout.settings_fragment) {
 
     private val viewModel by viewModels<SettingsViewModel>()
 
-    private lateinit var navController: NavController
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -29,31 +26,20 @@ class SettingsDialogFragment : DialogFragment(R.layout.settings_fragment) {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        binding.settingsRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+        binding.settingsRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.settings_radioButton_euro -> {
-                    viewModel.onRadioButtonEuroClicked() {
+                    viewModel.onRadioButtonEuroClicked {
                         dismiss()
                     }
                 }
                 R.id.settings_radioButton_dollar -> {
-                    viewModel.onRadioButtonDollarClicked() {
+                    viewModel.onRadioButtonDollarClicked {
                         dismiss()
                     }
                 }
             }
         }
-//
-//        binding.settingsRadioButtonDollar.setOnClickListener {
-//            viewModel.onRadioButtonDollarClicked(binding.settingsRadioButtonDollar.isChecked) {
-//                dismiss()
-//            }
-//        }
-//
-//        binding.settingsRadioButtonEuro.setOnClickListener {
-//            viewModel.onRadioButtonEuroClicked(binding.settingsRadioButtonEuro.isChecked) {
-//                dismiss()
-//            }
-//        }
+
     }
 }

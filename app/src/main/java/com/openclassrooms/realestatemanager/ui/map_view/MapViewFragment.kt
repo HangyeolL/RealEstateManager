@@ -82,7 +82,6 @@ class MapViewFragment : SupportMapFragment(), OnMapReadyCallback {
                 navController.navigate(
                     MapViewFragmentDirections.actionToAddOrModifyRealEstateFragment()
                 )
-                true
             }
         }
         return super.onOptionsItemSelected(item)

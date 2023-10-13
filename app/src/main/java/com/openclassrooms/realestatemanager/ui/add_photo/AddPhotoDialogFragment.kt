@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.AddPhotoDialogFragmentBinding
-import com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,9 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddPhotoDialogFragment : DialogFragment(R.layout.add_photo_dialog_fragment) {
 
     private val binding by viewBinding { AddPhotoDialogFragmentBinding.bind(it) }
-
-    // Create new viewModel from parent fragment use ownerProducer if not just delegation is fine :)
-    private val viewModel by viewModels<AddOrModifyRealEstateViewModel>()
 
     private lateinit var navController: NavController
     private val args: AddPhotoDialogFragmentArgs by navArgs()
@@ -40,7 +35,6 @@ class AddPhotoDialogFragment : DialogFragment(R.layout.add_photo_dialog_fragment
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        val realEstateId = args.realEstateId
         val picUriToString = args.picUriToString
 
         Glide.with(this).load(args.picUriToString)

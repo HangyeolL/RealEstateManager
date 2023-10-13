@@ -1,14 +1,13 @@
 package com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate
 
-import android.R.attr.data
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
@@ -52,36 +51,23 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
                 if (selectedIntent?.data != null) {
                     // The user selected an image from the gallery
-                    navController.navigate(
-                        AddOrModifyRealEstateFragmentDirections.actionToAddPhotoDialogFragment(
-                            args.realEstateId, selectedIntent.data.toString()
-                        )
-                    )
-                } else if (selectedIntent?.extras != null) {
+                    Log.d("HL", "User chose gallery for an image")
                     navController.navigate(
                         AddOrModifyRealEstateFragmentDirections.actionToAddPhotoDialogFragment(
                             args.realEstateId, selectedIntent.data.toString()
                         )
                     )
                 }
-            }
-        }
-
-    private val takePictureResult =
-        registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
-            if (isSuccess) {
-                navController.navigate(
-                    AddOrModifyRealEstateFragmentDirections.actionToAddPhotoDialogFragment(
-                        args.realEstateId, latestTmpUri.toString()
+                // Camera to capture an image
+                else if (selectedIntent?.extras != null) {
+                    Log.d("HL", "User chose camera for an image")
+                    Log.d("HL", "latestTmpUri: $latestTmpUri")
+                    navController.navigate(
+                        AddOrModifyRealEstateFragmentDirections.actionToAddPhotoDialogFragment(
+                            args.realEstateId, latestTmpUri.toString()
+                        )
                     )
-                )
-            }
-        }
-
-    private val selectImageFromGalleryResult =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            uri?.let {
-                viewModel.onPicUriToStringSet(uri.toString())
+                }
             }
         }
 
@@ -104,11 +90,9 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
 
-        cameraIntent.action = MediaStore.ACTION_IMAGE_CAPTURE
-        galleryIntent.action = Intent.ACTION_GET_CONTENT
-
         // Decide where the capture image should be saved
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTmpFileUri())
+        latestTmpUri = getTmpFileUri()
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, latestTmpUri)
         // Restrict to only image types
         galleryIntent.type = "image/*"
 
@@ -144,7 +128,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
             latestTmpUri = getTmpFileUri()
             showImageSourceChooser()
         }
-        val cityAutocompleteAdapter = AutocompleteAdapter()
+        val autocompleteAdapter = AutocompleteAdapter()
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAsTypeSpinner.setAdapter(typeSpinnerAdapter)
         binding.addOrModifyRealEstateAutoCompleteTextViewAsAgentSpinner.setAdapter(
@@ -152,11 +136,8 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         )
         binding.addOrModifyRealEstateRecyclerViewRealEstatePhotoList.adapter =
             realEstatePhotoListAdapter
-        binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setAdapter(cityAutocompleteAdapter)
-        binding.addOrModifyRealEstateAutoCompleteTextViewCity.setAdapter(cityAutocompleteAdapter)
-
-        //TODO ViewState Observed data still emit the values after user puts the new value
-        // Test Modification case + sort out common methods
+        binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setAdapter(autocompleteAdapter)
+        binding.addOrModifyRealEstateAutoCompleteTextViewCity.setAdapter(autocompleteAdapter)
 
         // Observer for viewState set up
         viewModel.initialViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
@@ -204,16 +185,11 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
 
         // Observer : Autocomplete dynamic liveData
         viewModel.addressPredictionsLiveData.observe(viewLifecycleOwner) { viewState ->
-            cityAutocompleteAdapter.setData(viewState)
+            autocompleteAdapter.setData(viewState)
         }
 
         viewModel.cityPredictionsLiveData.observe(viewLifecycleOwner) { viewState ->
-            cityAutocompleteAdapter.setData(viewState)
-        }
-
-        // Observer : SingleLiveEvent for Toast
-        viewModel.stringSingleLiveEvent.observe(viewLifecycleOwner) { string ->
-            Toast.makeText(requireContext(), string, Toast.LENGTH_SHORT).show()
+            autocompleteAdapter.setData(viewState)
         }
 
         // Observer : NavController retrieving data from DatePickerDialogFragment
@@ -229,7 +205,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
                 binding.addOrModifyRealEstateTextInputEditTextDateOfSold.setText(pickedDate)
             }
 
-//         Observer: NavController retrieving data from AddPhotoFragment
+        //  Observer: NavController retrieving data from AddPhotoFragment
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("picUriToString")
             ?.observe(viewLifecycleOwner) { picUriToString ->
                 viewModel.onPicUriToStringSet(picUriToString)
@@ -253,7 +229,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         binding.addOrModifyRealEstateAutoCompleteTextViewAddress.setOnItemClickListener { _, _, position, _ ->
-            cityAutocompleteAdapter.getItem(position)?.let { autocompleteTextViewState ->
+            autocompleteAdapter.getItem(position)?.let { autocompleteTextViewState ->
                 viewModel.onAutocompleteAddressItemClicked(autocompleteTextViewState)
             }
         }
@@ -263,7 +239,7 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
         }
 
         binding.addOrModifyRealEstateAutoCompleteTextViewCity.setOnItemClickListener { _, _, position, _ ->
-            cityAutocompleteAdapter.getItem(position)?.let { autocompleteTextViewState ->
+            autocompleteAdapter.getItem(position)?.let { autocompleteTextViewState ->
                 viewModel.onAutocompleteCityItemClicked(autocompleteTextViewState)
             }
         }

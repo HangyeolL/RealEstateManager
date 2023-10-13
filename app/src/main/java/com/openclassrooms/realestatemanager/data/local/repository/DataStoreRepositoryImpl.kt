@@ -15,7 +15,6 @@ class DataStoreRepositoryImpl @Inject constructor(
 
     companion object {
         const val DOLLAR_BOOLEAN_KEY = "dollar_boolean"
-        const val EURO_BOOLEAN_KEY = "euro_boolean"
     }
 
     override suspend fun writeDollarBooleanToTrue() {
@@ -41,20 +40,4 @@ class DataStoreRepositoryImpl @Inject constructor(
             preferences[dataStoreKey] ?: false
         }
     }
-
-//    override suspend fun writeEuroBoolean(value: Boolean) {
-//        val dataStoreKey = booleanPreferencesKey(EURO_BOOLEAN_KEY)
-//
-//        dataStore.edit { settings ->
-//            settings[dataStoreKey] = value
-//        }
-//    }
-//
-//    override fun readEuroBoolean(): Flow<Boolean> {
-//        val dataStoreKey = booleanPreferencesKey(EURO_BOOLEAN_KEY)
-//
-//        return dataStore.data.map { preferences ->
-//            preferences[dataStoreKey] ?: true
-//        }
-//    }
 }

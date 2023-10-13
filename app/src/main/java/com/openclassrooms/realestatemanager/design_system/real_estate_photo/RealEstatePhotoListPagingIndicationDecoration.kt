@@ -33,6 +33,7 @@ import android.view.animation.Interpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import kotlin.math.max
 
 class RealEstatePhotoListPagingIndicationDecoration : ItemDecoration() {
     private val colorActive = -0x1
@@ -70,7 +71,7 @@ class RealEstatePhotoListPagingIndicationDecoration : ItemDecoration() {
 
         // center horizontally, calculate width and subtract half from center
         val totalLength = mIndicatorItemLength * itemCount
-        val paddingBetweenItems = Math.max(0, itemCount - 1) * mIndicatorItemPadding
+        val paddingBetweenItems = max(0, itemCount - 1) * mIndicatorItemPadding
         val indicatorTotalWidth = totalLength + paddingBetweenItems
         val indicatorStartX = (parent.width - indicatorTotalWidth) / 2f
 

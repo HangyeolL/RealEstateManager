@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.main
 
 import android.Manifest
-import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +12,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -38,7 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        // TODO Ask Location permission
         val requestPermissionLauncher =
             registerForActivityResult(
                 ActivityResultContracts.RequestPermission()
@@ -48,22 +45,19 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        when {
+        when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED -> {
+            ) -> {
                 viewModel.startLocationRequest()
             }
-
             else -> {
                 requestPermissionLauncher.launch(
                     Manifest.permission.ACCESS_FINE_LOCATION
                 )
             }
         }
-
-
 
         setSupportActionBar(binding.mainToolbar)
 
@@ -72,12 +66,10 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.mainDrawerLayout)
 
-//        navController.addOnDestinationChangedListener(this)
-
         binding.mainToolbar.setupWithNavController(navController, appBarConfiguration)
         binding.mainNavigationView.setupWithNavController(navController)
 
-        binding.mainNavigationView.setNavigationItemSelectedListener() { menuItem ->
+        binding.mainNavigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.main_navigationView_mapView -> {
                     Log.d("HL", "Navigate from MainActivity to MapViewFragment")
@@ -123,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.toolbar_menu_search -> {
-                Log.d("HG", "MainActivity handling toolBar menu search")
+                Log.d("HL", "MainActivity handling toolBar menu search")
                 navController.navigate(RealEstateListFragmentDirections.actionToSearchModalBottomSheetFragment())
                 return true
 

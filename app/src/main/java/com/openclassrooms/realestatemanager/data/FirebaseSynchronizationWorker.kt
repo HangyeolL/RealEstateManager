@@ -13,7 +13,6 @@ import com.openclassrooms.realestatemanager.domain.realestate.RealEstateReposito
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 
@@ -28,17 +27,16 @@ class FirebaseSynchronizationWorker @AssistedInject constructor(
     override suspend fun doWork(): Result =
         try {
             withContext(Dispatchers.IO) {
-                val realEstateWithPhotosList = async {
-                    realEstateRepository.getRealEstatesWithPhotos().first()
-                }.await()
+                val realEstateWithPhotosList = withContext(Dispatchers.IO) {
+                        realEstateRepository.getRealEstatesWithPhotos().first()
+                    }
 
                 firebaseRepository.setRealEstateWithPhotosList(realEstateWithPhotosList)
-                Log.d("HL", "firebase synchronization success")
-
-                showNotification("Success")
-
-                Result.success()
             }
+            Log.d("HL", "firebase synchronization success")
+            showNotification("Success")
+
+            Result.success()
 
         } catch (e: Exception) {
             Log.d("HL", "${e.printStackTrace()}")

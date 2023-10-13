@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.data.remote.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateWithPhotos
 import com.openclassrooms.realestatemanager.domain.firebase.FirebaseRepository
 import javax.inject.Inject

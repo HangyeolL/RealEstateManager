@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.RealEstateListItemBinding
 
-class RealEstateListAdapter(
+class RealEstateListAdapter (
     private val itemIdListener: (id: Int) -> Unit
 ) : ListAdapter<RealEstateListItemViewState, RealEstateListAdapter.ViewHolder>(RealEstateListDiffCallback) {
 
@@ -27,6 +27,10 @@ class RealEstateListAdapter(
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(viewState: RealEstateListItemViewState, itemIdListener: (id: Int) -> Unit) {
+            itemBinding.realEstateListItemCardView.setOnClickListener {
+                itemIdListener.invoke(viewState.id)
+            }
+
             itemBinding.realEstateListItemTextViewType.text = viewState.type
             itemBinding.realEstateListItemTextViewCity.text = viewState.city
             itemBinding.realEstateListItemTextViewPrice.text = viewState.price.toString()
@@ -40,11 +44,6 @@ class RealEstateListAdapter(
             } else {
                 itemBinding.realEstateListItemImageViewSoldOutTag.visibility = View.INVISIBLE
             }
-
-            itemBinding.realEstateListItemCardView.setOnClickListener {
-                itemIdListener.invoke(viewState.id)
-            }
-
         }
     }
 

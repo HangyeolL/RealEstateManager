@@ -11,27 +11,8 @@ sealed class SearchViewState(
         val agentSpinnerItemViewStateList: List<RealEstateAgentSpinnerItemViewState>,
     ) : SearchViewState(SearchViewStateType.INITIAL)
 
-//    data class WithUserInput(
-//        val numberOfBathrooms: String,
-//        val numberOfBedrooms: String,
-//        val minSquareMeter: String,
-//        val maxSquareMeter: String,
-//        val minPrice: String,
-//        val maxPrice: String,
-//
-//        val garage: Boolean,
-//        val guard: Boolean,
-//        val garden: Boolean,
-//        val elevator: Boolean,
-//        val groceryStoreNearby: Boolean,
-//        val soldOutRecently: Boolean,
-//        val registeredRecently: Boolean,
-//        val photoAvailable: Boolean,
-//    ) : SearchViewState(SearchViewStateType.USER_INPUT)
-
     enum class SearchViewStateType {
         INITIAL,
-        USER_INPUT
     }
 }
 

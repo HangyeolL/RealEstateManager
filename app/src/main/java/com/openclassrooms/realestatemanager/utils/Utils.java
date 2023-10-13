@@ -6,10 +6,8 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -65,10 +63,6 @@ public class Utils {
      * @param context
      * @return
      */
-//    public static Boolean isInternetAvailable(Context context) {
-//        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-//        return wifiManager.isWifiEnabled();
-//    }
 
     @SuppressLint("MissingPermission")
     public static boolean isWifiAvailable(Context context) {

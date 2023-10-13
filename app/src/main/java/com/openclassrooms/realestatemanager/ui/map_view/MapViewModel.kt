@@ -8,10 +8,10 @@ import com.openclassrooms.realestatemanager.domain.location.LocationRepository
 import com.openclassrooms.realestatemanager.domain.realestate.CurrentRealEstateIdRepository
 import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,7 +33,9 @@ class MapViewModel @Inject constructor(
     val viewStateLiveData = liveData(coroutineDispatcherProvider.io) {
         coroutineScope {
 
-            val allRealEstatesListAsync = async { allRealEstatesFlow.first() }.await()
+            val allRealEstatesListAsync = withContext(coroutineDispatcherProvider.io) {
+                allRealEstatesFlow.first()
+            }
 
             val mapMarkerViewStateList = allRealEstatesListAsync.map { realEstateEntity ->
                 MapMarkerViewState(

@@ -19,7 +19,8 @@ class AutocompleteAdapter : BaseAdapter(), Filterable {
     override fun getItemId(position: Int): Long = position.toLong()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val textView: TextView = LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false) as TextView
+        val textView: TextView =
+            LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false) as TextView
 
         getItem(position)?.let {
             textView.text = it.text

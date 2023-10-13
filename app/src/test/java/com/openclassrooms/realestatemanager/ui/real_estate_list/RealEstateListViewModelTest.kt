@@ -53,7 +53,7 @@ class RealEstateListViewModelTest {
             coroutineDispatcherProvider = testCoroutineRule.getTestCoroutineDispatcherProvider(),
             context = context,
             realEstateRepository = realEstateRepository,
-            currentRealEstateRepository = currentRealEstateIdRepository,
+            currentRealEstateIdRepository = currentRealEstateIdRepository,
             searchCriteriaRepository = searchCriteriaRepository,
             dataStoreRepository = dataStoreRepository
         )

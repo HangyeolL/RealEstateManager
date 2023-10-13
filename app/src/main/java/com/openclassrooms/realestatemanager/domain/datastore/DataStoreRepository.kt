@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.domain.datastore
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 interface DataStoreRepository {
 
@@ -10,9 +9,5 @@ interface DataStoreRepository {
     suspend fun writeDollarBooleanToFalse()
 
     fun readDollarBoolean(): Flow<Boolean>
-
-//    suspend fun writeEuroBoolean(value: Boolean)
-
-//    fun readEuroBoolean(): Flow<Boolean>
 
 }

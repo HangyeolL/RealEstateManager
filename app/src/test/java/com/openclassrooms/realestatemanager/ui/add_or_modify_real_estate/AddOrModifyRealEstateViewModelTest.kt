@@ -31,8 +31,6 @@ class AddOrModifyRealEstateViewModelTest {
         private const val REAL_ESTATE_ID_KEY = "realEstateId"
         private const val SELECTED_REAL_ESTATE_ID = 1
         private const val DEFAULT_REAL_ESTATE_ID = 0
-        private const val PHOTO_ID = 1
-
     }
 
     private val context: Application = mockk()
@@ -186,101 +184,6 @@ class AddOrModifyRealEstateViewModelTest {
             }
 
         }
-
-//    @Test
-//    fun `modifying an existing entity case - on save button clicked with selected real estate id`() =
-//        testCoroutineRule.runTest {
-//            // Given
-//            addOrModifyRealEstateViewModel.onTypeSpinnerItemClicked(
-//                getDefaultRealEstateTypeSpinnerItemViewState(
-//                    icon = R.drawable.ic_baseline_bed_24,
-//                    type = getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).type
-//                )
-//            )
-//            addOrModifyRealEstateViewModel.onAutocompleteAddressItemClicked(
-//                getDefaultAutocompleteTextViewStateOfAddress(SELECTED_REAL_ESTATE_ID)
-//            )
-//            addOrModifyRealEstateViewModel.onAutocompleteCityItemClicked(
-//                getDefaultAutocompleteTextViewStateOfCity(SELECTED_REAL_ESTATE_ID)
-//            )
-//            addOrModifyRealEstateViewModel.onEditTextNumberOfRoomsChanged(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).numberOfRooms.toString()
-//            )
-//            addOrModifyRealEstateViewModel.onEditTextNumberOfBathRoomsChanged(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).numberOfBathrooms.toString()
-//            )
-//            addOrModifyRealEstateViewModel.onEditTextNumberOfBedRoomsChanged(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).numberOfBedrooms.toString()
-//            )
-//            addOrModifyRealEstateViewModel.onEditTextSqmChanged(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).squareMeter.toString()
-//            )
-//            addOrModifyRealEstateViewModel.onEditTextPriceChanged(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).price.toString()
-//            )
-//            addOrModifyRealEstateViewModel.onDefaultMarketSinceValueSet(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).marketSince
-//            )
-//            addOrModifyRealEstateViewModel.onUserMarketSinceDateSet(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).marketSince
-//            )
-//            addOrModifyRealEstateViewModel.onChipGuardClicked(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).guard
-//            )
-//            addOrModifyRealEstateViewModel.onChipGarageClicked(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).garage
-//            )
-//            addOrModifyRealEstateViewModel.onChipGardenClicked(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).garden
-//            )
-//            addOrModifyRealEstateViewModel.onChipElevatorClicked(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).elevator
-//            )
-//            addOrModifyRealEstateViewModel.onChipGroceryStoreNextByClicked(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).groceryStoreNearby
-//            )
-//            addOrModifyRealEstateViewModel.onChipIsSoldOutClicked(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).isSoldOut
-//            )
-//            addOrModifyRealEstateViewModel.onEditTextDescriptionChanged(
-//                getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).descriptionBody
-//            )
-//            addOrModifyRealEstateViewModel.onAgentSpinnerItemClicked(
-//                getDefaultAgentSpinnerItemViewState(
-//                    getDefaultRealEstateEntity(SELECTED_REAL_ESTATE_ID).agentIdInCharge
-//                )
-//            )
-//            addOrModifyRealEstateViewModel.onPicUriToStringSet(
-//                getDefaultRealEstatePhotoEntity(PHOTO_ID, SELECTED_REAL_ESTATE_ID).url
-//            )
-//            addOrModifyRealEstateViewModel.photoDescriptionSet(
-//                getDefaultRealEstatePhotoEntity(
-//                    PHOTO_ID,
-//                    SELECTED_REAL_ESTATE_ID
-//                ).description.toString()
-//            )
-//
-//            // When
-//            addOrModifyRealEstateViewModel.onSaveButtonClicked { }
-//
-//            this.advanceTimeBy(1000)
-//
-//            coVerify {
-//                realEstateRepository.updateRealEstate(
-//                    getDefaultRealEstateEntity(
-//                        SELECTED_REAL_ESTATE_ID
-//                    )
-//                )
-//                realEstateRepository.insertRealEstatePhoto(
-//                    getDefaultRealEstatePhotoEntity(
-//                        PHOTO_ID,
-//                        SELECTED_REAL_ESTATE_ID
-//                    )
-//                )
-//            }
-//
-//        }
-
 
     // Region OUT //
     private fun getDefaultAddOrModifyRealEstateViewState(realEstateId: Int) =

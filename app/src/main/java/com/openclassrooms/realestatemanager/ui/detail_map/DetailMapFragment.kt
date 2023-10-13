@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailMapFragment : SupportMapFragment(), OnMapReadyCallback {
 
+    // Using parent's view model
     private val viewModel by viewModels<DetailViewModel>(ownerProducer = {requireParentFragment()})
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

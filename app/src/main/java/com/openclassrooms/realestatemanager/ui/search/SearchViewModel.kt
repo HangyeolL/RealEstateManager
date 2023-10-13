@@ -1,19 +1,24 @@
 package com.openclassrooms.realestatemanager.ui.search
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteTextViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_agent.RealEstateAgentSpinnerItemViewState
+import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealEstateTypeSpinnerItemViewState
 import com.openclassrooms.realestatemanager.domain.CoroutineDispatcherProvider
 import com.openclassrooms.realestatemanager.domain.agent.AgentRepository
 import com.openclassrooms.realestatemanager.domain.autocomplete.AutocompleteRepository
 import com.openclassrooms.realestatemanager.domain.search_criteria.SearchCriteriaRepository
 import com.openclassrooms.realestatemanager.domain.search_criteria.model.SearchCriteria
-import com.openclassrooms.realestatemanager.design_system.real_estate_agent.RealEstateAgentSpinnerItemViewState
-import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealEstateTypeSpinnerItemViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,9 +47,9 @@ class SearchViewModel @Inject constructor(
                 )
             )
 
-            val agentSpinnerItemViewStateList = async {
-                agentRepository.getAllAgents().first()
-            }.await().map { agentEntity ->
+            val agentSpinnerItemViewStateList = withContext(coroutineDispatcherProvider.io) {
+                    agentRepository.getAllAgents().first()
+                }.map { agentEntity ->
                 RealEstateAgentSpinnerItemViewState(
                     agentIdInCharge = agentEntity.agentId,
                     agentNameInCharge = agentEntity.name,

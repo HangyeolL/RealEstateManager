@@ -50,8 +50,7 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment) {
 
         val toolbar = requireActivity().findViewById<Toolbar>(R.id.main_Toolbar)
 
-        binding.realEstateListSlidingPaneLayout.addPanelSlideListener(object :
-            SlidingPaneLayout.PanelSlideListener {
+        binding.realEstateListSlidingPaneLayout.addPanelSlideListener(object : SlidingPaneLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View, slideOffset: Float) {}
 
             override fun onPanelOpened(panel: View) {
@@ -67,7 +66,7 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment) {
         })
 
 
-        val recyclerViewAdapter = RealEstateListAdapter() { itemId ->
+        val recyclerViewAdapter = RealEstateListAdapter { itemId ->
             viewModel.onRealEstateListItemClicked(itemId)
             binding.realEstateListSlidingPaneLayout.openPane()
         }

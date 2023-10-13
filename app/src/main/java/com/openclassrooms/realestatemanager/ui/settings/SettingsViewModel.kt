@@ -1,12 +1,10 @@
 package com.openclassrooms.realestatemanager.ui.settings
 
-import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.domain.CoroutineDispatcherProvider
 import com.openclassrooms.realestatemanager.domain.datastore.DataStoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -36,12 +34,4 @@ class SettingsViewModel @Inject constructor(
             }
         }
     }
-
-//    fun onRadioButtonEuroClicked(isChecked: Boolean, onFinished: () -> Unit) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            dataStoreRepository.writeEuroBoolean(isChecked)
-//        }
-//    }
-
-
 }

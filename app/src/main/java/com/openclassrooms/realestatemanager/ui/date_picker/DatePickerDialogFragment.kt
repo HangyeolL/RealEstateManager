@@ -1,10 +1,11 @@
 package com.openclassrooms.realestatemanager.ui.date_picker
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.os.Build
 import android.os.Bundle
 import android.widget.DatePicker
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -12,8 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.openclassrooms.realestatemanager.R
 import java.time.LocalDateTime
 
-class DatePickerDialogFragment(
-) : DialogFragment(), DatePickerDialog.OnDateSetListener {
+class DatePickerDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
 //    // Sharing viewModel between AddOrModifyRealEstateFragment and DatePickerDialogFragment
 //    private val viewModel by viewModels<AddOrModifyRealEstateViewModel>(ownerProducer = { requireParentFragment() })
@@ -27,7 +27,7 @@ class DatePickerDialogFragment(
         private const val DATE_OF_SOLD = 2
     }
 
-    @SuppressLint("NewApi")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         navController = Navigation.findNavController(

@@ -55,7 +55,7 @@ class RealEstateListViewModel @Inject constructor(
                 searchCriteriaStateFlow,
                 realEstatesWithPhotosFlow,
                 dollarBooleanFlow
-            ) { searchCriteria, realEstatesWithPhotos, dollarBoolean,  ->
+            ) { searchCriteria, realEstatesWithPhotos, dollarBoolean ->
 
                 val filteredItemViewList =
                     realEstatesWithPhotos.filter { realEstateWithPhotos ->

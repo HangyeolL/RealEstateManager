@@ -27,11 +27,6 @@ class MapViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    companion object {
-        private const val DEFAULT_LATITUDE = 48.85648195552058
-        private const val DEFAULT_LONGITUDE = 2.352610864067402
-    }
-
     private val currentRealEstateIdRepository: CurrentRealEstateIdRepository = mockk()
     private val realEstateRepository: RealEstateRepository = mockk()
     private val locationRepository: LocationRepository = mockk()
@@ -47,7 +42,7 @@ class MapViewModelTest {
 
         mapViewModel = MapViewModel(
             coroutineDispatcherProvider = testCoroutineRule.getTestCoroutineDispatcherProvider(),
-            currentRealEstateRepository = currentRealEstateIdRepository,
+            currentRealEstateIdRepository = currentRealEstateIdRepository,
             realEstateRepository = realEstateRepository,
             locationRepository = locationRepository
         )

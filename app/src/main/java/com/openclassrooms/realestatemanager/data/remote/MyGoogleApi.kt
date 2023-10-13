@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.data.remote
 
 import com.openclassrooms.realestatemanager.data.remote.model.autocomplete.MyAutocompleteResponse
 import com.openclassrooms.realestatemanager.data.remote.model.geocoding.MyGeocodingResponse
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 

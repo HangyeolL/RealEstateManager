@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.SearchModalBottomSheetsFragmentBinding
-import com.openclassrooms.realestatemanager.design_system.real_estate_agent.RealEstateAgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.design_system.autocomplete_text_view.AutocompleteAdapter
+import com.openclassrooms.realestatemanager.design_system.real_estate_agent.RealEstateAgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.design_system.real_estate_type.RealEstateTypeSpinnerAdapter
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,8 +19,6 @@ class SearchModalBottomSheetFragment :
 
     private val binding by viewBinding { SearchModalBottomSheetsFragmentBinding.bind(it) }
     private val viewModel by viewModels<SearchViewModel>()
-
-    private lateinit var navController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,7 +57,7 @@ class SearchModalBottomSheetFragment :
             autocompleteAdapter.setData(autocompleteViewStateList)
         }
 
-        // UI elements listener //
+        // UI elements listener
         binding.searchAutoCompleteTextViewAsTypeSpinner.setOnItemClickListener { _, _, position, _ ->
             typeSpinnerAdapter.getItem(position)?.let { typeSpinnerItemViewState ->
                 viewModel.onTypeSpinnerItemClicked(typeSpinnerItemViewState)
@@ -134,13 +131,13 @@ class SearchModalBottomSheetFragment :
         }
 
         binding.searchButtonApply.setOnClickListener {
-            viewModel.onButtonApplyClicked() {
+            viewModel.onButtonApplyClicked {
                 dismiss()
             }
         }
 
         binding.searchButtonReset.setOnClickListener {
-            viewModel.onButtonResetClicked() {
+            viewModel.onButtonResetClicked {
                 dismiss()
             }
         }
