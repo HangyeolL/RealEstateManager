@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.MainActivityBinding
 import com.openclassrooms.realestatemanager.ui.real_estate_list.RealEstateListFragmentDirections
@@ -123,22 +124,6 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-//    override fun onDestinationChanged(
-//        controller: NavController,
-//        destination: NavDestination,
-//        arguments: Bundle?
-//    ) {
-//        when (destination.id) {
-//            R.id.mapViewFragment -> {
-//                binding.mainToolbar.menu.clear()
-//            }
-//
-//            else -> {
-//
-//            }
-//        }
-//    }
 
     override fun onDestroy() {
         super.onDestroy()

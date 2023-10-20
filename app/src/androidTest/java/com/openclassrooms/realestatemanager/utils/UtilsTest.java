@@ -21,17 +21,15 @@ public class UtilsTest {
         appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
 
-    // I have to stimulate wifi manually on emulator
-
     @Test
     public void testWifiAvailable() {
-        boolean wifiAvailable = Utils.isWifiAvailable(appContext);
+        boolean wifiAvailable = Utils.isInternetAvailable(appContext);
         assertTrue("Wi-Fi should be available", wifiAvailable);
     }
 
     @Test
     public void testWifiNotAvailable() {
-        boolean wifiAvailable = Utils.isWifiAvailable(appContext);
+        boolean wifiAvailable = Utils.isInternetAvailable(appContext);
         assertFalse("Wi-Fi should not be available", wifiAvailable);
     }
 

@@ -86,17 +86,20 @@ class RealEstateListFragment : Fragment(R.layout.real_estate_list_fragment) {
                 Log.d("HL", "ListFragment handling toolBar menu modify")
                 Log.d("HL", "ListToAddOrModify:currentRealEstateId=${realEstateId}")
 
+                binding.realEstateListSlidingPaneLayout.closePane()
                 navController.navigate(
                     RealEstateListFragmentDirections.actionToAddOrModifyRealEstateFragment(
                         realEstateId
                     )
                 )
 
+
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
 }
 
 /**
@@ -115,8 +118,8 @@ class RealEstateListOnBackPressedCallback(
     }
 
     override fun handleOnBackPressed() {
-        // Return to the list pane when the system back button is pressed.
-        slidingPaneLayout.closePane()
+            slidingPaneLayout.closePane()
+
     }
 
     override fun onPanelSlide(panel: View, slideOffset: Float) {}

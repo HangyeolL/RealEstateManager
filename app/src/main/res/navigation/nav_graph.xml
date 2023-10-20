@@ -26,6 +26,15 @@
             app:destination="@id/settingsDialogFragment" />
     </fragment>
     <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.detail.DetailFragment"
+        android:label="Detail View"
+        tools:layout="@layout/detail_fragment">
+        <action
+            android:id="@+id/action_to_addOrModifyRealEstateFragment"
+            app:destination="@id/addOrModifyRealEstateFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/addOrModifyRealEstateFragment"
         android:name="com.openclassrooms.realestatemanager.ui.add_or_modify_real_estate.AddOrModifyRealEstateFragment"
         android:label="Add or Modify"
@@ -36,36 +45,15 @@
         <action
             android:id="@+id/action_to_datePickerDialogFragment"
             app:destination="@id/datePickerDialogFragment" />
-        <action
-            android:id="@+id/action_to_realEstateListFragment"
-            app:destination="@id/realEstateListFragment" />
-        <action
-            android:id="@+id/action_to_detailFragment"
-            app:destination="@id/detailFragment" />
         <argument
             android:name="realEstateId"
             android:defaultValue="0"
             app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.openclassrooms.realestatemanager.ui.detail.DetailFragment"
-        android:label="Detail View"
-        tools:layout="@layout/detail_fragment">
-        <action
-            android:id="@+id/action_to_addOrModifyRealEstateFragment"
-            app:destination="@id/addOrModifyRealEstateFragment" />
-        <action
-            android:id="@+id/action_detailFragment_pop"
-            app:destination="@id/realEstateListFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/mapViewFragment"
         android:name="com.openclassrooms.realestatemanager.ui.map_view.MapViewFragment"
         android:label="Map View">
-        <action
-            android:id="@+id/action_to_realEstateListFragment"
-            app:popUpTo="@id/realEstateListFragment" />
         <action
             android:id="@+id/action_to_addOrModifyRealEstateFragment"
             app:destination="@id/addOrModifyRealEstateFragment" />
@@ -81,9 +69,6 @@
         android:name="com.openclassrooms.realestatemanager.ui.add_photo.AddPhotoDialogFragment"
         android:label="Add Photo"
         tools:layout="@layout/add_photo_dialog_fragment">
-        <action
-            android:id="@+id/action_to_addOrModifyRealEstateFragment"
-            app:popUpTo="@id/addOrModifyRealEstateFragment" />
         <argument
             android:name="realEstateId"
             app:argType="integer" />
@@ -95,10 +80,6 @@
         android:id="@+id/datePickerDialogFragment"
         android:name="com.openclassrooms.realestatemanager.ui.date_picker.DatePickerDialogFragment"
         android:label="Date Picker">
-        <action
-            android:id="@+id/action_datePickerDialogFragment_pop"
-            app:popUpTo="@id/addOrModifyRealEstateFragment"
-            app:popUpToInclusive="false" />
         <argument
             android:name="fragmentNumber"
             android:defaultValue="1"

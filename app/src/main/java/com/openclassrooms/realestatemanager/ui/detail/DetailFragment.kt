@@ -20,12 +20,9 @@ import com.openclassrooms.realestatemanager.design_system.real_estate_photo.Real
 import com.openclassrooms.realestatemanager.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class DetailFragment : Fragment(R.layout.detail_fragment) {
-
-    companion object {
-        fun newInstance() = DetailFragment()
-    }
 
     private val binding by viewBinding { DetailFragmentBinding.bind(it) }
 
@@ -95,11 +92,15 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                     )
                 )
 
+
+
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 
     override fun onResume() {
         super.onResume()

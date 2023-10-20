@@ -38,16 +38,16 @@ public class Utils {
     public static String changeDateFormatToDaysFirstFromYearsFirst(String inputDate) {
         try {
             // Create a SimpleDateFormat object to parse the input date
-            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy/MM/dd");
 
             // Parse the input date string to a Date object
             Date date = inputFormat.parse(inputDate);
 
             // Create a SimpleDateFormat object for the desired output format
-            SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
 
             // Format the Date object to the desired output format
-            return outputFormat.format(date);
+            return outputFormat.format(inputDate);
 
         } catch (ParseException e) {
             // Handle parsing exceptions here
@@ -65,19 +65,23 @@ public class Utils {
      */
 
     @SuppressLint("MissingPermission")
-    public static boolean isWifiAvailable(Context context) {
+    public static boolean isInternetAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Network network = connectivityManager.getActiveNetwork();
             NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(network);
 
-            // return true if those conditions are met else false
-            return networkCapabilities != null && networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI);
+            // Return true if there is an active network connection with internet capability
+            return networkCapabilities != null &&
+                    (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET));
         } else {
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-            return networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI && networkInfo.isConnected();
+            // Return true if there is an active network connection and it's connected
+            return networkInfo != null && networkInfo.isConnected();
         }
     }
+
 }

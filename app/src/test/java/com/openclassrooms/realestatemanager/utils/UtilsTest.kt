@@ -34,8 +34,8 @@ class UtilsTest {
     @Test
     fun `Change date format to days first from years first`() {
         // Given
-        val givenDateFormat = "1999-12-25"
-        val expectedDateFormat = "25-12-1999"
+        val givenDateFormat = "1999.12.25"
+        val expectedDateFormat = "25/12/1999"
 
         // Then
         assertEquals(expectedDateFormat, Utils.changeDateFormatToDaysFirstFromYearsFirst(givenDateFormat))

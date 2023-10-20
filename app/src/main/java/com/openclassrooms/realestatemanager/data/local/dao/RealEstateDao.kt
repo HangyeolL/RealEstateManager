@@ -43,4 +43,13 @@ interface RealEstateDao {
     @Query("SELECT * FROM realEstates")
     fun getAllRealEstatesAsCursor() : Cursor
 
+    @Query("DELETE FROM realEstatePhotos")
+    fun nukeRealEstatePhotosTable()
+
+    @Query("DELETE FROM realEstates")
+    fun nukeRealEstateTable()
+
+    @Insert
+    fun insertRealEstateNoReturn(realEstateEntity: RealEstateEntity)
+
 }

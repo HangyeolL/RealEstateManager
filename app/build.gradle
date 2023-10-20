@@ -19,7 +19,8 @@ android {
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        testInstrumentationRunner = "com.openclassrooms.realestatemanager.CustomTestRunner"
     }
     buildTypes {
         release {
@@ -96,23 +97,24 @@ dependencies {
 
     //--------------------------------TEST IMPLEMENTATION-----------------------------------------//
 
-    // Junit
     testImplementation 'junit:junit:4.13.2'
-
-    // AndroidJunit for instrumented test
-    androidTestImplementation "androidx.test:core-ktx:1.5.0"
-    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.5"
-    // Need runner to run the tests
-    androidTestImplementation 'androidx.test:runner:1.5.0'
-
-    // Mockk
     testImplementation 'io.mockk:mockk:1.12.0'
-
-    // Coroutine Test
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1'
-
     // Helps testing livedata : InstantTaskExecutorRule for example
     testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation "androidx.test.ext:truth:1.4.0"
+
+    // Instrumented Test
+    androidTestImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1'
+    androidTestImplementation "androidx.test:core-ktx:1.5.0"
+    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.5"
+    androidTestImplementation 'androidx.test:runner:1.5.0'
+    androidTestImplementation "androidx.test.ext:truth:1.4.0"
+
+    // Hilt
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.42'
+    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.42'
 
 
 }

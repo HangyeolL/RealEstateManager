@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.data.local.repository
 
+import android.database.Cursor
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.data.local.model.RealEstateEntity
 import com.openclassrooms.realestatemanager.data.local.model.RealEstatePhotoEntity
@@ -43,4 +44,20 @@ class RealEstateRepositoryImpl @Inject constructor(
     override fun getRealEstatesWithPhotos(): Flow<List<RealEstateWithPhotos>> =
         realEstateDao.getRealEstatesWithPhotos()
 
+    // TEST
+
+    override fun getAllRealEstatesAsCursor(): Cursor =
+        realEstateDao.getAllRealEstatesAsCursor()
+
+    override fun nukeRealEstatePhotosTable() {
+        realEstateDao.nukeRealEstatePhotosTable()
+    }
+
+    override fun nukeRealEstateTable() {
+        realEstateDao.nukeRealEstateTable()
+    }
+
+    override fun insertRealEstateNoReturn(realEstateEntity: RealEstateEntity) {
+        realEstateDao.insertRealEstateNoReturn(realEstateEntity)
+    }
 }

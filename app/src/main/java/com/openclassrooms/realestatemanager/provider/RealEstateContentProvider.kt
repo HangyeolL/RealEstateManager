@@ -5,55 +5,70 @@ import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
-import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
-import dagger.hilt.android.EntryPointAccessors
+import androidx.room.RoomMasterTable.TABLE_NAME
+import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
+import dagger.hilt.EntryPoints
+import javax.inject.Inject
 
-class RealEstateContentProvider : ContentProvider() {
+class RealEstateContentProvider @Inject constructor(): ContentProvider() {
 
-    companion object {
+    companion object{
         const val AUTHORITY = "com.openclassrooms.realestatemanager.provider"
-        const val PATH_REAL_ESTATE_LIST = "REAL_ESTATE_LIST"
-
-        val CONTENT_URI_1 = Uri.parse("content://$AUTHORITY/$PATH_REAL_ESTATE_LIST")
-
-        const val CODE_REAL_ESTATE_LIST = 1
-
-        private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
-            addURI(AUTHORITY, PATH_REAL_ESTATE_LIST, CODE_REAL_ESTATE_LIST)
-        }
+        private const val REAL_ESTATE_TABLE = "realEstate_table"
+        val CONTENT_URI : Uri = Uri.parse("content://$AUTHORITY/$REAL_ESTATE_TABLE")
     }
 
-    private lateinit var realEstateDao: RealEstateDao
+    lateinit var realEstateRepository: RealEstateRepository
+
+    private val sURIMatcher = UriMatcher(UriMatcher.NO_MATCH)
+
+    private val realEstate = 1
+    private val realEstateID = 2
+
+    init {
+        sURIMatcher.addURI(AUTHORITY, REAL_ESTATE_TABLE, realEstate)
+        sURIMatcher.addURI(AUTHORITY, "$REAL_ESTATE_TABLE/#",realEstateID)
+    }
 
     override fun onCreate(): Boolean {
-        val appContext = context?.applicationContext ?: throw IllegalStateException()
-        val hiltEntryPoint = EntryPointAccessors.fromApplication(appContext, ContentProviderEntryPoint::class.java)
-        realEstateDao = hiltEntryPoint.getRealEstateDao()
+        realEstateRepository = EntryPoints.get(context!!, ContentProviderEntryPoint::class.java).realEstateRepository
         return true
     }
 
     override fun query(
         uri: Uri,
-        projection: Array<out String>?,
-        selection: String?,
-        selectionArgs: Array<out String>?,
-        sortOrder: String?
-    ): Cursor? = when(uriMatcher.match(uri)) {
-        CODE_REAL_ESTATE_LIST -> realEstateDao.getAllRealEstatesAsCursor()
-        else -> {
-            throw IllegalArgumentException("Unknown URI: $uri")
+        strings: Array<String>?,
+        s: String?,
+        strings1: Array<String>?,
+        s1: String?
+    ): Cursor {
+        return if (context != null) {
+            val cursor = realEstateRepository.getAllRealEstatesAsCursor()
+            cursor.setNotificationUri(context!!.contentResolver, uri)
+            cursor
+        } else {
+            throw IllegalArgumentException("Failed to query row for uri $uri")
         }
-    }.apply {
-        setNotificationUri(context?.contentResolver, uri)
     }
 
-    override fun getType(p0: Uri): String? = null
+    override fun getType(uri: Uri): String {
+        return "vnd.android.cursor.item/$AUTHORITY.$TABLE_NAME"
+    }
 
-    override fun insert(p0: Uri, p1: ContentValues?): Uri? = null
+    override fun insert(uri: Uri, contentValues: ContentValues?): Uri? {
+        return null
+    }
 
-    override fun delete(p0: Uri, p1: String?, p2: Array<out String>?): Int = 0
+    override fun delete(uri: Uri, s: String?, strings: Array<String>?): Int {
+        return 0
+    }
 
-    override fun update(p0: Uri, p1: ContentValues?, p2: String?, p3: Array<out String>?): Int = 0
-
-
+    override fun update(
+        uri: Uri,
+        contentValues: ContentValues?,
+        s: String?,
+        strings: Array<String>?
+    ): Int {
+        return 0
+    }
 }

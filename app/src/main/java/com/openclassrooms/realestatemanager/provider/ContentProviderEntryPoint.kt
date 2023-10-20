@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.provider
 
 import com.openclassrooms.realestatemanager.data.local.dao.RealEstateDao
+import com.openclassrooms.realestatemanager.domain.realestate.RealEstateRepository
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -9,5 +10,5 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface ContentProviderEntryPoint {
 
-    fun getRealEstateDao() : RealEstateDao
+    var realEstateRepository: RealEstateRepository
 }
