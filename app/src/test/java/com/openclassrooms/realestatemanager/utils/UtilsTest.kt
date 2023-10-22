@@ -1,9 +1,13 @@
 package com.openclassrooms.realestatemanager.utils
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.google.common.truth.Truth.assertThat
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 import kotlin.text.Typography.dollar
 
 class UtilsTest {
@@ -32,13 +36,16 @@ class UtilsTest {
     }
 
     @Test
-    fun `Change date format to days first from years first`() {
-        // Given
-        val givenDateFormat = "1999.12.25"
-        val expectedDateFormat = "25/12/1999"
+    fun return_date_to_ddMMyyyy_format() {
+        val dateOfDay = LocalDate.now()
+        val rightFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())
+        val wrongFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
+        val rightFormattedDate = dateOfDay.format(rightFormatter)
+        val wrongFormattedDate = dateOfDay.format(wrongFormatter)
+        val dateToCheck = Utils.getTodayDateInRightFormat()
 
-        // Then
-        assertEquals(expectedDateFormat, Utils.changeDateFormatToDaysFirstFromYearsFirst(givenDateFormat))
+        assertThat(dateToCheck).isEqualTo(rightFormattedDate)
+        assertThat(dateToCheck).isNotEqualTo(wrongFormattedDate)
     }
 
 

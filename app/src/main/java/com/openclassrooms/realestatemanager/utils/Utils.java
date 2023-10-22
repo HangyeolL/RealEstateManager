@@ -11,6 +11,7 @@ import android.os.Build;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Utils {
 
@@ -35,25 +36,10 @@ public class Utils {
      *
      * @return
      */
-    public static String changeDateFormatToDaysFirstFromYearsFirst(String inputDate) {
-        try {
-            // Create a SimpleDateFormat object to parse the input date
-            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy/MM/dd");
+    public static String getTodayDateInRightFormat() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
-            // Parse the input date string to a Date object
-            Date date = inputFormat.parse(inputDate);
-
-            // Create a SimpleDateFormat object for the desired output format
-            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-            // Format the Date object to the desired output format
-            return outputFormat.format(inputDate);
-
-        } catch (ParseException e) {
-            // Handle parsing exceptions here
-            e.printStackTrace();
-            return null; // or throw an exception if needed
-        }
+        return formatter.format(new Date());
     }
 
     /**
