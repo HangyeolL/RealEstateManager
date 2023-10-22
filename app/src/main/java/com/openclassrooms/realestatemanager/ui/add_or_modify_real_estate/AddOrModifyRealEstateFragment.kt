@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
@@ -181,6 +182,11 @@ class AddOrModifyRealEstateFragment : Fragment(R.layout.add_or_modify_real_estat
                     viewModel.onDefaultMarketSinceValueSet(binding.addOrModifyRealEstateTextInputEditTextMarketSince.text.toString())
                 }
             }
+        }
+
+        // Observer : Single live event
+        viewModel.toastMessageSingleLiveEvent().observe(viewLifecycleOwner) { toastMessage ->
+            Toast.makeText(requireContext(), toastMessage, Toast.LENGTH_SHORT).show()
         }
 
         // Observer : Autocomplete dynamic liveData
