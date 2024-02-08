@@ -20,7 +20,7 @@ inline fun <T : ViewBinding> AppCompatActivity.viewBinding(
 }
 
 /** Fragment binding delegate, may be used since onViewCreated up to onDestroyView (inclusive) */
-inline fun <T : ViewBinding> Fragment.viewBinding(
+inline fun <T : ViewBinding> Fragment.  viewBinding(
     crossinline factory: (View) -> T,
 ): ReadOnlyProperty<Fragment, T> = object : ReadOnlyProperty<Fragment, T>,
     DefaultLifecycleObserver {
